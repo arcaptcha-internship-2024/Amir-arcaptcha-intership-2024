@@ -1,0 +1,129 @@
+:root {
+    --color-dark: #201E43;
+    --color-secondary: #134B70;
+    --color-info: #508C9B;
+    --color-light: #EEEEEE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: roboto;
+    src: url("../font/Roboto-Regular.ttf");
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.db-table {
+    margin: .5rem auto;
+    width: 80%;
+    max-width: 1240px;
+    padding: 1%;
+    border: 1px solid #000;
+    background-color: var(--color-dark);
+}
+
+.db-table-name {
+    margin: .75rem 0;
+    color: var(--color-light);
+    text-align: center;
+    font-family: roboto;
+}
+
+.db-table-header,
+.db-table-row {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-family: roboto;
+}
+
+.db-table-header {
+    color: var(--color-light);
+    background-color: var(--color-secondary);
+}
+
+.db-table-row {
+    color: var(--color-dark);
+    background-color: var(--color-light);
+}
+
+.db-table-cell {
+    width: 25%;
+    padding: 5px;
+    font-size: 16px;
+    text-align: start;
+    color: inherit;
+    background-color: inherit;
+}
+
+.db-table-header>.db-table-cell {
+    font-weight: bold;
+}
+
+.add-object-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-info);
+}
+
+.add-object-row {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.add-object-header {
+    font-family: roboto;
+    color: var(--color-light);
+}
+
+.add-object-input {
+    width: 30%;
+    margin: 0 10px;
+    padding: 15px 10px;
+    font-size: 16px;
+    color: var(--color-dark);
+    font-family: roboto;
+    border: none;
+    border-radius: 10px;
+}
+
+.add-object-input:focus {
+    border: none;
+    font-size: 16px;
+    color: var(--color-dark);
+    font-family: roboto;
+}
+
+#add-new-user-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: roboto;
+    background-color: var(--color-light);
+    color: var(--color-secondary);
+    transition: background-color 500ms;
+}
+
+#add-new-user-button:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-light);
+}

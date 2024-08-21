@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="widdiv=device-widdiv, initial-scale=1.0">
+        <title>Exercise 1</title>
+        <link href="./css/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="db-table">
+            <h1 class="db-table-name">Users Table</h1>
+            <div id="table-body">
+                <div class="db-table-header">
+                    <div class="db-table-cell">ID</div>
+                    <div class="db-table-cell">First Name</div>
+                    <div class="db-table-cell">Last Name</div>
+                    <div class="db-table-cell">Age</div>
+                </div>
+            </div>
+            <form class="add-object-form">
+                <div class="add-object-row">
+                    <h3 class="add-object-header">Add New User</h3>
+                </div>
+                <div class="add-object-row">
+                    <input type="text" class="add-object-input"
+                        name="first_name" id="first_name" required
+                        placeholder="First Name">
+                    <input type="text" class="add-object-input" name="last_name"
+                        id="last_name" required placeholder="Last Name">
+                    <input type="number" class="add-object-input" name="age"
+                        id="age" required min="0"
+                        max="120" placeholder="Age">
+                </div>
+                <div class="add-object-row">
+                    <button type="button" id="add-new-user-button">Add Object</button>
+                </div>
+            </form>
+        </div>
+        <script src="./js/script.js"></script>
+    </body>
+</html>
