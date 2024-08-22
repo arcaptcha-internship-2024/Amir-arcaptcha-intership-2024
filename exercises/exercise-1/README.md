@@ -3,4 +3,10 @@
 Make a CRUD with JavaScript Array
 
 ## TODO:
-- [ ] Make update, and delete users option in HTML page
+- [x] Make update, and delete users option in HTML page
+
+### Images:
+
+Exercise Sample Overview:
+
+![View Of the project](img/example.png)

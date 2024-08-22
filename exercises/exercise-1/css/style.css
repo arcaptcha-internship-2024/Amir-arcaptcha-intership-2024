@@ -3,6 +3,8 @@
     --color-secondary: #134B70;
     --color-info: #508C9B;
     --color-light: #EEEEEE;
+    --color-danger: #C63C51;
+    --color-success: #399918;
 }
 
 * {
@@ -59,12 +61,16 @@ body {
 }
 
 .db-table-cell {
-    width: 25%;
+    width: 10%;
     padding: 5px;
     font-size: 16px;
     text-align: start;
     color: inherit;
     background-color: inherit;
+}
+
+.db-table-cell-lg {
+    width: 25%;
 }
 
 .db-table-header>.db-table-cell {
@@ -126,4 +132,32 @@ body {
 #add-new-user-button:hover {
     background-color: var(--color-secondary);
     color: var(--color-light);
+}
+
+.operation-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.operation-button {
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 8px 16px;
+    color: var(--color-light);
+    font-family: roboto;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+}
+
+.hidden {
+    display: none;
 }

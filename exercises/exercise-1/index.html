@@ -12,9 +12,10 @@
             <div id="table-body">
                 <div class="db-table-header">
                     <div class="db-table-cell">ID</div>
-                    <div class="db-table-cell">First Name</div>
-                    <div class="db-table-cell">Last Name</div>
+                    <div class="db-table-cell db-table-cell-lg">First Name</div>
+                    <div class="db-table-cell db-table-cell-lg">Last Name</div>
                     <div class="db-table-cell">Age</div>
+                    <div class="db-table-cell db-table-cell-lg">Operation</div>
                 </div>
             </div>
             <form class="add-object-form">
@@ -30,9 +31,15 @@
                     <input type="number" class="add-object-input" name="age"
                         id="age" required min="0"
                         max="120" placeholder="Age">
+
+                    <!-- User_id hidden input will have 0 as a default value or user id -->
+                    <!-- If value was a integer except 0, try to update user based on the id -->
+                    <input type="number" id="user_id_hidden" min="0" class="hidden"
+                        value="0">
                 </div>
                 <div class="add-object-row">
-                    <button type="button" id="add-new-user-button">Add Object</button>
+                    <button type="button" id="add-new-user-button">Add
+                        Object</button>
                 </div>
             </form>
         </div>
