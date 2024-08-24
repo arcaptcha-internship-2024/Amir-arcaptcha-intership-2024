@@ -110,3 +110,42 @@ console.log(numbers.fill(100));
 // [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 ```
 
+#### Array.prototype.filter(callbackFunction)
+
+The filter() method will creates a shallow copy of a given array and filtered down that pass the test by the given array. The filter method doesn't change the array, instead return a new array.
+
+```javascript
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+console.log(numbers.filter(item => item % 2 == 0))
+// [0, 2, 4, 6, 8, 10]
+
+console.log(numbers.filter(item => item > 5))
+// [5, 6, 7, 8, 9, 10]
+```
+
+#### Array.prototype.find(callbackFunction)
+
+The find() method will return the first element from array that pass the condition provided in the callback function.
+
+```javascript
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+console.log(numbers.find(item => item % 2 == 0))
+// 0
+
+console.log(numbers.find(item => item % 5 == 0))
+// 5
+```
+
+#### Array.prototype.findIndex(callbackFunction)
+
+The findIndex() method will return the **first element index** from array that pass the condition provided in the callback function. If item doesn't founded, return -1.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.findIndex(item => item > 8 == 0))
+// 3
+
+console.log(numbers.findIndex(item => item % 5 == 0))
+// -1
+```
+
