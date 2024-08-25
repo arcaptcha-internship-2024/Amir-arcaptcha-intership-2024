@@ -149,3 +149,58 @@ console.log(numbers.findIndex(item => item % 5 == 0))
 // -1
 ```
 
+#### Array.prototype.findLast(callbackFunction)
+
+The findLast() method will iterate over the array in reverse and then return the value of the first element that pass the testing function.
+If no item satisfy the test function, it will return `undefined`.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.findLast(item => item % 3 === 0))
+// 6
+
+console.log(numbers.findLast(item => item === 8))
+// 8
+```
+
+#### Array.prototype.findLastIndex(callbackFunction)
+
+The findLastIndex() method will iterate over the array in reverse order and return the index of the value that pass the testing function.
+If no item satisfy the test function, it will return `-1`.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.findLastIndex(item => item % 3 === 0))
+// 1
+
+console.log(numbers.findLastIndex(item => item === 8))
+// 2
+```
+
+#### Array.prototype.flat(depth)
+
+The flat() method will get an **optional** argument `depth` and make a new array with all sub-array elements that are less than the depth and concate the array with them and return a single array instead.
+
+
+```javascript
+const numbers = [4, 6, [8, [10, 12, [13, 18]]]];
+console.log(numbers.flat())
+// [4, 6, 8, [10, 12, [13, 18]]]
+
+console.log(numbers.flat(2))
+// [4, 6, 8, 10, 12, [13, 18]]
+
+console.log(numbers.flat(Infinity))
+// [4, 6, 8, 10, 12, 13, 18]
+```
+
+#### Array.prototype.flatMap(callbackFunction)
+
+The flatMap() method will return a flat array which is created by applying the callback function on every elemnt of array.
+It is combination of `map()` and also `flat()` methods.
+
+```javascript
+const numbers = [1, 2, 1];
+console.log(numbers.flatMap(num => num === 2 ? [2, 2] : 1));
+// [1, 2, 2, 1]
+```
