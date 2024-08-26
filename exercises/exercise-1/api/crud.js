@@ -24,6 +24,7 @@ const addUser = (first_name, last_name, age) => {
 }
 
 const deleteUser = (user_id) => {
+    user_id = parseInt(user_id);
     for (let i = 0; i < users.length; i++) {
         if (users[i]["id"] === user_id) {
             // Remove user with specified index from users array
@@ -67,7 +68,7 @@ const responseMaker = (response, status_code, response_body) => {
 
 http.createServer((request, response) => {
     let urlPath = url.parse(request.url, true);
-    if (urlPath.path === "/api/create/" && request.method === "POST") {
+    if (urlPath.pathname === "/api/create/" && request.method === "POST") {
         let data = "";
         let requiredKeys = ['first_name', 'last_name', 'age'];
         request.on("data", (chunk) => {
@@ -75,10 +76,11 @@ http.createServer((request, response) => {
         })
         request.on("end", () => {
             data = JSON.parse(data);
+            console.log("Hi");
             if (!requiredKeys.every(key => key in data)) {
                 responseMaker(response, 400, { 'error': 'JSON is not valid' })
             } else if (requiredKeys.filter(key => key !== "age").some(key => String(data[key]).length === 0)) {
-                responseMaker(response, 400, { 'error': 'First and last name must have been set' })
+                responseMaker(response, 400, { 'error': 'First and last name are required' })
             } else {
                 let user = addUser(data['first_name'], data['last_name'], data['age']);
                 responseMaker(response, 201, { 'message': 'Object created', user: user })
@@ -93,5 +95,38 @@ http.createServer((request, response) => {
             let user = getUser(data['user_id']);
             user ? responseMaker(response, 200, user) : responseMaker(response, 200, { 'user': null })
         }
+    } else if (urlPath.pathname === "/api/update/" && request.method === "PUT") {
+        let data = "";
+        let requiredKeys = ["id", 'first_name', 'last_name', 'age'];
+        request.on("data", (chunk) => {
+            data += chunk.toString();
+        })
+        request.on("end", () => {
+            data = JSON.parse(data);
+            if (!requiredKeys.filter(key => key === "id").every(key => key in data)) {
+                responseMaker(response, 400, { 'error': 'User ID must have been set' })
+            } else if (requiredKeys.filter(key => key !== "id" && key !== "age").some(key => String(data[key]).length === 0)) {
+                responseMaker(response, 400, { 'error': 'First and last name are required' })
+            } else {
+                requiredKeys.forEach(key => data[key] ? data[key] : null);
+                let user = updateUser(data['id'], data['first_name'], data['last_name'], data['age']);
+                user ? responseMaker(response, 200, { 'message': 'Object Updated', user: user }) : responseMaker(response, 400, { 'error': 'User not found', user: user });
+            }
+        })
+    } else if (urlPath.pathname === "/api/delete/" && request.method === "DELETE") {
+        let data = "";
+        let requiredKeys = ["id"];
+        request.on("data", (chunk) => {
+            data += chunk.toString();
+        })
+        request.on("end", () => {
+            data = JSON.parse(data);
+            if (!requiredKeys.every(key => key in data)) {
+                responseMaker(response, 400, { 'error': 'User ID must have been set' })
+            } else {
+                let user = deleteUser(data['id']);
+                user ? responseMaker(response, 200, { 'message': 'Object Deleted' }) : responseMaker(response, 400, { 'error': 'User not found' });
+            }
+        })
     }
 }).listen(8000)
