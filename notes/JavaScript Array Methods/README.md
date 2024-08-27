@@ -6,19 +6,21 @@ In this Document we're going to take a look at javascript methods that are avail
 
 #### Array.prototype.at()
 
-The at() method give an integer as an argument and return the item at that value. Allows both positive and negative integers, negative integers will count from end of an array. If item doesn't exists, return **undefined**.
+The `at()` method take an integer as an argument and return the item at that value. Allows both positive and negative integers, negative integers will count from end of an array. If item doesn't exists, return **undefined**.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
 console.log(numbers.at(1)) // 2
-console.log(numbers.at(-1)) // 2
+console.log(numbers.at(-1)) // 5
 console.log(numbers.at(10)) // undefined
 ```
 
+___
+
 #### Array.prototype.concat()
 
-The concat() method will merge 2 or more arrays into a one.
+The `concat()` method will merge 2 or more arrays into a one.
 The method doesn't change the array, instead will return a new array.
 
 ```javascript
@@ -36,9 +38,11 @@ console.log(numbers1.concat(numbers2, numbers3))
 console.log(numbers1) // [1, 2, 3, 4, 5]
 ```
 
+___
+
 #### Array.prototype.copyWithin(target, start, end)
 
-The copyWithin() method will copy item from start and end index and put in target index until put all 
+The `copyWithin()` method will copy item from start and end index and put in target index until put all 
 
 [Array.copyWithin()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)
 
@@ -58,9 +62,11 @@ console.log(numbers.copyWithin(6, 7))
 //[0, 1, 2, 3,  4, 5, 7, 8, 9, 10, 10]
 ```
 
+___
+
 #### Array.prototype.entries()
 
-This method will return an array iterator object that contains the key/value pairs for each index in the array.
+The `entries()` method will return an array iterator object that contains the key/value pairs for each index in the array.
 
 ```javascript
 const numbers = ["john", "jimmy", "mark"];
@@ -79,9 +85,12 @@ console.log(iterator.next().value)
 // undefined
 ```
 
+___
+
+
 #### Array.prototype.every(callbackFuncation,)
 
-The every() method will check all items in an array pass the test in function or not. It returns a Boolean Value.
+The `every()` method will check all items in an array pass the test in function or not. It returns a Boolean Value.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -89,9 +98,12 @@ console.log(numbers.every((item) => item < 10 )); // true
 console.log(numbers.every((item) => item < 8 )); // false
 ```
 
+___
+
+
 #### Array.prototype.fill(item, start, end)
 
-The fill() will fill the array items with the specified item in first parameter utill the end indices.
+The `fill()` will fill the array items with the specified item in first parameter utill the end indices.
 
 
 ```javascript
@@ -110,9 +122,11 @@ console.log(numbers.fill(100));
 // [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 ```
 
+---
+
 #### Array.prototype.filter(callbackFunction)
 
-The filter() method will creates a shallow copy of a given array and filtered down that pass the test by the given array. The filter method doesn't change the array, instead return a new array.
+The `filter()` method will creates a shallow copy of a given array and filtered down that pass the test by the given array. The filter method doesn't change the array, instead return a new array.
 
 ```javascript
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -123,9 +137,11 @@ console.log(numbers.filter(item => item > 5))
 // [5, 6, 7, 8, 9, 10]
 ```
 
+---
+
 #### Array.prototype.find(callbackFunction)
 
-The find() method will return the first element from array that pass the condition provided in the callback function.
+The `find()` method will return the first element from array that pass the condition provided in the callback function.
 
 ```javascript
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -136,9 +152,11 @@ console.log(numbers.find(item => item % 5 == 0))
 // 5
 ```
 
+---
+
 #### Array.prototype.findIndex(callbackFunction)
 
-The findIndex() method will return the **first element index** from array that pass the condition provided in the callback function. If item doesn't founded, return -1.
+The `findIndex()` method will return the **first element index** from array that pass the condition provided in the callback function. If item doesn't founded, return -1.
 
 ```javascript
 const numbers = [4, 6, 8, 10];
@@ -149,9 +167,11 @@ console.log(numbers.findIndex(item => item % 5 == 0))
 // -1
 ```
 
+---
+
 #### Array.prototype.findLast(callbackFunction)
 
-The findLast() method will iterate over the array in reverse and then return the value of the first element that pass the testing function.
+The `findLast()` method will iterate over the array in reverse and then return the value of the first element that pass the testing function.
 If no item satisfy the test function, it will return `undefined`.
 
 ```javascript
@@ -163,9 +183,11 @@ console.log(numbers.findLast(item => item === 8))
 // 8
 ```
 
+---
+
 #### Array.prototype.findLastIndex(callbackFunction)
 
-The findLastIndex() method will iterate over the array in reverse order and return the index of the value that pass the testing function.
+The `findLastIndex()` method will iterate over the array in reverse order and return the index of the value that pass the testing function.
 If no item satisfy the test function, it will return `-1`.
 
 ```javascript
@@ -177,9 +199,11 @@ console.log(numbers.findLastIndex(item => item === 8))
 // 2
 ```
 
+---
+
 #### Array.prototype.flat(depth)
 
-The flat() method will get an **optional** argument `depth` and make a new array with all sub-array elements that are less than the depth and concate the array with them and return a single array instead.
+The `flat()` method will get an **optional** argument `depth` and make a new array with all sub-array elements that are less than the depth and concate the array with them and return a single array instead.
 
 
 ```javascript
@@ -194,9 +218,11 @@ console.log(numbers.flat(Infinity))
 // [4, 6, 8, 10, 12, 13, 18]
 ```
 
+---
+
 #### Array.prototype.flatMap(callbackFunction)
 
-The flatMap() method will return a flat array which is created by applying the callback function on every elemnt of array.
+The `flatMap()` method will return a flat array which is created by applying the callback function on every elemnt of array.
 It is combination of `map()` and also `flat()` methods.
 
 ```javascript
@@ -204,6 +230,8 @@ const numbers = [1, 2, 1];
 console.log(numbers.flatMap(num => num === 2 ? [2, 2] : 1));
 // [1, 2, 2, 1]
 ```
+
+---
 
 #### Array.prototype.forEach(callbackFunction)
 The `forEach()` method will call a callback functon once for every element in array.
@@ -217,6 +245,8 @@ numbers.forEach(number => {
 // 2
 // 1
 ```
+
+---
 
 #### Array.prototype.includes(searchElement, fromIndex:optional)
 
@@ -232,6 +262,8 @@ names.includes("Michel");
 // false
 ```
 
+---
+
 #### Array.prototype.indexOf(searchElement, fromIndex:optional)
 
 The `indexOf()` method will search for given element in array and if find it return the index of first element, and if lost, return `-1`.
@@ -245,6 +277,8 @@ names.indexOf("Sara");
 names.indexOf("Michel");
 // -1
 ```
+
+---
 
 #### Array.prototype.join(separator: optional)
 
@@ -267,6 +301,8 @@ name.join()
 // Amir
 ```
 
+---
+
 #### Array.prototype.keys()
 
 The `keys()` method of arrays, will return a `array iterator` contains key index for each element in array
@@ -283,6 +319,8 @@ for (let key of iterator) {
 // 2
 ```
 
+---
+
 #### Array.prototype.lastIndexOf(searchElement, fromIndex:optional)
 
 The `lastIndexOf()` will returns the last index at which a given element can be found in the array, or -1 if it is not present.
@@ -294,6 +332,8 @@ names.lastIndexOf("John");
 // 2
 ```
 
+---
+
 #### Array.prototype.map(callbackFunction)
 
 The `map()` method in arrays will create a new array contains all element returned from callbackFunction.
@@ -303,6 +343,8 @@ const numbers = [4, 6, 8, 10];
 console.log(numbers.map(num => num * 2))
 // [8, 12, 16, 20]
 ```
+
+---
 
 #### Array.prototype.pop()
 
@@ -317,6 +359,8 @@ names.pop();
 console.log(names)
 // [John, Mike]
 ```
+
+---
 
 #### Array.prototype.push(element1, element2, ...)
 
@@ -333,6 +377,8 @@ console.log(names.push("Michel", "Jack"))
 // 6
 ```
 
+---
+
 #### Array.prototype.reduce(callbackFunction, initialValue: Optional)
 
 The `reduce()` method will call a function with 2 values, **accumulator** and **current** value, accumulator is a variable that holds the value from every calculation in this method. With `initialValue` parameter we can set a initial value for accumulator otherwise the initial value will be the value of first element.
@@ -344,6 +390,8 @@ console.log(numbers.reduce((accumulator, current) => accumulator + number, 0))
 // 28
 ```
 
+---
+
 #### Array.prototype.reduceRight(callbackFunction, initialValue: Optional)
 
 The `reduceRight()` method will do the same as `reduce()` but it will start iteration other the loop from **right-to-left**.
@@ -353,6 +401,8 @@ const numbers = [4, 6, 8, 10];
 console.log(numbers.reduceRight((accumulator, current) => accumulator + number, 0))
 // 28
 ```
+
+---
 
 #### Array.prototype.reverse()
 
@@ -368,6 +418,8 @@ console.log(names)
 // ["Sara", "Mike", "John"]
 ```
 
+---
+
 #### Array.prototype.shift()
 
 The `shift()` method of array will remove the first element from array and return it from array.
@@ -381,6 +433,8 @@ console.log(names.shift());
 console.log(names)
 // ["Mike", "Sara"]
 ```
+
+---
 
 #### Array.prototype.slice(start, end: Optional)
 
@@ -399,6 +453,8 @@ console.log(names);
 // ["John", "Mike", "Sara", "Michel", "Jack", "Bob"]
 ```
 
+---
+
 #### Array.prototype.some(callbackFunction)
 
 The `some()` method test whether at least one element in array pass the test function or not.
@@ -413,6 +469,8 @@ console.log(numbers.some(num => num < 0))
 console.log(numbers.some(num => num > 1000))
 // false
 ```
+
+---
 
 #### Array.prototype.sort(compareFunction)
 ...
