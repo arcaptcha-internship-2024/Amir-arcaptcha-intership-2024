@@ -204,3 +204,215 @@ const numbers = [1, 2, 1];
 console.log(numbers.flatMap(num => num === 2 ? [2, 2] : 1));
 // [1, 2, 2, 1]
 ```
+
+#### Array.prototype.forEach(callbackFunction)
+The `forEach()` method will call a callback functon once for every element in array.
+
+```javascript
+const numbers = [1, 2, 1];
+numbers.forEach(number => {
+    console.log(number);
+})
+// 1
+// 2
+// 1
+```
+
+#### Array.prototype.includes(searchElement, fromIndex:optional)
+
+The `includes()` method will search in array for find the given element and if find any result, return `true` and if not, return `false`.
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+names.includes("John");
+// true
+
+names.includes("Michel");
+// false
+```
+
+#### Array.prototype.indexOf(searchElement, fromIndex:optional)
+
+The `indexOf()` method will search for given element in array and if find it return the index of first element, and if lost, return `-1`.
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+names.indexOf("Sara");
+// 2
+
+names.indexOf("Michel");
+// -1
+```
+
+#### Array.prototype.join(separator: optional)
+
+The `join()` method will create a string from all elements in array using a given separator that is optional.
+If call this function without give any separator, it will concate strings using a comma `,`.
+If there is a single element in array, it will generate string without any separator.
+
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+names.join();
+// John,Mike,Sara
+
+names.join(" | ");
+// John | Mike | Sara
+
+let name = ['Amir'];
+name.join()
+// Amir
+```
+
+#### Array.prototype.keys()
+
+The `keys()` method of arrays, will return a `array iterator` contains key index for each element in array
+
+```javascript
+const array1 = ['a', 'b', 'c'];
+const iterator = array1.keys();
+
+for (let key of iterator) {
+  console.log(key);
+}
+// 0
+// 1
+// 2
+```
+
+#### Array.prototype.lastIndexOf(searchElement, fromIndex:optional)
+
+The `lastIndexOf()` will returns the last index at which a given element can be found in the array, or -1 if it is not present.
+
+```javascript
+const names = ["John", "Mike", "John"];
+
+names.lastIndexOf("John");
+// 2
+```
+
+#### Array.prototype.map(callbackFunction)
+
+The `map()` method in arrays will create a new array contains all element returned from callbackFunction.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.map(num => num * 2))
+// [8, 12, 16, 20]
+```
+
+#### Array.prototype.pop()
+
+The `pop()` method will return the last item from array and also remove it from array.
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+names.pop();
+// Sara
+
+console.log(names)
+// [John, Mike]
+```
+
+#### Array.prototype.push(element1, element2, ...)
+
+The `push()` method will add element or elements from given parameter and append them into array.
+This method will add append items at the end of the array and return new length of array
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+console.log(names.push("Amir"));
+// 4
+
+console.log(names.push("Michel", "Jack"))
+// 6
+```
+
+#### Array.prototype.reduce(callbackFunction, initialValue: Optional)
+
+The `reduce()` method will call a function with 2 values, **accumulator** and **current** value, accumulator is a variable that holds the value from every calculation in this method. With `initialValue` parameter we can set a initial value for accumulator otherwise the initial value will be the value of first element.
+The returned result is a single value, that would be accumulator final result.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.reduce((accumulator, current) => accumulator + number, 0))
+// 28
+```
+
+#### Array.prototype.reduceRight(callbackFunction, initialValue: Optional)
+
+The `reduceRight()` method will do the same as `reduce()` but it will start iteration other the loop from **right-to-left**.
+
+```javascript
+const numbers = [4, 6, 8, 10];
+console.log(numbers.reduceRight((accumulator, current) => accumulator + number, 0))
+// 28
+```
+
+#### Array.prototype.reverse()
+
+The `reverse()` method will reverse array in place, it means that it will reverse the actual array and also return a reversed array.
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+console.log(names.reverse());
+// ["Sara", "Mike", "John"]
+
+console.log(names)
+// ["Sara", "Mike", "John"]
+```
+
+#### Array.prototype.shift()
+
+The `shift()` method of array will remove the first element from array and return it from array.
+
+```javascript
+const names = ["John", "Mike", "Sara"];
+
+console.log(names.shift());
+// "John"
+
+console.log(names)
+// ["Mike", "Sara"]
+```
+
+#### Array.prototype.slice(start, end: Optional)
+
+The `slice()` method will return a slice array from current array. If end parameter had set, it will slice array from start point until end index and if not, it will start from start index and continue until reach the end of array.
+
+```javascript
+const names = ["John", "Mike", "Sara", "Michel", "Jack", "Bob"];
+
+console.log(names.slice(1, 3));
+// ["Mike", "Sara"]
+
+console.log(names.slice(2));
+// ["Sara", "Michel", "Jack", "Bob"]
+
+console.log(names);
+// ["John", "Mike", "Sara", "Michel", "Jack", "Bob"]
+```
+
+#### Array.prototype.some(callbackFunction)
+
+The `some()` method test whether at least one element in array pass the test function or not.
+It returns true if, in the array, it finds an element for which the provided function returns true; otherwise it returns false. It doesn't modify the array.
+
+```javascript
+const numbers = [4, 6, 8, 10, -5, 0, -4, 13];
+
+console.log(numbers.some(num => num < 0))
+// true
+
+console.log(numbers.some(num => num > 1000))
+// false
+```
+
+#### Array.prototype.sort(compareFunction)
+...
