@@ -66,66 +66,98 @@ const responseMaker = (response, status_code, response_body) => {
     response.end();
 }
 
+const HTTP404Response = (response) => {
+    response.statusCode = 404;
+    response.end();
+}
+
+const validateRequestData = (requestDataObject, requiredKeysArray) => {
+    return requiredKeysArray.every(key => key in requestDataObject);
+}
+
+const retrieveUserAPIView = (urlPath, response) => {
+    let urlQueryParams = urlPath.query;
+    let requiredKeys = ['user_id'];
+    let user_id = validateRequestData(urlQueryParams, requiredKeys) ? urlQueryParams['user_id'] : null;
+    if (user_id) {
+        let user = getUser(user_id);
+        user ? responseMaker(response, 200, user) : responseMaker(response, 200, { 'user': null })
+    } else {
+        responseMaker(response, 400, { 'error': 'You have to set user_id in url' })
+    }
+}
+
+const createUserAPIView = (request, response) => {
+    let requestData = "";
+    let requiredKeys = ['first_name', 'last_name', 'age'];
+    request.on("data", (chunk) => {
+        requestData += chunk.toString();
+    })
+    request.on("end", () => {
+        requestData = JSON.parse(requestData);
+        let requestDataIsValid = validateRequestData(requestData, requiredKeys);
+        requestDataIsValid = requiredKeys.every(key => String(requestData[key]).length !== 0);
+        if (requestDataIsValid) {
+            let user = addUser(requestData['first_name'], requestData['last_name'], requestData['age']);
+            responseMaker(response, 201, { 'message': 'Object created', user: user })
+        } else {
+            responseMaker(response, 400, { 'error': 'Data Is not Valid' })
+        }
+    })
+}
+
+const updateUserAPIView = (request, response) => {
+    let requestData = "";
+    let requiredKeys = ["id", 'first_name', 'last_name', 'age'];
+    request.on("data", (chunk) => {
+        requestData += chunk.toString();
+    })
+    request.on("end", () => {
+        requestData = JSON.parse(requestData);
+        let requestDataIsValid = validateRequestData(requestData, requiredKeys);
+        if (requestDataIsValid) {
+            let user = updateUser(requestData['id'], requestData['first_name'], requestData['last_name'], requestData['age']);
+            user ? responseMaker(response, 200, { 'message': 'Object Updated', user: user }) : responseMaker(response, 400, { 'error': 'User not found', user: user });
+        } else {
+            responseMaker(response, 400, { 'error': 'Data is not valid' })
+        }
+    })
+}
+
+const deleteUserAPIView = (request, response) => {
+    let requestData = "";
+    let requiredKeys = ["id"];
+    request.on("data", (chunk) => {
+        requestData += chunk.toString();
+    })
+    request.on("end", () => {
+        requestData = JSON.parse(requestData);
+        let requestDataIsValid = validateRequestData(requestData, requiredKeys);
+        if (requestDataIsValid) {
+            let user = deleteUser(requestData['id']);
+            user ? responseMaker(response, 200, { 'message': 'Object Deleted' }) : responseMaker(response, 400, { 'error': 'User not found' });
+        } else {
+            responseMaker(response, 400, { 'error': 'User ID must have been set' })
+        }
+    })
+}
+
 http.createServer((request, response) => {
     let urlPath = url.parse(request.url, true);
-    if (urlPath.pathname === "/api/create/" && request.method === "POST") {
-        let data = "";
-        let requiredKeys = ['first_name', 'last_name', 'age'];
-        request.on("data", (chunk) => {
-            data += chunk.toString();
-        })
-        request.on("end", () => {
-            data = JSON.parse(data);
-            if (!requiredKeys.every(key => key in data)) {
-                responseMaker(response, 400, { 'error': 'JSON is not valid' })
-            } else if (requiredKeys.filter(key => key !== "age").some(key => String(data[key]).length === 0)) {
-                responseMaker(response, 400, { 'error': 'First and last name are required' })
-            } else {
-                let user = addUser(data['first_name'], data['last_name'], data['age']);
-                responseMaker(response, 201, { 'message': 'Object created', user: user })
-            }
-        })
-    } else if (urlPath.pathname === "/api/get/" && request.method === "GET") {
-        let data = urlPath.query;
-        let requiredKeys = ['user_id'];
-        if (!requiredKeys.every(key => key in data)) {
-            responseMaker(response, 400, { 'error': 'You have to set user_id in url' })
-        } else {
-            let user = getUser(data['user_id']);
-            user ? responseMaker(response, 200, user) : responseMaker(response, 200, { 'user': null })
-        }
-    } else if (urlPath.pathname === "/api/update/" && request.method === "PUT") {
-        let data = "";
-        let requiredKeys = ["id", 'first_name', 'last_name', 'age'];
-        request.on("data", (chunk) => {
-            data += chunk.toString();
-        })
-        request.on("end", () => {
-            data = JSON.parse(data);
-            if (!requiredKeys.filter(key => key === "id").every(key => key in data)) {
-                responseMaker(response, 400, { 'error': 'User ID must have been set' })
-            } else if (requiredKeys.filter(key => key !== "id" && key !== "age").some(key => String(data[key]).length === 0)) {
-                responseMaker(response, 400, { 'error': 'First and last name are required' })
-            } else {
-                requiredKeys.forEach(key => data[key] ? data[key] : null);
-                let user = updateUser(data['id'], data['first_name'], data['last_name'], data['age']);
-                user ? responseMaker(response, 200, { 'message': 'Object Updated', user: user }) : responseMaker(response, 400, { 'error': 'User not found', user: user });
-            }
-        })
-    } else if (urlPath.pathname === "/api/delete/" && request.method === "DELETE") {
-        let data = "";
-        let requiredKeys = ["id"];
-        request.on("data", (chunk) => {
-            data += chunk.toString();
-        })
-        request.on("end", () => {
-            data = JSON.parse(data);
-            if (!requiredKeys.every(key => key in data)) {
-                responseMaker(response, 400, { 'error': 'User ID must have been set' })
-            } else {
-                let user = deleteUser(data['id']);
-                user ? responseMaker(response, 200, { 'message': 'Object Deleted' }) : responseMaker(response, 400, { 'error': 'User not found' });
-            }
-        })
+    switch (urlPath.pathname) {
+        case "/api/get/":
+            retrieveUserAPIView(urlPath, response);
+            break;
+        case "/api/create/" && request.method === "POST":
+            createUserAPIView(request, response);
+            break;
+        case "/api/update/" && request.method === "PUT":
+            updateUserAPIView(request, response);
+            break;
+        case "/api/delete/" && request.method === "DELETE":
+            deleteUserAPIView(request, response);
+            break;
+        default:
+            HTTP404Response(response);
     }
 }).listen(8000)
