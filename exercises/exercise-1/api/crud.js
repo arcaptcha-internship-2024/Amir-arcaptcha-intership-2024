@@ -76,7 +76,6 @@ http.createServer((request, response) => {
         })
         request.on("end", () => {
             data = JSON.parse(data);
-            console.log("Hi");
             if (!requiredKeys.every(key => key in data)) {
                 responseMaker(response, 400, { 'error': 'JSON is not valid' })
             } else if (requiredKeys.filter(key => key !== "age").some(key => String(data[key]).length === 0)) {
