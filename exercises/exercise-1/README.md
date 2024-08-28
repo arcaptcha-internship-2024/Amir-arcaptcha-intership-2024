@@ -68,11 +68,9 @@ Method: `POST`
 
 ```json
 {
-    "user": {
-        "first_name": "john",
-        "last_name": "doe",
-        "age": 20
-    }
+    "first_name": "john",
+    "last_name": "doe",
+    "age": 20
 }
 ```
 
