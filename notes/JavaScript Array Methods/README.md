@@ -473,4 +473,118 @@ console.log(numbers.some(num => num > 1000))
 ---
 
 #### Array.prototype.sort(compareFunction)
-...
+
+The `sort()` method will sort array **in place** and return the sorted array.
+The defualt sorting is ascending, and will build everything to **string** object and comparing their sequences of **UTF-16**.
+
+The time complexity for this function is not guaranteed and it depends on the implementation.
+
+This method will get a `Optional` compare function that should return a number that mean this:
+
+| A | B | Result | Meaning | Array |
+| a | b | -1 | a < b | [a, b] |
+| a | b | 0 | a == b | keep original order |
+| a | b | 1 | a > b | [b, a] |
+
+```javascript
+function compareFn(a, b) {
+  if (a is less than b by some ordering criterion) {
+    return -1;
+  } else if (a is greater than b by the ordering criterion) {
+    return 1;
+  }
+  // a must be equal to b
+  return 0;
+}
+```
+---
+
+```javascript
+const numbers = [4, 6, 8, 10, -5, 0, -4, 13];
+numbers.sort();
+console.log(numbers)
+// [-4, -5, 0, 10, 13,  4, 6,  8]
+
+// sort in descending order:
+
+numbers.sort((a, b) => {
+    if (a > b) {
+        return -1;
+    } else if (b > a) {
+        return 1;
+    }
+    return 0;
+})
+
+console.log(numbers)
+// [13, 10,  8,  6, 4,  0, -4, -5]
+```
+
+---
+
+#### Array.prototype.splice(start, deleteCount, item1, item2, item3, /*...*/, itemN)
+
+The `splice()` method will change the array by add new element, or replace or delete existing element **in place**.
+
+```javascript
+const months = ['Jan', 'March', 'April', 'June'];
+months.splice(1, 0, 'Feb');
+// Inserts at index 1
+console.log(months);
+// Expected output: Array ["Jan", "Feb", "March", "April", "June"]
+
+months.splice(4, 1, 'May');
+// Replaces 1 element at index 4
+console.log(months);
+// Expected output: Array ["Jan", "Feb", "March", "April", "May"]
+```
+
+---
+
+#### Array.prototype.unshift(item1, item2, item3, /*...*/, itemN)
+
+The `unshift()` method will append given items to the beginning of the array and return new length of array.
+
+```javascript
+const numbers = [1, 2, 3];
+console.log(numbers.unshift(4, 5));
+// 5 => The new lenght of array
+
+console.log(numbers);
+// [4, 5, 1, 2, 3]
+```
+
+---
+
+#### Array.prototype.values()
+
+The `values()` method will return a new iterator object contains array values.
+
+```javascript
+const numbers = [1, 2, 3];
+const numberIterator = numbers.values();
+
+for (const value of numberIterator){
+  console.log(value)
+}
+// 1
+// 2
+// 3
+```
+
+---
+
+#### Array.prototype.with(index, value)
+
+The `with()` method will return a new array with change the given **index** replaced with the given **value**.
+
+If given index was not specified it will choose last index from array
+
+```javascript
+const numbers = [1, 2, 3];
+const newNumbers = numbers.with(0, 10);
+console.log()
+// [10, 2, 3]
+```
+
+---
