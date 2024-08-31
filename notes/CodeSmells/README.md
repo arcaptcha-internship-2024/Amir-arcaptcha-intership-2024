@@ -12,7 +12,7 @@ These smells means that if you want to change something in your code, you've to 
 
 The **Change Preventers** are:
 
-- Divergent Change
+- #### Divergent Change
 
 **Sign:**
 
@@ -35,7 +35,7 @@ Poor progrqamming structure and copy paste programming
 
 ___
 
-- Shotgun surgery
+- #### Shotgun surgery
 
 **Sign:**
 
@@ -64,7 +64,7 @@ Also this can happen after `Dirvergent change` if you didn't split code correctl
 
 ___
 
-- Parallel Inheritance Hierarchies
+- #### Parallel Inheritance Hierarchies
 
 **Sign:**
 
