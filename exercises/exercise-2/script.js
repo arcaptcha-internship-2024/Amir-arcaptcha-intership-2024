@@ -1,7 +1,7 @@
 // 1. Given an array of numbers, create a new array that contains only the even numbers.
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-let evenNumbers = numbers.filter(num => num % 2 === 1);
+let evenNumbers = numbers.filter(num => num % 2 === 0);
 console.log(evenNumbers)
 
 // 2. Create a new array that contains the squares of each number in the given array.
