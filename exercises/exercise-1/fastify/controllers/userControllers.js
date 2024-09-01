@@ -1,4 +1,18 @@
-const { users } = require("../db/usersDB");
+let { users } = require("../db/usersDB");
+
+const updateUserFromDB = (user_id, first_name = null, last_name = null, age = null) => {
+    user_id = parseInt(user_id);
+    let user = users.find(user => user.id === user_id);
+    if (user) {
+        user["first_name"] = first_name ? first_name : user["first_name"];
+        user["last_name"] = last_name ? last_name : user["last_name"];
+        user["age"] = age ? age : user["age"];
+        let userIndex = users.findIndex(user => user.id === user_id);
+        users.splice(userIndex, 1, user);
+        return user;
+    }
+    return null;
+}
 
 const getUser = (request, response) => {
     let { id } = request.params;
@@ -8,27 +22,37 @@ const getUser = (request, response) => {
     if (user) {
         response.send(user);
     } else {
-        response.send({});
+        response.code(404).send({});
     }
 }
 
 const addUser = (request, response) => {
     let data = request.body;
-    data = JSON.parse(data);
-    let requiredKeys = ['first_name', 'last_name', 'age'];
-    let dataIsValid = requiredKeys.every(key => String(data[key]).length !== 0);
-    if (dataIsValid) {
-        let newUser = {
-            id: users.length + 1,
-            'first_name': data['first_name'],
-            'last_name': data['last_name'],
-            'age': data['age']
-        }
-        users.push(newUser);
-        response.send(newUser);
+    let newUser = {
+        id: users.length + 1,
+        'first_name': data['first_name'],
+        'last_name': data['last_name'],
+        'age': data['age']
+    };
+    users.push(newUser);
+    response.code(201).send(newUser);
+}
+
+const updateUser = (request, response) => {
+    let data = request.body;
+    let updatedUser = updateUserFromDB(data.id, data.first_name, data.last_name, data.age);
+    if (updatedUser) {
+        response.send(updatedUser);
     } else {
-        response.send({ "error": "data is not valid" });
+        response.code(404).send({ "error": "User not found" });
     }
 }
 
-module.exports = { getUser, addUser };
+const deleteUser = (request, response) => {
+    let data = request.body;
+    users = users.filter(user => user.id !== data.id);
+    response.send({ status: "user successfully deleted" });
+}
+
+module.exports = { getUser, addUser, updateUser, deleteUser };
+
