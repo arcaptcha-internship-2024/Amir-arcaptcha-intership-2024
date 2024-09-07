@@ -1,4 +1,4 @@
-const userInformationOpt = {
+module.exports = {
     schema: {
         body: {
             type: "object",
@@ -22,8 +22,4 @@ const userInformationOpt = {
         }
     },
     handler: userInformationController,
-}
-
-module.exports = {
-    userInformationOpt,
 }
