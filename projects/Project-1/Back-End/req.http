@@ -1,0 +1,13 @@
+POST http://127.0.0.1:8000/api/user-information/
+Content-Type: application/json
+
+{
+    "first_name": "Amir",
+    "last_name": "Kahdouii",
+    "phone_number": "09121234567",
+    "company_name": "arcaptcha",
+    "description": "Null",
+    "job_position": "Null"
+}
+
+### 

@@ -1,3 +1,5 @@
+const {userInformationController} = require("../../controllers/users");
+
 module.exports = {
     schema: {
         body: {
