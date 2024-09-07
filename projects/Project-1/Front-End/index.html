@@ -9,10 +9,50 @@
 </head>
 
 <body>
+    <div class="container bg-primary rounded rounded-2">
+        <div class="row">
+            <div class="col-12 my-3">
+                <h2 class="text-light">
+                    Information Form:
+                </h2>
+            </div>
+            <form class="col-12" action="" method="post">
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name">
+                    <label for="last_name">Last Name</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" name="company_name" id="company_name"
+                        placeholder="Company Name">
+                    <label for="company_name">Company Name</label>
+                </div>
 
-    <form action="" method="post">
-        
-    </form>
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" name="job_position" id="job_position"
+                        placeholder="Job Position">
+                    <label for="job_position">Job Position<label>
+                </div>
+
+                <div class="form-floating mb-2">
+                    <input type="text" class="form-control" name="phone_number" id="phone_number"
+                        placeholder="Phone Number">
+                    <label for="phone_number">Phone Number<label>
+                </div>
+                <div class="form-floating mb-2">
+                    <textarea class="form-control" name="description" id="description"
+                        placeholder="Description"></textarea>
+                    <label for="description">Description<label>
+                </div>
+                <div class="row justify-content-center my-2">
+                        <button class="col-4 btn btn-success fs-bold">Submit</button>
+                </div>
+            </form>
+    </div>
+    </div>
 
     <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
