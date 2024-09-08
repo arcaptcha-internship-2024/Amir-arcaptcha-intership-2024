@@ -80,3 +80,97 @@ The **latest** tag is most important tag for every images that is the last updat
 
 1. pull `hello-world` image from DockerHub
 2. run the image
+
+
+> [!NOTE]
+> After execute a container in detach mode, you can access logs by `docker logs {container}`
+>
+> For access container from our local, we have to use port binding
+
+#### Port Binding:
+
+- Application inside container runs in an **isolated Docker network**
+- We need to expose the container port to the **host** (The machine the container runs on)
+
+**Port Binding:** 
+Bind the container's port to the host's port to make the service availabe to the outside world
+
+Example:
+
+```sh
+docker run -d -p 80:80 nginx:latest
+```
+
+> [!NOTE]
+> It is standard to use the same port on your host as container is using
+
+#### Docker registry VS Docker repository
+
+Docker registery is a service providing storage for hosting docker repositories.
+
+Some Private Docker registries:
+- Amazon Elastic Container Registery (ECR)
+- Microsoft Azure
+- Google Cloud
+- DockerHub!
+
+**Docker repositoty** is collection of related images with the same name but different version.
+
+#### Building own docker image:
+
+First, we need to create a **definition** of how to build an image from our application.
+
+This Definition will store in a file named **Dockerfile**.
+
+Structure of Dockerfile:
+
+- Dockerfiles start from a parent image or "base image"
+- It's a Docker image that our application based on
+- **You choose the base image depending on which tools you need to have available**
+- Dockerfile should start with a `FROM` to define the base image
+
+| Dockerfile Command | Action |
+| --- | --- |
+| `FROM` | Define the base image to use |
+| `RUN` | Will execute any command in a shell inside a container environment |
+| `COPY` | Copy files or directories from <src\> to the container path <dest\>. While `RUN` **is executed in container**, `COPY` **is executed in host** |
+| `WORKDIR` | Sets the working directory for all commands, like `cd` in bash |
+| `CMD` | The instruction that is to be executed when a Docker container starts, **There can only be a one `CMD` instruction in a Dockerfile** |
+
+
+##### Example of structure for a Nodejs application:
+
+- Linux operation system
+- Node and npm installed
+- Copy application file from host into container
+- Executing `npm install` to install dependencies
+
+##### Dockerfile Example:
+
+```Dockerfile
+FROM node:22-alpine
+
+WORKDIR /app
+
+COPY package.json .
+RUN npm install
+COPY src/ .
+CMD ["node", "server.js"]
+```
+
+> [!IMPORTANT]
+> In this directory, there is a simple Nodejs application that you can build it using docker
+>
+> It's important to get correct path for Docker file, by default I imagined that your terminal is in this directory.
+
+Create Image:
+
+```sh
+docker build -t first_node_app:1.0 .
+```
+
+Create Container:
+
+```sh
+docker run first_node_app:1.0
+```
