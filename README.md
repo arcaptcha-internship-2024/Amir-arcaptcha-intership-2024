@@ -7,7 +7,8 @@
 
 # Lessons:
 
-- [ ] Learn Fastify
+- [x] Fastify
+- [x] Docker
 
 # Docs:
 
