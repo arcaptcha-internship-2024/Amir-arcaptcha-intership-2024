@@ -207,3 +207,78 @@ fastify.get("/greeting", (request, response)=> {
 > [!IMPORTANT]
 > You have to keep the initial decorated field as close as possible to the result. For instance, initialize a decorator with an empty string `''` shows that the value is going to be string. Also you have to define `null` for a decorator that is going to be a `object or function`.
 
+#### Fastify Hooks Scopes:
+
+Fastify hooks are defined in 3 scope:
+
+1. Global Scope
+2. Plugin-Level Scope
+3. Route-Level Scope
+
+All we have code hooks until here in this document, was global scope, means that the hook will apply to every path we define, but for 2 other scope, we can encapsulate the hooks, to specified for a group of routes or even for just one route.
+
+#### Plugin Level Scope
+
+**Example:**
+
+```js
+const routeController = (fastify, option, done) => {
+    fastify.addHook("preHandler", (request, response, done) => {
+        // Your code here
+        done();
+    })
+
+    fastify.get("/", (request, response) => {
+        return {
+            message: "Hello World!"
+        }
+    })
+}
+
+fastify.register(routeController);
+fastify.get("/users", (request, response) => { ... });
+```
+
+In example above, the `preHandler` Hook will apply to `/` route not for `/users` route, because we have defined in a plugin and then register that plugin.
+This is how we define a hook for plugin level scope.
+
+#### Route Level Scope
+
+```js
+const userSchema = {
+    schema: {
+        response: {
+            200: {
+                type: "object",
+                properties: {
+                    first_name: { type: "string" },
+                    last_name: { type: "string" },
+                }
+            }
+        }
+    },
+    onRequest: (request, response, done) => {
+        // On request handler here
+        ...
+    },
+
+    preHandler: (request, reponse, done) => {
+        // Pre handler hook here
+        ...
+    },
+
+    handler: (request, response) => {
+        // Handler function here
+        ...
+    }
+}
+
+fastify.get("/:user", userSchema)
+```
+
+In example above we have define 2 different hook for special route, and the hooks will apply for specified route. 
+It is obvious that you can pass the schema to different routes!
+
+> [!CAUTION]
+> You can't use `onClose` hook in Plugin Level or Route level because this hook is not encapsulated.
+> Sometimes you want to access elements defined in hooks in handler by `this` object. remember that this is not available in `arrow functions`.
