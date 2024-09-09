@@ -4,6 +4,26 @@
 > You can find the source of this file in link below:
 > [Video Source](https://youtu.be/pg19Z8LL06w?si=-ANu7g9AfZ2A6ONE)
 
+## Table of contents:
+
+| Title | Link |
+| --- | --- |
+| What is Docker? | [Link](#what-is-docker) |
+| What problems Docker solved? | [Link](#what-problems-docker-solved) |
+| Virtual Machines VS Docker | [Link](#virtual-machines-vs-docker) |
+| What is Docker Image? | [Link](#what-is-docker-image) |
+| What is Docker Container? | [Link](#what-is-docker-container) |
+| Docker Image VS Docker containers | [Link](#docker-images-vs-docker-containers) |
+| Docker registeries | [Link](#docker-registeries) |
+| Docker Images tag | [Link](#docker-images-tag) |
+| Run your first container  | [Link](#run-your-first-container) |
+| Port Binding  | [Link](#port-binding) |
+| Docker registry VS Docker repository | [Link](#docker-registry-vs-docker-repository) |
+| Building own docker image | [Link](#building-own-docker-image) |
+| Example of create a simple docker image | [Link](#example-of-structure-for-a-nodejs-application) |
+| Dockerfile Example | [Link](#dockerfile-example) |
+| More about Docker architecture | [Link](#more-about-docker-architecture) |
+
 #### What is Docker?
 
 Docker is a **virtualization software** that makes both developing and deploying phases much easier by packaging the application in something called a `container`.
@@ -51,6 +71,14 @@ The Virtual machines have their own kernel when they executed but docker will us
 | Compability | Docker doesn't run in every OS | Not depend on OS |
 
 Docker cannot use *Windows* kernel to run linux based images, in order it will use a hypervisor layer with a light weight linux distro.
+
+#### What is Docker Image?
+
+It is a file that comprised of multiple layers, used to execute code in Docker container. Docker image is an executable package of software that includes everything needed to run an application. This image informs how a container should instantiate, determine which software component will run and how container should act.
+
+#### What is Docker Container?
+
+Docker container is a runtime instance of a Docker image. Docker containers allows developers to package all dependencies with application for easy to setup in everywhere.
 
 #### Docker Images VS Docker Containers
 
@@ -137,6 +165,10 @@ Structure of Dockerfile:
 | `WORKDIR` | Sets the working directory for all commands, like `cd` in bash |
 | `CMD` | The instruction that is to be executed when a Docker container starts, **There can only be a one `CMD` instruction in a Dockerfile** |
 
+> [!NOTE]
+> Dockerfile use DSL (Domain Specific Language) and contains instruction for createing an image.
+>
+> Docker image is creating use a Dockerfile
 
 ##### Example of structure for a Nodejs application:
 
@@ -174,3 +206,9 @@ Create Container:
 ```sh
 docker run first_node_app:1.0
 ```
+
+#### More about Docker architecture:
+
+Docker use `client-server` architecture for control everything. The Docker client and Docker daemon can run in same system or they can connect with eachother remotly using REST API or UNIX socket or a network. 
+
+![Docker Architecture](./assets/images/Architecture-of-Docker.png)
