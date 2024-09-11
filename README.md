@@ -7,10 +7,15 @@
 
 # Lessons:
 
-- [ ] Learn Fastify
+- [x] Fastify
+- [x] Docker
 
 # Docs:
 
 - [x] JavaScript Array methods: *Complete the document of javascript array methods*
 - [ ] Code Smells 
 - [ ] Refactoring Patterns 
+
+# Projects:
+
+- [ ] Project 1 From ARCaptcha
