@@ -23,6 +23,8 @@
 | Example of create a simple docker image | [Link](#example-of-structure-for-a-nodejs-application) |
 | Dockerfile Example | [Link](#dockerfile-example) |
 | More about Docker architecture | [Link](#more-about-docker-architecture) |
+| Docker Network | [Link](#docker-network) |
+| Docker Compose | [Link](#docker-compose) |
 
 #### What is Docker?
 
@@ -209,6 +211,36 @@ docker run first_node_app:1.0
 
 #### More about Docker architecture:
 
-Docker use `client-server` architecture for control everything. The Docker client and Docker daemon can run in same system or they can connect with eachother remotly using REST API or UNIX socket or a network. 
+Docker use `client-server` architecture for control everything. The Docker client and Docker daemon can run in same system or they can connect with each other remotly using REST API or UNIX socket or a network. 
 
 ![Docker Architecture](./assets/images/Architecture-of-Docker.png)
+
+
+#### Docker network:
+
+> [!TIP]
+> - [Source](https://www.geeksforgeeks.org/basics-of-docker-networking/)
+
+Docker networking allows you to create a Network of Docker containers managed by a master node called the `manager`.
+Containers inside a network can communicate with each other and share their informations by packets.
+
+A network is a group of two or more devices that can communicate with each other either physically or virtually.
+The Docker network is a virtual network created by docker to allow communication between docker containers. If two containers be on same network, they can communicate with each other without needs for port exposing on the host machine.
+
+> [!NOTE]
+> There are some types of network available in docker, and there are also others that can install by plugins.
+
+
+## Docker Compose:
+
+Imagine that you have an application that is made of different containers. All containers have to connect with eachother and also communicate with themselves. For doing this, Docker provide a service called `docker-compose`.
+So, you have an application that made of containers and containers must : 
+- They must be deployed and run together
+- The services need to communicate
+
+Docker compose is a tool that allow you to `define and run` `multiple services` and application in `one isolated environment`.
+
+#### Use Case:
+
+If you want to have multiple containers with multiple configuration, you can use `docker compose` to manage them easily.
+

@@ -112,3 +112,80 @@ Aliases:
 docker image rm, docker image remove, docker rmi
 
 ---
+
+```sh
+docker network ls
+```
+
+List all networks available 
+
+---
+
+```sh
+docker network create {bridge-name}
+```
+
+This command will create a new network with given type and also given name parameter.
+
+**Parameters:**
+
+| Parameter | Action |
+| --- | --- |
+| -d, --driver string | Driver to manage the Network (default "bridge") |
+
+---
+
+```sh
+docker network connect {network-name} {container-name}
+```
+
+By using `connect` command, you can connect a **running** docker container to an extisting network.
+
+---
+
+```sh
+docker network inspect {network-names}
+```
+
+The `inspect` command will display information of 1 or more given network name.
+
+---
+
+```sh 
+docker network disconnect {network-name} {container-name}
+```
+
+disconnect a given container from given network
+
+**Parameters:**
+
+| Parameter | Action |
+| --- | --- |
+| -f, --force | Force the container to disconnect from a network |
+
+---
+
+```sh
+docker network rm {network-name}
+```
+
+By using `rm` command you can remove a network from docker networks list.
+
+> [!NOTE]
+> If you want to remove a network, make sure that no container is connected to the network
+
+---
+
+```sh
+docker network prune
+```
+
+Remove all unused network from networks
+
+**Parameters:**
+
+| Parameter | Action |
+| --- | --- |
+| -f, --force | Do not prompt for confirmation |
+
+---
