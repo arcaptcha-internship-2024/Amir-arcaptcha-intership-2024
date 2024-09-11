@@ -1,0 +1,12 @@
+{
+  "name": "docker",
+  "version": "1.0.0",
+  "description": "> [!NOTE] > You can find the source of this file in link below: > [Video Source](https://youtu.be/pg19Z8LL06w?si=-ANu7g9AfZ2A6ONE)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
