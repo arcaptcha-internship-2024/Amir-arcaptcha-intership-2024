@@ -195,3 +195,32 @@ Remove all unused network from networks
 | -f, --force | Do not prompt for confirmation |
 
 ---
+
+```sh
+docker compose {COMMAND}
+```
+
+Define and run multi-container applications with Docker
+
+**Parameters:**
+
+| Parameter | Action |
+| --- | --- |
+| -f, --file stringArray | Compose configuration files |
+
+---
+
+```sh
+docker compose up
+```
+
+Create and start containers
+
+**Parameters:**
+
+| Parameter | Action |
+| --- | --- |
+| --build | Build images before starting containers |
+| -d, --detach | Detach mode: Run containers in the background |
+
+---
