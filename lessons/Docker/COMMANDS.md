@@ -19,6 +19,7 @@ List all **running** containers
 | Parameter | Action |
 | --- | --- |
 | -a, --all | Show all containers (default shows just running) |
+| -q, --quiet | Only display container IDs |
 
 ---
 
