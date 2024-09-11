@@ -1,4 +1,4 @@
-const {userInformationController} = require("../../controllers/users");
+const {userInformationController} = require("../../controllers/users/controllers");
 
 module.exports = {
     schema: {

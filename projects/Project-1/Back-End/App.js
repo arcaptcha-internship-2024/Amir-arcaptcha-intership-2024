@@ -1,5 +1,5 @@
 const fastify = require("fastify")({ logger: true });
-fastify.register(require("./routes/users"));
+fastify.register(require("./routes/users/routes"));
 
 fastify.listen({ port: 8000 }, (err, address) => {
     if (err) {
