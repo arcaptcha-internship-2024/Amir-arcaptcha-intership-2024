@@ -42,9 +42,15 @@ Create a container from given image and start it. If image not founded locally, 
 | Parameter | Action |
 | --- | --- |
 | -d, --deatch | Run container in background and print container ID |
+| -e, --env list | Set environment variables |
 | -p, --publish list | Publish a container's port(s) to the host |
 | --name string | Assign a name to the container |
+| --network network | Connect a container to a network |
 
+
+> [!IMPORTANT]
+> Note that you can set multiple env variable when you want to start a container
+> `-e username=username -e password=*****`
 
 > [!IMPORTANT]
 > `docker run` always create a new container and doesn't re-use previous container
