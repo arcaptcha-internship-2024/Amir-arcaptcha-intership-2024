@@ -25,6 +25,7 @@
 | More about Docker architecture | [Link](#more-about-docker-architecture) |
 | Docker Network | [Link](#docker-network) |
 | Docker Compose | [Link](#docker-compose) |
+| Write Docker compose | [Link](#write-docker-compose) |
 
 #### What is Docker?
 
@@ -240,7 +241,80 @@ So, you have an application that made of containers and containers must :
 
 Docker compose is a tool that allow you to `define and run` `multiple services` and application in `one isolated environment`.
 
-#### Use Case:
+**Use Case:**
 
 If you want to have multiple containers with multiple configuration, you can use `docker compose` to manage them easily.
+
+**Configuration:**
+
+- You use a single YAML file to configure and maintain your application services
+- With a single command you create and also start all the services from your configuration
+
+**What is YAML?**
+
+> [!NOTE]
+> YAML is a human-friendly data serialization language for all programming languages.
+
+#### Write Docker compose:
+
+1. For writing Docker compose you have to list your services that you want to run
+2. The name you provide here is name of the container that will be create
+3. Next, you have to write a base image for your container
+4. After that, you can define a list of ports for binding (mostly you have just 1), The first port refers to the machine port and the second port refers to the port in container (Host:Container)
+5. Next, You define a list for environment variables
+
+> [!IMPORTANT]
+> If your images have dependencies with each other, you can use **depends_on** for manage the dependencies
+
+
+```yml
+services:
+  mysql:
+    image: mysql:8.0-debian
+    container_name: test_mysql
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=Alimardani33
+      - MYSQL_DATABASE=test_db
+      - MYSQL_USER=amir
+      - MYSQL_PASSWORD=Alimardani33
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: test_phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - "mysql"
+
+volumes:
+  mysql_data:
+```
+
+**Docker Compose Benefits:**
+
+- Helps to structure your commands
+- Simplifies container management
+- Easier to make changes, and see current confirguration
+- Declarative approach: defining the desired state
+- Code that defines how your services should run
+- Code can be versioned
+- Easier collaboration
+
+> [!NOTE]
+> By default, Compose sets up a single network for your application
+
+**Use Docker compose:**
+
+```sh
+docker compose -f docker-compose.yml up --build -d
+```
 
