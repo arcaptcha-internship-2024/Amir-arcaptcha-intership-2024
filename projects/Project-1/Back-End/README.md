@@ -4,8 +4,6 @@ In this document, we are going to setup project using docker, and after, send re
 
 ## Setup using Docker file:
 
-In Phase 1, we are going to build image and run container by docker, to do so, open the project root directory in terminal and after that run:
-
 > [!IMPORTANT]
 > If you're using file type for saving data follow below steps first
 
@@ -37,6 +35,8 @@ touch db/db.json
 ```
 
 ---
+
+In Phase 1, we are going to build image and run container by docker, to do so, open the project root directory in terminal and after that run:
 
 ```sh
 docker build -t arcaptcha_project_backend:1.0 .
