@@ -6,6 +6,38 @@ In this document, we are going to setup project using docker, and after, send re
 
 In Phase 1, we are going to build image and run container by docker, to do so, open the project root directory in terminal and after that run:
 
+> [!IMPORTANT]
+> If you're using file type for saving data follow below steps first
+
+1. Create a .env file
+
+```sh
+touch .env
+```
+
+2. Put this in env file
+
+```js
+DB_TYPE="file"
+```
+
+3. Create a folder and db.json file
+
+```sh
+mkdir db
+touch db/db.json
+```
+
+4. Initialize the **db.json** file for using by copy and paste this initial db into db.json:
+
+```json
+{
+    "users": []
+}
+```
+
+---
+
 ```sh
 docker build -t arcaptcha_project_backend:1.0 .
 ```
