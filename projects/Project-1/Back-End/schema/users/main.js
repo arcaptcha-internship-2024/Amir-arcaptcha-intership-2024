@@ -1,6 +1,6 @@
-const {userInformationController} = require("../../controllers/users/controllers");
+const { userInformationController } = require("../../controllers/users/controllers");
 
-module.exports = {
+const createUserSchema = {
     schema: {
         body: {
             type: "object",
@@ -24,4 +24,8 @@ module.exports = {
         }
     },
     handler: userInformationController,
+}
+
+module.exports = {
+    createUserSchema,
 }

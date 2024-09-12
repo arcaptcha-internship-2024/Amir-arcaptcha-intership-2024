@@ -4,10 +4,10 @@ let db = null;
 
 switch (DB_TYPE) {
     case "file":
-        db = require("./file/fileORM");
+        db = require("./file/orm");
         break;
     default:
-        db = require("./file/fileORM");
+        db = require("./file/orm");
 }
 
 module.exports = { db };
