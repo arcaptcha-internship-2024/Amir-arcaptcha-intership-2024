@@ -120,6 +120,14 @@ docker image rm, docker image remove, docker rmi
 ---
 
 ```sh
+docker image prune
+```
+
+Remove all Unused image
+
+---
+
+```sh
 docker network ls
 ```
 
