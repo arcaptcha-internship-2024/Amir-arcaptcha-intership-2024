@@ -1,0 +1,7 @@
+services:
+  nodejs:
+    build: .
+    container_name: arcaptcha_backend
+    restart: always
+    ports:
+      - 8000:8000
