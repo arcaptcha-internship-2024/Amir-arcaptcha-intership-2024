@@ -5,6 +5,10 @@ const getAdminTable = async () => {
     return admin;
 }
 
+const getAdmin = async (username) => {
+    const table = await getAdminTable();
+    return table.find(admin => admin.username === username);
+}
 
 const createAdmin = async (username, password, role = "sales_expert",) => {
     if (isObjectExists(username)) {
@@ -27,6 +31,7 @@ const isObjectExists = async (username) => {
 }
 
 module.exports = {
+    getAdmin,
     getAdminTable,
     createAdmin,
     isObjectExists

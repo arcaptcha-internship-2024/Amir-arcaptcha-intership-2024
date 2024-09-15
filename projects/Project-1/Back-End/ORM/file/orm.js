@@ -1,10 +1,11 @@
 const { getContactRequestTable, createContactRequest } = require("./contactRequest/manager");
-const { createAdmin, getAdminTable, isObjectExists } = require("./admin/manager");
+const { createAdmin, getAdminTable, isObjectExists, getAdmin } = require("./admin/manager");
 
 
 module.exports = {
     admin: {
         all: getAdminTable,
+        get: getAdmin,
         create: createAdmin,
         exists: isObjectExists,
     },
