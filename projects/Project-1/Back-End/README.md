@@ -30,7 +30,8 @@ touch db/db.json
 
 ```json
 {
-    "users": []
+    "admin": [],
+    "contactRequest": []
 }
 ```
 
@@ -50,7 +51,7 @@ docker run --name arcaptcha_backend -d -p 8000:8000  arcaptcha_project_backend:1
 
 #### Endpoints:
 
-- 127.0.0.1:8000/api/users/create
+- 127.0.0.1:8000/api/contact/create
 
 Create a user based on given data in JSON format
 
