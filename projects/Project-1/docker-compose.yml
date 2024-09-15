@@ -1,0 +1,10 @@
+services:
+  nodejs:
+    build: Back-End/
+    container_name: arcaptcha_backend
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - DB_TYPE=file
+    
