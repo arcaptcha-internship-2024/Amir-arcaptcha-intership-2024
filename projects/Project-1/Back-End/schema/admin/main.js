@@ -14,14 +14,14 @@ const adminLoginSchema = {
             200: {
                 type: "object",
                 properties: {
-                    login: { type: "boolean" }
+                    token: { type: "string" }
                 }
             }
         },
-        404: {
+        401: {
             type: "object",
             properties: {
-                login: { type: "boolean" }
+                error: { type: "string" }
             }
         }
     },
