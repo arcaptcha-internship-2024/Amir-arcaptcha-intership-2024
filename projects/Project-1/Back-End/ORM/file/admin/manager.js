@@ -5,9 +5,9 @@ const getAdminTable = async () => {
     return admin;
 }
 
-const getAdmin = async (username) => {
+const getAdmin = async (username, password) => {
     const table = await getAdminTable();
-    return table.find(admin => admin.username === username);
+    return table.find(admin => admin.username === username & admin.password === password);
 }
 
 const createAdmin = async (username, password, role = "sales_expert",) => {
