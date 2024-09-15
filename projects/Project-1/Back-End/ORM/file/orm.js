@@ -1,8 +1,8 @@
-const { getUsersTable, createUser } = require("./users/manager");
+const { getContactRequestTable, createContactRequest } = require("./contactRequest/manager");
 
 module.exports = {
-    users: {
-        table: getUsersTable,
-        add: createUser,
+    contactRequest: {
+        table: getContactRequestTable,
+        create: createContactRequest,
     }
 }

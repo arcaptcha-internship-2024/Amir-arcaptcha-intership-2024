@@ -1,4 +1,4 @@
-const { userInformationController } = require("../../controllers/users/controllers");
+const { saveUserInformationController } = require("../../controllers/users/controllers");
 
 const createUserSchema = {
     schema: {
@@ -23,7 +23,7 @@ const createUserSchema = {
             }
         }
     },
-    handler: userInformationController,
+    handler: saveUserInformationController,
 }
 
 module.exports = {
