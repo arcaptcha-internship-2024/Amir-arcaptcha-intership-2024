@@ -16,7 +16,14 @@ const saveDB = async (db) => {
     await fs.writeFile(dbFilePATH, db);
 }
 
+const updateDB = async (table_name, table) => {
+    let db = await getDB();
+    db[table_name] = table;
+    await saveDB(db);
+}
+
 module.exports = {
     getDB,
-    saveDB
+    saveDB,
+    updateDB
 }
