@@ -11,3 +11,4 @@ fastify.listen({ host: "0.0.0.0", port: 8000 }, (err, address) => {
         process.exit(1);
     }
 })
+module.exports = fastify;
