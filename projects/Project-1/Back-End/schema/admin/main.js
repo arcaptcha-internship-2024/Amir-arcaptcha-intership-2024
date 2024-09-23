@@ -16,14 +16,14 @@ const adminLoginSchema = {
                 properties: {
                     token: { type: "string" }
                 }
+            },
+            401: {
+                type: "object",
+                properties: {
+                    error: { type: "string" }
+                }
             }
         },
-        401: {
-            type: "object",
-            properties: {
-                error: { type: "string" }
-            }
-        }
     },
     handler: adminLoginController
 }
