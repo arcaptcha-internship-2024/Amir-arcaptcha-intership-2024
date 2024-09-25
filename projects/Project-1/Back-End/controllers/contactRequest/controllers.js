@@ -13,6 +13,12 @@ const createRequestController = async (request, response) => {
     response.code(201).send({ id: id });
 }
 
+const fetchContactRequestsController = async (request, response) => {
+    const conactRequests = await db.contactRequest.all();
+    return response.send(conactRequests);
+}
+
 module.exports = {
     createRequestController,
+    fetchContactRequestsController,
 }
