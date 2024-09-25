@@ -2,7 +2,7 @@ require("dotenv").config();
 const fastify = require("fastify")({ logger: true });
 fastify.register(require("./routes/contactRequest/routes"), { prefix: "api/contact/" });
 fastify.register(require("./routes/admin/routes"), { prefix: "api/admin/" });
-fastify.register(require("fastify-jwt"), {
+fastify.register(require("@fastify/jwt"), {
     secret: "supersecret"
 })
 
