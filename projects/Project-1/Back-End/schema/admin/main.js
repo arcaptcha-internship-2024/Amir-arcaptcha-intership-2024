@@ -1,5 +1,4 @@
-const { adminLoginController } = require("../../controllers/admin/controllers.js")
-
+const { adminLoginController } = require("../../controllers/admin/controllers.js");
 const adminLoginSchema = {
     schema: {
         body: {

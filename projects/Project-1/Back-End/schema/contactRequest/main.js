@@ -1,4 +1,5 @@
-const { createRequestController } = require("../../controllers/contactRequest/controllers");
+const { createRequestController, fetchContactRequestsController } = require("../../controllers/contactRequest/controllers");
+const { jwtAuthenticatePreValidationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const createRequestSchema = {
     schema: {
@@ -26,6 +27,32 @@ const createRequestSchema = {
     handler: createRequestController,
 }
 
+const fetchContactRequestSchema = {
+    schema: {
+        response: {
+            200: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        first_name: { type: "string" },
+                        last_name: { type: "string" },
+                        phone_number: { type: "string" },
+                        company_name: { type: "string" },
+                        job_position: { type: "string" },
+                        description: { type: "string" },
+                    }
+                }
+            }
+        }
+    },
+    preValidation: [
+        jwtAuthenticatePreValidationHook,
+    ],
+    handler: fetchContactRequestsController,
+}
+
 module.exports = {
     createRequestSchema,
+    fetchContactRequestSchema
 }
