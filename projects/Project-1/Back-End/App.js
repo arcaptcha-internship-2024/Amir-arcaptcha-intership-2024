@@ -3,7 +3,7 @@ const fastify = require("fastify")({ logger: true });
 fastify.register(require("./routes/contactRequest/routes"), { prefix: "api/contact/" });
 fastify.register(require("./routes/admin/routes"), { prefix: "api/admin/" });
 fastify.register(require("@fastify/jwt"), {
-    secret: "supersecret"
+    secret: process.env.JWT_SECRET
 })
 
 const { SERVER_HOST, SERVER_PORT } = process.env;
