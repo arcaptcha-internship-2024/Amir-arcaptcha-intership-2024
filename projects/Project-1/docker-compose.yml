@@ -7,4 +7,13 @@ services:
       - 8000:8000
     environment:
       - DB_TYPE=file
-    
+    volumes:
+      - ./Back-End/db/:/app/db
+  
+  frontend:
+    build: Front-End/
+    container_name: arcaptcha_frontend
+    ports:
+      - 8080:80
+    volumes:
+      - ./Front-End/:/usr/share/nginx/html
