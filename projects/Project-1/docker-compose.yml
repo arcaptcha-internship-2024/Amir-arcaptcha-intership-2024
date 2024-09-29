@@ -1,5 +1,5 @@
 services:
-  nodejs:
+  backend:
     build: Back-End/
     container_name: arcaptcha_backend
     restart: always
@@ -17,3 +17,5 @@ services:
       - 8080:80
     volumes:
       - ./Front-End/:/usr/share/nginx/html
+    depends_on:
+      - backend
