@@ -26,7 +26,7 @@ submitBtn.addEventListener("click", (e) => {
         return;
     }
     let sendDataRequest = new XMLHttpRequest();
-    sendDataRequest.open("POST", "http://backend:8000/api/contact/create/");
+    sendDataRequest.open("POST", "http://localhost:8000/api/contact/create/", true);
     sendDataRequest.setRequestHeader("Content-Type", "application/json");
     sendDataRequest.onload = () => {
         if (sendDataRequest.status === 201) {
