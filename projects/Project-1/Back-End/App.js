@@ -16,7 +16,7 @@ fastify.register(cors, {
 
 const { SERVER_HOST, SERVER_PORT } = process.env;
 
-fastify.listen({ host: SERVER_HOST, port: SERVER_PORT }, (err, address) => {
+fastify.listen({ host: SERVER_HOST || '0.0.0.0', port: SERVER_PORT || 8000 }, (err, address) => {
     if (err) {
         fastify.log.error(err);
         process.exit(1);
