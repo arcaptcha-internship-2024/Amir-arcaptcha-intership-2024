@@ -7,6 +7,9 @@ services:
       - 8000:8000
     environment:
       - DB_TYPE=file
+      - JWT_SECRET=testsecret
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=3000
     volumes:
       - ./Back-End/db/:/app/db
   
