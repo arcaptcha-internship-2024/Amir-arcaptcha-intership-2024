@@ -5,14 +5,15 @@ const createRequestSchema = {
     schema: {
         body: {
             type: "object",
-            required: ['first_name', 'last_name', 'company_name', 'job_position', 'phone_number', 'description'],
+            required: ['first_name', 'last_name', 'company_name', 'job_position', 'phone_number', 'description', 'arcaptcha_token'],
             properties: {
                 first_name: { type: "string" },
                 last_name: { type: "string" },
                 company_name: { type: "string" },
                 phone_number: { type: "string" },
                 job_position: { type: "string" },
-                description: { type: "string" }
+                description: { type: "string" },
+                arcaptcha_token: { type: "string" }
             }
         },
         response: {
@@ -20,6 +21,12 @@ const createRequestSchema = {
                 type: "object",
                 properties: {
                     id: { type: "string" }
+                }
+            },
+            400: {
+                type: "object",
+                properties: {
+                    error: { type: "string" }
                 }
             }
         }
