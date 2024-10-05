@@ -26,12 +26,18 @@ submitBtn.addEventListener("click", (e) => {
         return;
     }
     let sendDataRequest = new XMLHttpRequest();
+    let arcaptchaToken = document.getElementById("arcaptcha-token");
     sendDataRequest.open("POST", "http://localhost:8000/api/contact/create/", true);
     sendDataRequest.setRequestHeader("Content-Type", "application/json");
     sendDataRequest.onload = () => {
         if (sendDataRequest.status === 201) {
             alert("Data Saved successfully!");
+        } else {
+            const { error } = JSON.parse(sendDataRequest.response);
+            alert(error);
         }
     }
-    sendDataRequest.send(JSON.stringify(getInputsDataInObject()));
+    let JSONData = getInputsDataInObject();
+    JSONData['arcaptcha_token'] = arcaptchaToken.value;
+    sendDataRequest.send(JSON.stringify(JSONData));
 })
