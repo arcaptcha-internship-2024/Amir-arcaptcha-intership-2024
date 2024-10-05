@@ -35,6 +35,8 @@ touch db/db.json
 }
 ```
 
+5. Configue required environment variables, there is a sample in `.env.example` of all required environment variables.
+
 ---
 
 In Phase 1, we are going to build image and run container by docker, to do so, open the project root directory in terminal and after that run:
