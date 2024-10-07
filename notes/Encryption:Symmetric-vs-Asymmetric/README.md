@@ -1,5 +1,8 @@
 Encryption:
 
+### Source:
+- [Encryption - Symmetric Encryption vs Asymmetric Encryption - Cryptography](https://youtu.be/o_g-M7UBqI8?si=2jOC1F7wHtu7K-GR)
+
 Encryption is used to provide confidentiality. `Confidentiality`: Means that only intended recipient can access the Data.
 
 Basic Encryption:
