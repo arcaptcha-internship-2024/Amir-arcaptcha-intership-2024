@@ -57,3 +57,68 @@ console.log(messages.value) // Hello world
 > [!IMPORTANT]
 > These 2 methods will help us in future to make dynamic components!
 
+## Attribute Binding:
+
+In Vue, we call `{{  }}` mustaches and they're only used for text rendering.
+However, to bind an attribute to a dynamic value, we use `v-bind` directive.
+
+```vue
+<script setup>
+import { ref } from 'vue';
+const dynamicID = ref("");
+</script>
+
+<template>
+    <div v-bind:id="dynamicID"></div>
+</template>
+```
+
+A directive is a special attribute that starts with the v- prefix. They are part of Vue's template syntax. Similar to text interpolations, directive values are JavaScript expressions that have access to the component's state.
+
+The part after the colon (:id) is the "argument" of the directive. Here, the element's id attribute will be synced with the dynamicID property from the component's state.
+
+> [!NOTE]
+> Because v-bind is used so frequently, it has a dedicated shorthand syntax:
+
+```vue
+<div :id="dynamicId"></div>
+```
+
+## Event Listeners:
+
+We can listen to DOM events using the v-on directive or use shorthand syntax:
+
+```vue
+<script>
+    import { ref } from 'vue'
+
+    const count = ref(0);
+    const increment = ()=>{
+        count.value++;
+    }
+</script>
+
+<template>
+    <button v-on:click="increment"></button>
+    <button @click="increment"></button>
+</template>
+```
+
+> [!IMPORTANT]
+> Event handlers can also use inline expressions, and can simplify common tasks with modifiers
+
+```vue
+<script>
+    import { ref } from 'vue'
+
+    const count = ref(0);
+</script>
+
+<template>
+    <button @click="count++"></button>
+</template>
+```
+
+> [!NOTE]
+> For better understanding of event handlers, try to read [this page](https://vuejs.org/guide/essentials/event-handling.html)
+
