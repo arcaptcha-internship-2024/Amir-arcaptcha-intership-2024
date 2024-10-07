@@ -9,7 +9,7 @@ services:
       - DB_TYPE=file
       - JWT_SECRET=testsecret
       - SERVER_HOST=0.0.0.0
-      - SERVER_PORT=3000
+      - SERVER_PORT=8000
       - ARCAPTCHA_SITEKEY=PUT_ARCAPTCHA_SITEKEY_HERE
       - ARCAPTCHA_SECRETKEY=PUT_ARCAPTCHA_SECRETKEY_HERE
     volumes:
