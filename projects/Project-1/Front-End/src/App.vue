@@ -8,18 +8,32 @@ const job_position = ref('');
 const phone_number = ref('');
 const description = ref('');
 
-const checkEveryInputIsFilled = () => {
-  let requiredInputs = [...document.getElementsByClassName("form-input")];
-  return requiredInputs.every(input => input.value !== "")
+const getArcaptchaTokenValue = () => {
+  try {
+    let arcaptchaToken = document.getElementById("arcaptcha-token");
+    return arcaptchaToken.value;
+  } catch (e) {
+    console.log("Error: Cannot get captcha value");
+  }
+  return false;
 }
 
-const formSubmitHandler = (e) => {
-  if (!checkEveryInputIsFilled()) {
-    alert("Please fill all inputs");
-    return;
-  }
+const createObjectFromInputsData = () => {
+  let arcaptchaToken = getArcaptchaTokenValue();
+  if (!arcaptchaToken) return null;
+  return {
+    "first_name": first_name.value,
+    "last_name": last_name.value,
+    "company_name": company_name.value,
+    "job_position": job_position.value,
+    "phone_number": phone_number.value,
+    "description": description.value,
+    "arcaptcha_token": arcaptchaToken
+  };
+}
+
+const sendFieldsDataToServer = (fieldsData) => {
   let sendDataRequest = new XMLHttpRequest();
-  let arcaptchaToken = document.getElementById("arcaptcha-token");
   sendDataRequest.open("POST", "http://localhost:8000/api/contact/create/", true);
   sendDataRequest.setRequestHeader("Content-Type", "application/json");
   sendDataRequest.onload = () => {
@@ -30,16 +44,16 @@ const formSubmitHandler = (e) => {
       alert(error);
     }
   }
-  let JSONData = {
-    "first_name": first_name.value,
-    "last_name": last_name.value,
-    "company_name": company_name.value,
-    "job_position": job_position.value,
-    "phone_number": phone_number.value,
-    "description": description.value,
-    "arcaptcha_token": arcaptchaToken.value
-  };
-  sendDataRequest.send(JSON.stringify(JSONData));
+  sendDataRequest.send(JSON.stringify(fieldsData));
+}
+
+const formSubmitHandler = (e) => {
+  const fieldsData = createObjectFromInputsData();
+  if (!fieldsData) {
+    alert("Captcha is required");
+    return;
+  }
+  sendFieldsDataToServer(fieldsData);
 }
 </script>
 
