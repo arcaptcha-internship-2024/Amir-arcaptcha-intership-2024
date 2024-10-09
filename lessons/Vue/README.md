@@ -250,5 +250,145 @@ For doing this, We can use template refrences in Vue:
 
 First of all, we create a `ref object` with a given `null` value. After that we can use one of the Vue lifecycle Hooks, to manually manage the DOM behaviour.
 
-## Whatchers:
+## Watchers:
 
+Sometimes we do need a method to watch on some variables to do an action when changes happen. To achieve this, we can use the watchers:
+
+```html
+<script setup>
+import { ref, watch } from "vue";
+const count = ref(0);
+watch(count, (newCount) => {
+    console.log(`New count is ${newCount}`);
+})
+</script>
+```
+
+`watch()` can directly watch a ref, and the callback gets fired whenever `count`'s value changes. `watch()` can also watch other types of data (e.g: `reactivity()`).
+
+A more practical example than logging to the console would be fetching new data when an Id changes!
+
+Example:
+
+```html
+<script setup>
+import { ref, watch } from 'vue'
+
+const todoId = ref(1)
+const todoData = ref(null)
+
+async function fetchData() {
+  todoData.value = null
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+  )
+  todoData.value = await res.json()
+}
+// For the initial one
+fetchData()
+
+watch(todoId, (newTodoId)=> {
+    // Will fetch a new todo when user click on the next button
+    fetchData();
+})
+</script>
+
+<template>
+  <p>Todo id: {{ todoId }}</p>
+  <button @click="todoId++" :disabled="!todoData">Fetch next todo</button>
+  <p v-if="!todoData">Loading...</p>
+  <pre v-else>{{ todoData }}</pre>
+</template>
+```
+
+---
+
+## Components:
+
+So far we have only worked with a single component. However real Vue applications are typically worked with nested components. 
+A parent component can render another component in its template as a child component we need to first import it:
+
+```js
+import ChildComponent from "./path/to/the/childComponent.vue";
+```
+
+Then we can use it in our template:
+
+```vue
+<script>
+import ChildComponent from "./path/to/the/childComponent.vue";
+</script>
+<template>
+    <ChildComponent />
+</template>
+```
+
+## Props:
+
+A child component can accept input from the parent via **Props**. First, it need to declare the props that want to accept:
+
+```vue
+<!-- ChildComp.vue -->
+<script setup>
+const props = defineProps({
+  msg: String
+})
+</script>
+```
+
+Note `defineProps()` is a compile-time macro and doesn't need to be imported. Once declared, the `msg` prop can be used in the child component's template.It can also be accessed in JavaScript via the returned object of `defineProps()`.
+
+The parent can pass the props to child like this:
+
+```vue
+<ChildComponent :msg="Hello World" />
+```
+
+## Emits:
+
+In addition to recieving props, a child component can also emit events to the parent:
+
+```vue
+<script setup>
+const emit = defineEmits(['response']);
+emit("response", "Hello from child");
+</script>
+```
+
+The `emit` function takes 2 argument:
+
+The first argument is event name. Any additional arguments are passed on to the event listener.
+
+The parent can listen on the child-emmited events using `v-on`. Here the handler will recieve the emitted message and assign it to the ref variable:
+
+```vue
+<script setup>
+    import { ref } from "vue";
+    import ChildComponent from "./ChildComponent.vue";
+    const childMessage = ref("");
+</script>
+
+<template>
+    <ChildComponent @response="(message) => childMessage = message" />
+</template>
+```
+
+## Slots:
+
+In addition to passing data from parent to child with props, the parent element could also pass down template data using **slots**:
+
+```vue
+<ChildComponent>
+    This is some Slot
+</ChildComponent>
+```
+
+In the child component, it can render the slot content from the parent using `<slot>` element as outlet:
+
+```vue
+<template>
+    <slot>FallBack Content</slot>
+</template>
+```
+
+Content inside the <slot> outlet will be treated as "fallback" content: it will be displayed if the parent did not pass down any slot content.
