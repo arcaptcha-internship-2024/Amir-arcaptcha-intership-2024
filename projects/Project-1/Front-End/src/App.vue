@@ -112,7 +112,7 @@ const formSubmitHandler = (e) => {
 </script>
 
 <template>
-  <!-- <Header></Header> -->
+  <Header></Header>
   <div class="container d-flex align-items-center justify-content-center my-3">
     <div class="row bg-dark rounded rounded-2 p-2">
       <div class="col-12 my-3">
