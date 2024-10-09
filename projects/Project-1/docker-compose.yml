@@ -10,8 +10,8 @@ services:
       - JWT_SECRET=testsecret
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
-      - ARCAPTCHA_SITEKEY=PUT_ARCAPTCHA_SITEKEY_HERE
-      - ARCAPTCHA_SECRETKEY=PUT_ARCAPTCHA_SECRETKEY_HERE
+      - ARCAPTCHA_SITEKEY=rvr5q8ovqn
+      - ARCAPTCHA_SECRETKEY=ok1kmzuwxjtiak4rd2wl
     volumes:
       - ./Back-End/db/:/app/db
   
@@ -20,7 +20,5 @@ services:
     container_name: arcaptcha_frontend
     ports:
       - 8080:80
-    volumes:
-      - ./Front-End/:/usr/share/nginx/html
     depends_on:
       - backend
