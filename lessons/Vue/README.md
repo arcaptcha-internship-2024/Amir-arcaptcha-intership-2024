@@ -122,3 +122,133 @@ We can listen to DOM events using the v-on directive or use shorthand syntax:
 > [!NOTE]
 > For better understanding of event handlers, try to read [this page](https://vuejs.org/guide/essentials/event-handling.html)
 
+## Form Binding:
+
+Using `v-bind` and `v-on` together, we can we can bind a form input element:
+
+```html
+<script setup>
+const onInput = (e)=>{
+    text.value = e.target.value;
+}
+</script>
+
+<template>
+    <input :value="text" @input="onInput" />
+</template>
+```
+
+Also, to simplify two-way bindings, Vue provides a directive, `v-model`, which is essentially syntactic sugar for the above:
+
+```html
+<template>
+    <input v-model="text" />
+</template>
+```
+
+> [!NOTE]
+> `v-model` not only works for the input, but also it works for checkboxes, radio buttons and select dropdowns.
+
+## Conditional rendering:
+
+We can use the `v-if` directive to conditionally render an element:
+
+```vue 
+<h1 v-if="condition">If it's true, display me</h1>
+```
+
+This <h1> will be rendered only if the value of condition is `truthy`. If awesome changes to a `falsy` value, it will be removed from the DOM.
+
+We can also use v-else and v-else-if to denote other branches of the condition:
+
+```vue 
+<h1 v-if="condition">If it's true, display me</h1>
+<h1 v-else-if="condition2">If this is true, display me</h1>
+<h1 v-else>If there is no true condition, then display me</h1>
+```
+
+## List rendering:
+
+We can use the v-for directive to render a list of elements based on a source array:
+
+```html
+<ul>
+  <li v-for="todo in todos" :key="todo.id">
+    {{ todo.text }}
+  </li>
+</ul>
+```
+
+Here todo is a local variable representing the array element currently being iterated on. It's only accessible on or inside the v-for element, similar to a function scope.
+
+The `key` attribute is for Vue to identify each element from eachother.
+
+For update the array, there are 2 ways:
+
+1. Push something on array:
+
+```js
+todos.value.push(newTodo)
+```
+
+2. Remove an element from array:
+
+```js
+todos.value = todos.value.filter(/* ... */)
+```
+
+## Computed property:
+
+If we want to bind a variable to an input, we can do this by `v-model` same as before. For instance in the previous example:
+
+```js
+<li v-for="todo in todos">
+  <input type="checkbox" v-model="todo.done">
+  ...
+</li>
+```
+
+Introducing `computed()` method, we can create a computed ref that computes its `.value` based on other **reactive** data source.
+
+```js
+import { ref, computed } from 'vue'
+
+const hideCompleted = ref(false)
+const todos = ref([
+  { id: id++, text: 'Learn HTML', done: true },
+  { id: id++, text: 'Learn JavaScript', done: true },
+  { id: id++, text: 'Learn Vue', done: false }
+])
+
+const filteredTodos = computed(() => {
+    if (hideCompleted.value){
+        return todos.value.filter(todo => !todo.done)
+    }
+    return todo.value
+})
+```
+
+The `computed()` property will track other reactive dependencies used in its computation. It caches the result and automatically updates it when its dependencies change.
+
+## LifeCycle and Template Refs:
+
+We can bind an element to a refrence to manually handle DOM update by ourself. 
+For doing this, We can use template refrences in Vue:
+
+```html
+<script setup>
+    import { ref, onMounted } from 'vue';
+    const pElementRef = ref(null);
+    onMounted(()=>{
+        pElementRef.value.textContext = "Updated Text";
+    })
+</script>
+<template>
+<p ref="pElementRef">hello</p>
+</template>
+```
+
+First of all, we create a `ref object` with a given `null` value. After that we can use one of the Vue lifecycle Hooks, to manually manage the DOM behaviour.
+
+## Whatchers:
+
