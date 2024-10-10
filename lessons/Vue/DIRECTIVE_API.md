@@ -141,3 +141,36 @@ Denote the "else if block" for `v-if` and can be chained.
 ---
 
 ## v-for
+
+Render the element or template block multiple times based on the source data.
+
+- Expect: `Array | Object | Number | String | Iterable`
+
+- Details:
+The directive's value must use the special syntax `alias in expression` to provide an alias for the current element being iterated on:
+
+```vue
+<div v-for="item in items">
+    {{ item.text }}
+</div>
+```
+
+Alternatively, you can also specify an alias for the index (or the key if used on an Object):
+
+```vue
+<div v-for="(item, index) in items"></div>
+<div v-for="(value, key) in object"></div>
+<div v-for="(value, key, index) in object"></div>
+```
+
+The default behaviour of `v-for` will try to patch the elements in-place without moving them. To force it to reorder elements, you should provide an ordering hint using `key` special attribute
+
+```vue
+<div v-for="item in items" :key="item.id">
+  {{ item.text }}
+</div>
+```
+
+---
+
+## v-on
