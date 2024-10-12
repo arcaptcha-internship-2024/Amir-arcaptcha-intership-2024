@@ -19,13 +19,13 @@ const isAuthenticatedUser = ref(false);
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <RouterLink to="/" class="nav-link">Home</RouterLink>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <RouterLink to="/contactUs/" class="nav-link">Contact Us</RouterLink>
                     </li>
                 </ul>
 
