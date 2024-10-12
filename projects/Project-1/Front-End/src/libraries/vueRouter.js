@@ -1,9 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import contactUs from "@/pages/contactUs.vue";
+import ContactUs from "@/pages/contactUs.vue";
+import AdminLogin from "@/admin/Login.vue"
 
 const routes = [
-    { path: "/contactUs", component: contactUs },
+    { path: "/contactUs", component: ContactUs },
+    { path: "/admin/login", component: AdminLogin },
 ]
 
 const router = createRouter({
