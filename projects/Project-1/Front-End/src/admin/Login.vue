@@ -2,8 +2,11 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import getCaptchaToken from "/src/utils/captcha/main";
+
 const username = ref("");
 const password = ref("");
+const captchaToken = ref("");
 const successLoginMessageAlert = () => {
     Swal.fire({
         title: "Welcome",
@@ -24,13 +27,28 @@ const errorLoginMessageAlert = () => {
     })
 }
 
+const captchaRequiredMessageAlert = () => {
+    Swal.fire({
+        title: "Error",
+        text: "Please solve the captcha question",
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false
+    })
+}
+
 const clearFormFields = () => {
     username.value = "";
     password.value = "";
 }
 
 const formSubmitHandler = async () => {
-    const formData = { username: username.value, password: password.value };
+    captchaToken.value = getCaptchaToken();
+    if (!captchaToken.value) {
+        captchaRequiredMessageAlert();
+        return;
+    }
+    const formData = { username: username.value, password: password.value, arcaptcha_token: captchaToken.value };
     try {
         const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
         const { token } = data;
@@ -57,6 +75,7 @@ const formSubmitHandler = async () => {
                     v-model="password">
                 <label for="password">Password</label>
             </div>
+            <div class="arcaptcha" data-site-key="rvr5q8ovqn"></div>
             <div class="text-center">
                 <button type="submit" class="btn btn-custom">Log In</button>
             </div>
