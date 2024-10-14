@@ -1,18 +1,50 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const username = ref("");
 const password = ref("");
-const formSubmitHandler = async () => {
-    const formData = { username: username.value, password: password.value };
-    const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
+const successLoginMessageAlert = () => {
+    Swal.fire({
+        title: "Welcome",
+        text: "You have loggin successfully",
+        icon: "success",
+        timer: 2000,
+        showCloseButton: false
+    })
+}
+
+const errorLoginMessageAlert = () => {
+    Swal.fire({
+        title: "Error",
+        text: "Failed to login user",
+        icon: "error",
+        timer: 2000,
+        showCloseButton: false
+    })
+}
+
+const clearFormFields = () => {
     username.value = "";
     password.value = "";
+}
+
+const formSubmitHandler = async () => {
+    const formData = { username: username.value, password: password.value };
+    try {
+        const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
+        const { token } = data;
+        localStorage.setItem("token", token);
+        successLoginMessageAlert();
+    } catch {
+        errorLoginMessageAlert();
+    }
+    clearFormFields();
 }
 </script>
 
 <template>
-    <div class="login-container w-50 mx-auto my-5 show">
+    <div class="login-container mx-auto my-5 show">
         <h2 class="text-center mb-4" style="color: #667eea;">Login</h2>
         <form @submit.prevent="formSubmitHandler">
             <div class="form-floating mb-4">
@@ -42,6 +74,7 @@ const formSubmitHandler = async () => {
     transform: scale(0.9);
     transition: all 0.4s ease-in-out;
     opacity: 0;
+    max-width: 768px;
 }
 
 .login-container.show {
