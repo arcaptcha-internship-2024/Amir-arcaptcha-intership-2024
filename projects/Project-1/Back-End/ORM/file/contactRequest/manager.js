@@ -6,7 +6,7 @@ const getContactRequestTable = async () => {
     return contactRequest;
 }
 
-const createContactRequest = async (first_name, last_name, phone_number, company_name, job_position, description) => {
+const createContactRequest = async (first_name, last_name, phone_number, company_name, job_position, description, checked=false) => {
     let table = await getContactRequestTable();
     const requestObj = {
         id: uuidv4(),
@@ -15,7 +15,8 @@ const createContactRequest = async (first_name, last_name, phone_number, company
         phone_number,
         job_position,
         company_name,
-        description
+        description,
+        checked
     }
     table.push(requestObj);
     await updateDB("contactRequest", table);
