@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import getCaptchaToken from "/src/utils/captcha/main";
 const submitButtonClass = ref("col-4 btn btn-light fs-bold");
 const first_name = ref('');
 const last_name = ref('');
@@ -24,18 +25,8 @@ const inputClasses = ref({
   description: "form-control",
 })
 
-const getArcaptchaTokenValue = () => {
-  try {
-    let arcaptchaToken = document.getElementById("arcaptcha-token");
-    return arcaptchaToken.value;
-  } catch (e) {
-    console.log("Error: Cannot get captcha value");
-  }
-  return false;
-}
-
 const createObjectFromInputsData = () => {
-  let arcaptchaToken = getArcaptchaTokenValue();
+  let arcaptchaToken = getCaptchaToken();
   if (!arcaptchaToken) return null;
   return {
     "first_name": first_name.value,
@@ -102,10 +93,6 @@ const addErrorToInputOnBlur = (e) => {
 const formSubmitHandler = (e) => {
   if (validateFormInputsAreFilled()) { setErrorClassForInputs(); return; }
   const fieldsData = createObjectFromInputsData();
-  if (!getArcaptchaTokenValue) {
-    alert("Captcha is required");
-    return;
-  }
   sendFieldsDataToServer(fieldsData);
 }
 </script>
