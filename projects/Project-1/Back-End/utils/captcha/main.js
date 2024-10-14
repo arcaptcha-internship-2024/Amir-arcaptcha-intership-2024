@@ -17,6 +17,11 @@ const validateArcaptchaToken = async (arcaptcha_token) => {
     }
 }
 
+const validateCaptchaToken = async (arcaptcha_token) => {
+    return await validateArcaptchaToken(arcaptcha_token);
+}
+
 module.exports = {
-    validateArcaptchaToken
+    validateArcaptchaToken,
+    validateCaptchaToken
 }

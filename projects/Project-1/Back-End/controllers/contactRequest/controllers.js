@@ -1,9 +1,9 @@
 const { db } = require("../../ORM/main");
-const { validateArcaptchaToken } = require(process.cwd() + "/utils/captcha/arcaptcha.js");
+const { validateCaptchaToken } = require(process.cwd() + "/utils/captcha/main.js");
 
 const createRequestController = async (request, response) => {
     let { first_name, last_name, phone_number, company_name, job_position, description, arcaptcha_token } = request.body;
-    let isCaptchaValid = await validateArcaptchaToken(arcaptcha_token)
+    let isCaptchaValid = await validateCaptchaToken(arcaptcha_token)
     if (!isCaptchaValid) {
         return response.code(400).send({ error: "Captcha is not valid" });
     };
