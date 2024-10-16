@@ -142,3 +142,28 @@ const userID = route.params.id;
 | /users/:username | /users/john | { username: "john" } |
 | /users/:id/posts/:post_id | /users/john/posts/10 | { username: "john", post_id: 10 } |
 
+## Reacting to param changes
+
+One thing to note when using routes with params is that when the user navigates from `/users/johnny` to `/users/jolyne`, the **same component instance**
+**will be reused**. Since both routes render the same component, this is more efficient than destroying the old instance and then creating a new one. 
+However, this also means that the lifecycle hooks of the component will not be called.
+
+To react to params changes in the same component, you can simply **watch** anything on the route object, in this scenario, the `route.params`:
+
+```vue
+<script setup>
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    // react to route changes...
+  }
+)
+</script>
+
+```
+
