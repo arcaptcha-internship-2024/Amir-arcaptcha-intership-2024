@@ -1,0 +1,117 @@
+/* Main container */
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+
+/* Main content styling */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.main-content h1 {
+    color: #343a40;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Card styling for content */
+.content-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.4s ease-in-out;
+}
+
+.content-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+    position: absolute;
+    top: 15px;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for sidebar toggle */
+.sidebar-toggle:hover {
+    background-color: #495057;
+}
+
+/* Toggling the sidebar to a smaller version */
+.collapsed {
+    width: 80px;
+}
+
+.collapsed .logo {
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.collapsed ul li {
+    padding: 0.75rem 1rem;
+}
+
+.collapsed ul li a {
+    font-size: 0.85rem;
+    padding-left: 0.5rem;
+}
+
+/* Expand the main content when sidebar is collapsed */
+.expanded {
+    padding-left: 90px;
+}
+
+/* Animation for content cards */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-card {
+    animation: slideUp 0.5s ease-in-out;
+}
+
+/* Media query to handle responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar ul li a {
+        font-size: 0.85rem;
+        padding-left: 0.5rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+}
