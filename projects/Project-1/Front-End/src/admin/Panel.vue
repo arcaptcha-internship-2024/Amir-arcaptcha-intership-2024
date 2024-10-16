@@ -1,27 +1,12 @@
 <script setup>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import PanelSidebar from './components/PanelSidebar.vue';
+import MainContentTitle from './components/MainContentTitle.vue';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
-const toggleSidebar = () => {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('collapsed');
-    mainContent.classList.toggle('expanded');
-}
-
-window.onload = () => {
-    const contentCards = document.querySelectorAll('.content-card');
-    contentCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('show');
-        }, index * 200);
-    });
-};
-
 const router = useRouter();
 
 const getContactRequests = async () => {
@@ -63,7 +48,7 @@ onMounted(async () => {
     <div class="wrapper">
         <PanelSidebar />
         <div class="main-content">
-            <h1>Dashboard</h1>
+            <MainContentTitle title="Dashboard" />
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="content-card bg-success text-light show">
