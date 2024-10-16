@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import getCaptchaToken from "/src/utils/captcha/main";
 
+const router = useRouter();
 const username = ref("");
 const password = ref("");
 const captchaToken = ref("");
@@ -54,6 +56,7 @@ const formSubmitHandler = async () => {
         const { token } = data;
         localStorage.setItem("token", token);
         successLoginMessageAlert();
+        router.push("/admin/");
     } catch {
         errorLoginMessageAlert();
     }
