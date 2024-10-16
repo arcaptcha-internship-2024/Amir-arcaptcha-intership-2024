@@ -1,4 +1,5 @@
 <script setup>
+import Header from '@/components/Header.vue';
 import { ref } from 'vue';
 import getCaptchaToken from "/src/utils/captcha/main";
 const submitButtonClass = ref("col-4 btn btn-light fs-bold");
@@ -98,6 +99,7 @@ const formSubmitHandler = (e) => {
 </script>
 
 <template>
+  <Header />
   <div class="container d-flex align-items-center justify-content-center my-3">
     <div class="row bg-dark rounded rounded-2 p-2">
       <div class="col-12 my-3">
