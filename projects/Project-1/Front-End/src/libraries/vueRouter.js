@@ -1,13 +1,15 @@
 import { createWebHistory, createRouter } from "vue-router";
 
+import Home from "@/pages/Home.vue";
 import ContactUs from "@/pages/contactUs.vue";
 import AdminLogin from "@/admin/Login.vue";
 import AdminPanel from "@/admin/Panel.vue";
 
 const routes = [
-    { path: "/contactUs/", component: ContactUs, meta: { showHeader: true } },
-    { path: "/admin/login/", component: AdminLogin, meta: { showHeader: false } },
-    { path: "/admin/", component: AdminPanel, meta: { showHeader: false } },
+    { path: "/", component: Home },
+    { path: "/contactUs/", component: ContactUs },
+    { path: "/admin/login/", component: AdminLogin },
+    { path: "/admin/", component: AdminPanel },
 ]
 
 const router = createRouter({
