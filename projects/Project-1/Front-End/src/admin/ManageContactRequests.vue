@@ -30,20 +30,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="wrapper">
-        <PanelSidebar />
-        <div class="main-content">
-            <MainContentTitle title="Contact Requests" />
-            <div class="container">
-                <ContactRequestRow 
-                v-for="data in contactRequests"
-                :number=1 
-                :first_name=data.first_name 
-                :last_name=data.last_name 
-                date="2024/12/1" 
-                :status=false
-                />
-            </div>
-        </div>
+    <MainContentTitle title="Contact Requests" />
+    <div class="container">
+        <ContactRequestRow v-for="data in contactRequests" :number=1 :first_name=data.first_name
+            :last_name=data.last_name date="2024/12/1" :status=false />
     </div>
 </template>
