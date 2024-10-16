@@ -1,12 +1,12 @@
 <template>
     <div class="sidebar">
-        <div class="logo">Admin Panel</div>
+        <div class="logo">Arcaptcha</div>
         <ul>
             <li>
-                <RouterLink to="#">Dashboard</RouterLink>
+                <RouterLink :to="{ name: 'adminPanel' }">Dashboard</RouterLink>
             </li>
             <li>
-                <RouterLink to="#">Contact Requests</RouterLink>
+                <RouterLink :to="{ name: 'adminManageContactRequests' }">Contact Requests</RouterLink>
             </li>
             <li>
                 <RouterLink to="#">Logout</RouterLink>
