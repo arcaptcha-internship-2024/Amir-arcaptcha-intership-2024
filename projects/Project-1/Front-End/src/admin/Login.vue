@@ -2,41 +2,28 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import getCaptchaToken from "/src/utils/captcha/main";
+import { toast } from "vue3-toastify";
+const toastConfig = {
+    theme: "dark",
+    type: "default",
+    position: "top-left"
+}
 
 const router = useRouter();
 const username = ref("");
 const password = ref("");
 const captchaToken = ref("");
 const successLoginMessageAlert = () => {
-    Swal.fire({
-        title: "Welcome",
-        text: "You have loggin successfully",
-        icon: "success",
-        timer: 2000,
-        showCloseButton: false
-    })
+    toast.success("You have loggin successfully", toastConfig);
 }
 
 const errorLoginMessageAlert = () => {
-    Swal.fire({
-        title: "Error",
-        text: "Failed to login user",
-        icon: "error",
-        timer: 2000,
-        showCloseButton: false
-    })
+    toast.error("Failed to login user", toastConfig);
 }
 
 const captchaRequiredMessageAlert = () => {
-    Swal.fire({
-        title: "Error",
-        text: "Please solve the captcha question",
-        icon: "error",
-        timer: 2000,
-        showCloseButton: false
-    })
+    toast.error("Please solve the captcha question", toastConfig);
 }
 
 const clearFormFields = () => {
