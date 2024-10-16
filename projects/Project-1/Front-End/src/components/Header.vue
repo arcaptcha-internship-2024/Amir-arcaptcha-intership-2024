@@ -31,8 +31,7 @@ const isAuthenticatedUser = ref(false);
 
                 <!-- Login and Sign-up buttons -->
                 <div class="auth-buttons">
-                    <a href="#" class="btn btn-outline-primary">Login</a>
-                    <a href="#" class="btn btn-primary">Sign Up</a>
+                    <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary">Login</RouterLink>
                 </div>
             </div>
         </div>
