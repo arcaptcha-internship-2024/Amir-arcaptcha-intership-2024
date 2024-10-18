@@ -1,6 +1,10 @@
 <script setup>
-import { ref } from "vue";
-const isAuthenticatedUser = ref(false);
+import { ref, onMounted } from "vue";
+import { isUserAuthenticated } from "@/utils/admin/authentication";
+const userAuthenticated = ref(false);
+onMounted(() => {
+    userAuthenticated.value = isUserAuthenticated();
+})
 </script>
 
 <template>
@@ -31,7 +35,9 @@ const isAuthenticatedUser = ref(false);
 
                 <!-- Login and Sign-up buttons -->
                 <div class="auth-buttons">
-                    <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary">Login</RouterLink>
+                    <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary" v-if="!userAuthenticated">
+                        Login</RouterLink>
+                    <RouterLink :to="{ name: 'adminPanel' }" class="btn btn-outline-success" v-else>Panel</RouterLink>
                 </div>
             </div>
         </div>
@@ -86,10 +92,6 @@ const isAuthenticatedUser = ref(false);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.auth-buttons .btn:hover {
-    background-color: #007bff;
-    color: #fff;
-}
 
 /* Logo hover effect */
 .navbar-brand:hover {
