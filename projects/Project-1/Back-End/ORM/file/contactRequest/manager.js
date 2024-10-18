@@ -18,6 +18,8 @@ const createContactRequest = async (first_name, last_name, phone_number, company
         description,
         checked
     }
+    requestObj['created_at'] = new Date().toISOString();
+    requestObj['updated_at'] = new Date().toISOString();
     table.push(requestObj);
     await updateDB("contactRequest", table);
     return requestObj;
