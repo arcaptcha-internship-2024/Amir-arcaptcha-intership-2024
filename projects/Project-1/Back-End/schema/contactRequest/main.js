@@ -48,7 +48,9 @@ const fetchContactRequestSchema = {
                         company_name: { type: "string" },
                         job_position: { type: "string" },
                         description: { type: "string" },
-                        checked: { type: "boolean" }
+                        checked: { type: "boolean" },
+                        created_at: { type: "string" },
+                        updated_at: { type: "string" }
                     }
                 }
             }
