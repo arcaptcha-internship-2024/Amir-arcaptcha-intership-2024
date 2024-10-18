@@ -2,15 +2,15 @@
     <div class="sidebar">
         <div class="logo">Arcaptcha</div>
         <ul>
-            <li>
-                <RouterLink :to="{ name: 'adminPanel' }">Dashboard</RouterLink>
-            </li>
-            <li>
-                <RouterLink :to="{ name: 'adminManageContactRequests' }">Contact Requests</RouterLink>
-            </li>
-            <li>
-                <RouterLink to="#">Logout</RouterLink>
-            </li>
+            <RouterLink :to="{ name: 'adminPanel' }" class="sidebar-link">
+                <span>Dashboard</span>
+            </RouterLink>
+            <RouterLink :to="{ name: 'adminManageContactRequests' }" class="sidebar-link">
+                <span>Contact Requests</span>
+            </RouterLink>
+            <RouterLink to="#" class="sidebar-link">
+                <span>Logout</span>
+            </RouterLink>
         </ul>
     </div>
 </template>
@@ -41,17 +41,19 @@
     margin: 0;
 }
 
-.sidebar ul li {
+.sidebar-link {
     padding: 1rem 1.5rem;
     transition: background-color 0.3s ease;
     cursor: pointer;
+    display: list-item;
+    text-decoration: none
 }
 
-.sidebar ul li:hover {
+.sidebar-link:hover {
     background-color: #495057;
 }
 
-.sidebar ul li a {
+.sidebar-link span {
     text-decoration: none;
     color: #fff;
     display: block;
