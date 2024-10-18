@@ -8,7 +8,7 @@
             <RouterLink :to="{ name: 'adminManageContactRequests' }" class="sidebar-link">
                 <span>Contact Requests</span>
             </RouterLink>
-            <RouterLink to="#" class="sidebar-link">
+            <RouterLink :to="{ name: 'adminLogout' }" class="sidebar-link">
                 <span>Logout</span>
             </RouterLink>
         </ul>
