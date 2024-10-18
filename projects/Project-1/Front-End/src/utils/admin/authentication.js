@@ -4,4 +4,8 @@ const redirectAnonymousUserToLoginRoute = (router) => {
     }
 }
 
-export { redirectAnonymousUserToLoginRoute };
+const isUserAuthenticated = () => {
+    return localStorage.getItem("token") ? true : false;
+}
+
+export { redirectAnonymousUserToLoginRoute, isUserAuthenticated };
