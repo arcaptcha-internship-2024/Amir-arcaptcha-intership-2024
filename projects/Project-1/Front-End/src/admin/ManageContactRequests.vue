@@ -3,7 +3,7 @@ import MainContentTitle from "./components/MainContentTitle.vue";
 import ContactRequestRow from "./components/ContactRequestRow.vue";
 import FilterContactRequests from "./components/FilterContactRequests.vue";
 import axios from "axios";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import "@/assets/admin/css/admin-panel.css";
 const contactRequests = ref([]);
