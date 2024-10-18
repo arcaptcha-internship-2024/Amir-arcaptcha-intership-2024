@@ -65,6 +65,8 @@ const changeFiltering = (query) => {
     <div class="container">
         <FilterContactRequests @order-by="changeOrdering" @filter-by="changeFiltering" />
         <ContactRequestRow v-for="(data, index) in displayedResults" :number="index + 1" :first_name=data.first_name
-            :last_name=data.last_name date="2024/12/1" :status=data.checked :key="index" />
+            :last_name=data.last_name date="2024/12/1" :status=data.checked :key="index"
+            v-if="displayedResults.length" />
+        <h2 v-else>No result for display</h2>
     </div>
 </template>
