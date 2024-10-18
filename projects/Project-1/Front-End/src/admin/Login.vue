@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import getCaptchaToken from "/src/utils/captcha/main";
@@ -14,6 +14,13 @@ const router = useRouter();
 const username = ref("");
 const password = ref("");
 const captchaToken = ref("");
+
+const redirectUserIfIsAuthenticated = () => {
+    if (localStorage.getItem("token")) {
+        router.push("/admin/");
+    }
+}
+
 const successLoginMessageAlert = () => {
     toast.success("You have loggin successfully", toastConfig);
 }
@@ -49,6 +56,10 @@ const formSubmitHandler = async () => {
     }
     clearFormFields();
 }
+
+onMounted(() => {
+    redirectUserIfIsAuthenticated();
+})
 </script>
 
 <template>
