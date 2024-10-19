@@ -1,9 +1,12 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/user';
+
+const userStore = useUserStore();
 const router = useRouter();
 onMounted(() => {
-    localStorage.removeItem("token");
+    userStore.$reset();
     router.push("/admin/login/");
 })
 </script>
