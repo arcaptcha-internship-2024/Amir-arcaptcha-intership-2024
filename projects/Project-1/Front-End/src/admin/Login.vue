@@ -2,14 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import getCaptchaToken from "/src/utils/captcha/main";
-import { toast } from "vue3-toastify";
-const toastConfig = {
-    theme: "dark",
-    type: "default",
-    position: "top-left"
-}
-
+import getCaptchaToken from "@/utils/captcha/main";
+import { useAlertStore } from '@/store/alerts';
+const alertStore = useAlertStore();
 const router = useRouter();
 const username = ref("");
 const password = ref("");
@@ -22,15 +17,17 @@ const redirectUserIfIsAuthenticated = () => {
 }
 
 const successLoginMessageAlert = () => {
-    toast.success("You have loggin successfully", toastConfig);
+    alertStore.setMessage("You have loggin successfully", "success");
 }
 
 const errorLoginMessageAlert = () => {
-    toast.error("Failed to login user", toastConfig);
+    alertStore.setMessage("Failed to login user", "error");
+    alertStore.$fire();
 }
 
 const captchaRequiredMessageAlert = () => {
-    toast.error("Please solve the captcha question", toastConfig);
+    alertStore.setMessage("Please solve the captcha question", "error");
+    alertStore.$fire();
 }
 
 const clearFormFields = () => {
