@@ -1,44 +1,27 @@
 <script setup>
 import MainContentTitle from './MainContentTitle.vue';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import "@/assets/admin/css/admin-panel.css"
+import { useUserStore } from '@/store/user';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
-const router = useRouter();
+const userStore = useUserStore();
 
 const getContactRequests = async () => {
     await axios.get("http://localhost:8000/api/contact/all/", {
         headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + userStore.authToken
         }
     }).then(({ data }) => {
         contactRequests.value = data;
         unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
     }).catch(error => {
-        if (error.status === 401) {
-            Swal.fire({
-                icon: "error",
-                title: "Authentication Failed",
-                text: "You're not allowed to access this page"
-            })
-
-        }
-        router.push("/admin/login/");
+        console.log("User is not authenticated");
     })
 }
 
 onMounted(async () => {
-    if (!localStorage.getItem("token")) {
-        Swal.fire({
-            icon: "error",
-            title: "Authentication Failed",
-            text: "You're not allowed to access this page",
-            timer: 2000
-        })
-    }
     await getContactRequests();
 })
 </script>

@@ -4,7 +4,9 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import getCaptchaToken from "@/utils/captcha/main";
 import { useAlertStore } from '@/store/alerts';
+import { useUserStore } from '@/store/user';
 const alertStore = useAlertStore();
+const userStore = useUserStore();
 const router = useRouter();
 const username = ref("");
 const password = ref("");
@@ -45,7 +47,7 @@ const formSubmitHandler = async () => {
     try {
         const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
         const { token } = data;
-        localStorage.setItem("token", token);
+        userStore.authToken = token;
         successLoginMessageAlert();
         router.push("/admin/");
     } catch {
@@ -56,6 +58,9 @@ const formSubmitHandler = async () => {
 
 onMounted(() => {
     redirectUserIfIsAuthenticated();
+    if (alertStore.hasMessage) {
+        alertStore.$fire();
+    }
 })
 </script>
 
