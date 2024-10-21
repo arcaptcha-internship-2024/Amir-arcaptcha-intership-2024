@@ -47,7 +47,7 @@ const formSubmitHandler = async () => {
     try {
         const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
         const { token } = data;
-        userStore.authToken = token;
+        userStore.setAuthenticateUser(token);
         successLoginMessageAlert();
         router.push("/admin/");
     } catch {
