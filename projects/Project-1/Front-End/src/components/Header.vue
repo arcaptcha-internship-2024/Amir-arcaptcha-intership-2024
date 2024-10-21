@@ -1,10 +1,6 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { isUserAuthenticated } from "@/utils/admin/authentication";
-const userAuthenticated = ref(false);
-onMounted(() => {
-    userAuthenticated.value = isUserAuthenticated();
-})
+import { useUserStore } from "@/store/user";
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -35,7 +31,8 @@ onMounted(() => {
 
                 <!-- Login and Sign-up buttons -->
                 <div class="auth-buttons">
-                    <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary" v-if="!userAuthenticated">
+                    <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary"
+                        v-if="!userStore.isUserAuthenticated">
                         Login</RouterLink>
                     <RouterLink :to="{ name: 'adminPanel' }" class="btn btn-outline-success" v-else>Panel</RouterLink>
                 </div>
