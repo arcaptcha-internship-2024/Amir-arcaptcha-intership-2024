@@ -31,7 +31,7 @@ onMounted(async () => {
         <div class="col-md-6">
             <div class="content-card bg-success text-light show">
                 <h3>You have {{ unreadRequets.length }} new requests</h3>
-                <RouterLink to="" class="btn btn-light">View in detail</RouterLink>
+                <RouterLink :to="{ name: 'adminManageContactRequests', query: {filter: 'not-checked'} }" class="btn btn-light">View in detail</RouterLink>
             </div>
         </div>
     </div>

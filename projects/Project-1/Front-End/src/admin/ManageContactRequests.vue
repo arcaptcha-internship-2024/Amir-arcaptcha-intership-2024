@@ -12,7 +12,7 @@ const displayedResults = ref([]);
 const orderingResult = ref("");
 const filteringResult = ref("");
 const router = useRouter();
-const route = useRoute;
+const route = useRoute();
 const userStore = useUserStore();
 
 const getContactRequests = async () => {
@@ -22,21 +22,22 @@ const getContactRequests = async () => {
         }
     }).then(({ data }) => {
         contactRequests.value = data;
-        displayedResults.value = data;
     }).catch(error => {
         if (error.status === 401) {
-            Swal.fire({
-                icon: "error",
-                title: "Authentication Failed",
-                text: "You're not allowed to access this page"
-            })
+            console.log("You're not allowed to access this page");
         }
     })
 }
 
+const setDisplayData = () => {
+    displayedResults.value = contactRequests.value;
+}
+
 onMounted(async () => {
     await getContactRequests();
+    setDisplayData();
 })
+
 const changeData = (query, queryKey) => {
     const queryObj = {};
     queryObj[queryKey] = query;
