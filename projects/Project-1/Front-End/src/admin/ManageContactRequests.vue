@@ -22,6 +22,8 @@ const getContactRequests = async () => {
         }
     }).then(({ data }) => {
         contactRequests.value = data;
+        displayedResults.value = contactRequests.value;
+
     }).catch(error => {
         if (error.status === 401) {
             console.log("You're not allowed to access this page");
@@ -29,16 +31,7 @@ const getContactRequests = async () => {
     })
 }
 
-const setDisplayData = () => {
-    displayedResults.value = contactRequests.value;
-}
-
-onMounted(async () => {
-    await getContactRequests();
-    setDisplayData();
-})
-
-const changeData = (query, queryKey) => {
+const updateRouteWithQueryString = (query, queryKey) => {
     const queryObj = {};
     queryObj[queryKey] = query;
     router.push({
@@ -48,11 +41,11 @@ const changeData = (query, queryKey) => {
 }
 const changeOrdering = (query) => {
     orderingResult.value = query;
-    changeData(query, "ordering");
+    updateRouteWithQueryString(query, "ordering");
 }
 const changeFiltering = (query) => {
     filteringResult.value = query;
-    changeData(query, "filter");
+    updateRouteWithQueryString(query, "filter");
     if (query === "checked") {
         displayedResults.value = contactRequests.value.filter(data => data.checked)
     } else if (query === "not-checked") {
@@ -61,6 +54,18 @@ const changeFiltering = (query) => {
         displayedResults.value = contactRequests.value;
     }
 }
+
+const setQueryStringOnMountingPoint = () => {
+    const queryStringKeys = Object.keys(route.query);
+    if (queryStringKeys.includes("filter")) changeFiltering(route.query['filter']);
+    if (queryStringKeys.includes("ordering")) changeOrdering(route.query['ordering']);
+}
+
+onMounted(async () => {
+    await getContactRequests();
+    setQueryStringOnMountingPoint();
+})
+
 </script>
 
 <template>
