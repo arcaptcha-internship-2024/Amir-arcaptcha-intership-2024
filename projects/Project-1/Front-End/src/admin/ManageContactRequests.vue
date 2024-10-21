@@ -5,6 +5,7 @@ import FilterContactRequests from "./components/FilterContactRequests.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/store/user";
 import "@/assets/admin/css/admin-panel.css";
 const contactRequests = ref([]);
 const displayedResults = ref([]);
@@ -12,11 +13,12 @@ const orderingResult = ref("");
 const filteringResult = ref("");
 const router = useRouter();
 const route = useRoute;
+const userStore = useUserStore();
 
 const getContactRequests = async () => {
     await axios.get("http://localhost:8000/api/contact/all/", {
         headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
+            Authorization: "Bearer " + userStore.authToken
         }
     }).then(({ data }) => {
         contactRequests.value = data;

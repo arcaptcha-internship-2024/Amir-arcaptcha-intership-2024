@@ -9,7 +9,6 @@ const userStore = useUserStore();
 const router = useRouter();
 
 onMounted(() => {
-    console.log(userStore.isUserAnonymous);
     if (userStore.isUserAnonymous) {
         router.push({ name: "adminLogin" })
         alertStore.setMessage("Please confirm authntication first", "warning");

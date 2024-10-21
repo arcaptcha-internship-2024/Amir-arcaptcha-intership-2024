@@ -8,5 +8,8 @@ export const useUserStore = defineStore("user", () => {
     const $reset = () => {
         authToken.value = "";
     }
-    return { authToken, isUserAuthenticated, isUserAnonymous, $reset }
+    const setAuthenticateUser = (token) => {
+        authToken.value = token;
+    }
+    return { authToken, isUserAuthenticated, isUserAnonymous, $reset, setAuthenticateUser }
 })
