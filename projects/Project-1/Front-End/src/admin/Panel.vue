@@ -15,7 +15,7 @@ onMounted(() => {
     <div class="wrapper">
         <PanelSidebar />
         <div class="main-content">
-            <RouterView />
+            <RouterView :key="$route.fullPath"/>
         </div>
     </div>
 

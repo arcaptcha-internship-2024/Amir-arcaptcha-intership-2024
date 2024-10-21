@@ -5,7 +5,7 @@
             <RouterLink :to="{ name: 'adminPanel' }" class="sidebar-link">
                 <span>Dashboard</span>
             </RouterLink>
-            <RouterLink :to="{ name: 'adminManageContactRequests' }" class="sidebar-link">
+            <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'all' } }" class="sidebar-link">
                 <span>Contact Requests</span>
             </RouterLink>
             <RouterLink :to="{ name: 'adminLogout' }" class="sidebar-link">
