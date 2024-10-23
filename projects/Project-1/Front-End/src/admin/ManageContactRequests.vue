@@ -6,6 +6,7 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
+import { logoutUser } from '@/utils/admin/authentication';
 import "@/assets/admin/css/admin-panel.css";
 const contactRequests = ref([]);
 const displayedResults = ref([]);
@@ -24,7 +25,8 @@ const getContactRequests = async () => {
 
     }).catch(error => {
         if (error.status === 401) {
-            console.log("You're not allowed to access this page");
+            logoutUser();
+            router.push({ name: "adminLogin" });
         }
     })
 }
