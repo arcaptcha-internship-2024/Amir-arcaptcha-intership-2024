@@ -1,4 +1,5 @@
-const { adminLoginController } = require(process.cwd() + "/controllers/admin/controllers.js");
+const { adminLoginController, usersListController } = require(process.cwd() + "/controllers/admin/controllers.js");
+const { jwtAuthenticatePreValidationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const errorResponseSchema = {
     type: "object",
@@ -39,6 +40,31 @@ const adminLoginSchema = {
     handler: adminLoginController
 }
 
+const allUserSchema = {
+    schema: {
+        response: {
+            200: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        id: { type: "number" },
+                        username: { type: "string" },
+                        role: { type: "string" }
+                    }
+                }
+            },
+            400: errorResponseSchema,
+            401: errorResponseSchema
+        }
+    },
+    preValidation: [
+        jwtAuthenticatePreValidationHook
+    ],
+    handler: usersListController
+}
+
 module.exports = {
     adminLoginSchema,
+    allUserSchema
 }

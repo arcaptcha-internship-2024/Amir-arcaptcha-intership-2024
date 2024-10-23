@@ -16,6 +16,12 @@ const adminLoginController = async (request, response) => {
     return response.code(401).send({ error: "Invalid Username or Password" });
 }
 
+const usersListController = async (request, response) => {
+    const users = await db.admin.all();
+    return response.send(users);
+}
+
 module.exports = {
     adminLoginController,
+    usersListController
 }
