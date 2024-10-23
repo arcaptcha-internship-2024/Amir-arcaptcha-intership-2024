@@ -1,6 +1,7 @@
 require("dotenv").config();
 const fastify = require("fastify")({ logger: true });
 const cors = require('@fastify/cors');
+fastify.register(require("fastify-cookie"));
 fastify.register(require("./routes/contactRequest/routes"), { prefix: "api/contact/" });
 fastify.register(require("./routes/admin/routes"), { prefix: "api/admin/" });
 fastify.register(require("@fastify/jwt"), {

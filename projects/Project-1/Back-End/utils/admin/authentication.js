@@ -12,7 +12,16 @@ const jwtAuthenticatePreValidationHook = async (request, response) => {
     }
 }
 
+const setAuthTokenInCookieForRequest = async (response, token) => {
+    response.setCookie('token', token, {
+        httpOnly: true,
+        sameSite: 'Strict',
+        path: '/'
+      })
+}
+
 module.exports = {
     authenticate,
-    jwtAuthenticatePreValidationHook
+    jwtAuthenticatePreValidationHook,
+    setAuthTokenInCookieForRequest
 }
