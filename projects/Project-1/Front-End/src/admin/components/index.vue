@@ -4,6 +4,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import "@/assets/admin/css/admin-panel.css"
 import { useUserStore } from '@/store/user';
+import { logoutUser } from '@/utils/admin/authentication';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
 const userStore = useUserStore();
@@ -15,6 +16,10 @@ const getContactRequests = async () => {
         contactRequests.value = data;
         unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
     }).catch(error => {
+        if (error.status === 401) {
+            logoutUser();
+            router.push({ name: "adminLogin" });
+        }
         console.log("User is not authenticated");
     })
 }
@@ -36,7 +41,7 @@ onMounted(async () => {
         <div class="col-md-6">
             <div class="content-card bg-secondary text-light show">
                 <h3>Users Management</h3>
-                <RouterLink :to="{ name: '' }" class="btn btn-light">
+                <RouterLink :to="{ name: 'adminManageUsers' }" class="btn btn-light">
                     View in detail
                 </RouterLink>
             </div>
