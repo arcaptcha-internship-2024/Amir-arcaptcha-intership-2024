@@ -1,15 +1,25 @@
 require("dotenv").config();
 const fastify = require("fastify")({ logger: true });
 const cors = require('@fastify/cors');
-fastify.register(require("fastify-cookie"));
+fastify.register(require("@fastify/cookie"), {
+    secret: "supersecret",
+    hook: "onRequest",
+
+});
 fastify.register(require("./routes/contactRequest/routes"), { prefix: "api/contact/" });
 fastify.register(require("./routes/admin/routes"), { prefix: "api/admin/" });
 fastify.register(require("@fastify/jwt"), {
-    secret: process.env.JWT_SECRET
+    secret: process.env.JWT_SECRET,
+    cookie: {
+        cookieName: "token",
+    },
+    sign: {
+        expiresIn: '1d'
+    }
 })
 
 fastify.register(cors, {
-    origin: '*',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', "OPTIONS"],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
