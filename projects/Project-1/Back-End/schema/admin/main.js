@@ -21,7 +21,15 @@ const adminLoginSchema = {
             200: {
                 type: "object",
                 properties: {
-                    token: { type: "string" }
+                    message: { type: "string" },
+                    user: {
+                        type: "object",
+                        properties: {
+                            id: { type: "number" },
+                            username: { type: "string" },
+                            role: { type: "string" },
+                        }
+                    }
                 }
             },
             400: errorResponseSchema,
