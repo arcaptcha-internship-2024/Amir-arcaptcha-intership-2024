@@ -7,6 +7,8 @@ const userStore = useUserStore();
 const router = useRouter();
 onMounted(() => {
     userStore.$reset();
+    localStorage.setItem("isAuthenticated", false);
+    localStorage.setItem("user", '{}');
     router.push("/admin/login/");
 })
 </script>
