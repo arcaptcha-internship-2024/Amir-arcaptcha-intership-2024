@@ -1,6 +1,6 @@
 <script setup>
 import Header from '@/components/Header.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import getCaptchaToken from "/src/utils/captcha/main";
 const submitButtonClass = ref("col-4 btn btn-light fs-bold");
 const first_name = ref('');
@@ -96,6 +96,11 @@ const formSubmitHandler = (e) => {
   const fieldsData = createObjectFromInputsData();
   sendFieldsDataToServer(fieldsData);
 }
+onMounted(() => {
+  arcaptcha.render("#arcaptcha", {
+        site_key: "rvr5q8ovqn"
+    })
+})
 </script>
 
 <template>
@@ -148,7 +153,7 @@ const formSubmitHandler = (e) => {
           <label for="description">Description</label>
           <span class="text-danger" v-if="inputsErrorStatus.description">This Field is required</span>
         </div>
-        <div class="arcaptcha" data-site-key="rvr5q8ovqn"></div>
+        <div id="arcaptcha"></div>
         <div class="row justify-content-center my-2">
           <button :class="submitButtonClass" id="form-submit-button">Submit</button>
         </div>

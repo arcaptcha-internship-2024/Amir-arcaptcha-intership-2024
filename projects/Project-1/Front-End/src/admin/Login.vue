@@ -76,6 +76,9 @@ onMounted(() => {
     if (alertStore.hasMessage) {
         alertStore.$fire();
     }
+    arcaptcha.render("#arcaptcha", {
+        site_key: "rvr5q8ovqn"
+    })
 })
 </script>
 
@@ -93,7 +96,7 @@ onMounted(() => {
                     v-model="password">
                 <label for="password">Password</label>
             </div>
-            <div class="arcaptcha" data-site-key="rvr5q8ovqn"></div>
+            <div id="arcaptcha"></div>
             <div class="text-center">
                 <button type="submit" class="btn btn-custom">Log In</button>
             </div>
