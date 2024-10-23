@@ -10,7 +10,7 @@ const adminLoginController = async (request, response) => {
     const user = await db.admin.get(username);
     if (await authenticate(user, password)) {
         const token = request.fastify.jwt.sign({ id: user.id, username: username, role: user['role'] });
-        setAuthTokenInCookieForRequest(response, token);
+        await setAuthTokenInCookieForRequest(response, token);
         return response.send({ message: "User Logined successfully", user });
     }
     return response.code(401).send({ error: "Invalid Username or Password" });
