@@ -13,7 +13,7 @@ const password = ref("");
 const captchaToken = ref("");
 
 const redirectUserIfIsAuthenticated = () => {
-    if (userStore.isUserAuthenticated) router.push({ name: "adminPanel" })
+    if (localStorage.getItem("isAuthenticated") === "true") { router.push({ name: "adminPanel" }) };
 }
 
 const successLoginMessageAlert = () => {
@@ -35,6 +35,19 @@ const clearFormFields = () => {
     password.value = "";
 }
 
+const setAuthenticateUserInStore = () => {
+    let user = localStorage.getItem("user");
+    if (user) {
+        user = JSON.parse(user);
+        userStore.user = user;
+    }
+}
+
+const setAuthenticateUserInLocalStorage = (userData) => {
+    localStorage.setItem("isAuthenticated", true);
+    localStorage.setItem("user", JSON.stringify(userData))
+}
+
 const formSubmitHandler = async () => {
     captchaToken.value = getCaptchaToken();
     if (!captchaToken.value) {
@@ -48,6 +61,7 @@ const formSubmitHandler = async () => {
         });
         const { user } = data;
         userStore.setUserData(user);
+        setAuthenticateUserInLocalStorage(user);
         successLoginMessageAlert();
         router.push("/admin/");
     } catch {
@@ -57,6 +71,7 @@ const formSubmitHandler = async () => {
 }
 
 onMounted(() => {
+    setAuthenticateUserInStore();
     redirectUserIfIsAuthenticated();
     if (alertStore.hasMessage) {
         alertStore.$fire();
