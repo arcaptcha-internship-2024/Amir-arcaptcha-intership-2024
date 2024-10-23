@@ -13,9 +13,7 @@ const password = ref("");
 const captchaToken = ref("");
 
 const redirectUserIfIsAuthenticated = () => {
-    if (localStorage.getItem("token")) {
-        router.push("/admin/");
-    }
+    // TODO: Change this method behaviour
 }
 
 const successLoginMessageAlert = () => {
@@ -46,8 +44,8 @@ const formSubmitHandler = async () => {
     const formData = { username: username.value, password: password.value, arcaptcha_token: captchaToken.value };
     try {
         const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
-        const { token } = data;
-        userStore.setAuthenticateUser(token);
+        const { user } = data;
+        userStore.setUserData(user);
         successLoginMessageAlert();
         router.push("/admin/");
     } catch {

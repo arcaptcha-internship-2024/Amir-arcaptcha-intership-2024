@@ -2,14 +2,14 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
-    const authToken = ref("");
-    const isUserAuthenticated = computed(() => authToken.value !== "");
-    const isUserAnonymous = computed(() => authToken.value === "");
+    const user = ref({});
+    const isUserAuthenticated = computed(() => user.value);
+    const isUserAnonymous = computed(() => !user.value);
     const $reset = () => {
-        authToken.value = "";
+        user.value = {};
     }
-    const setAuthenticateUser = (token) => {
-        authToken.value = token;
+    const setUserData = (userData) => {
+        user.value = userData;
     }
-    return { authToken, isUserAuthenticated, isUserAnonymous, $reset, setAuthenticateUser }
+    return { user, isUserAuthenticated, isUserAnonymous, $reset, setUserData }
 })
