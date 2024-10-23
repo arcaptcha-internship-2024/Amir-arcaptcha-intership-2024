@@ -13,7 +13,7 @@ const password = ref("");
 const captchaToken = ref("");
 
 const redirectUserIfIsAuthenticated = () => {
-    // TODO: Change this method behaviour
+    if (userStore.isUserAuthenticated) router.push({ name: "adminPanel" })
 }
 
 const successLoginMessageAlert = () => {

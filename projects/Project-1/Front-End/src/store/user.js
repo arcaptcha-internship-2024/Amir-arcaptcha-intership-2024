@@ -3,8 +3,14 @@ import { computed, ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
     const user = ref({});
-    const isUserAuthenticated = computed(() => user.value);
-    const isUserAnonymous = computed(() => !user.value);
+    const isUserAuthenticated = computed(() => isUserObjEmpty());
+    const isUserAnonymous = computed(() => !isUserObjEmpty());
+    const isUserObjEmpty = () => {
+        if (Object.keys(user.value).length > 0) {
+            return true;
+        }
+        return false;
+    }
     const $reset = () => {
         user.value = {};
     }
