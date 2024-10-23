@@ -43,7 +43,9 @@ const formSubmitHandler = async () => {
     }
     const formData = { username: username.value, password: password.value, arcaptcha_token: captchaToken.value };
     try {
-        const { data } = await axios.post("http://localhost:8000/api/admin/login/", formData);
+        const { data } = await axios.post("/api/admin/login/", formData, {
+            withCredentials: true
+        });
         const { user } = data;
         userStore.setUserData(user);
         successLoginMessageAlert();
