@@ -1,0 +1,35 @@
+{
+    "admin": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "$2a$10$sN4joBPnPejtKeCrlOH2deqkaiw6AgCcZhfa3Ay6Z0tXvi1axOVR6",
+            "role": "superuser"
+        }
+    ],
+    "contactRequest": [
+        {
+            "first_name": "Mike",
+            "last_name": "Candy",
+            "phone_number": "9121234567",
+            "company_name": "Arcaptcha",
+            "job_position": "back-end dev",
+            "description": "",
+            "checked": true,
+            "created_at": "2024-10-23T08:31:46.401Z",
+            "updated_at": "2024-10-23T08:31:46.401Z"
+        },
+        {
+            "id": "648e8fbd-9781-446f-a9c4-09989993cf11",
+            "first_name": "John",
+            "last_name": "Doe",
+            "phone_number": "9121234567",
+            "job_position": "Software Engineer",
+            "company_name": "Arcaptcha",
+            "description": "None",
+            "checked": false,
+            "created_at": "2024-10-23T08:31:46.401Z",
+            "updated_at": "2024-10-23T08:31:46.401Z"
+        }
+    ]
+}

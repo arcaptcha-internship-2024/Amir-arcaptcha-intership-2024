@@ -4,4 +4,4 @@ COPY package.json package.json
 RUN npm install
 EXPOSE 8000
 COPY . .
-CMD ["node", "App.js"]
+CMD node migration.js; node App.js;
