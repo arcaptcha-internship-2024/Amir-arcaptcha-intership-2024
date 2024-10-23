@@ -16,10 +16,8 @@ const route = useRoute();
 const userStore = useUserStore();
 
 const getContactRequests = async () => {
-    await axios.get("http://localhost:8000/api/contact/all/", {
-        headers: {
-            Authorization: "Bearer " + userStore.authToken
-        }
+    await axios.get("/api/contact/all/", {
+        withCredentials: true
     }).then(({ data }) => {
         contactRequests.value = data;
         displayedResults.value = contactRequests.value;

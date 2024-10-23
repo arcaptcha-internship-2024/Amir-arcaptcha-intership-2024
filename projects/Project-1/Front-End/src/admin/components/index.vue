@@ -9,10 +9,8 @@ const unreadRequets = ref([]);
 const userStore = useUserStore();
 
 const getContactRequests = async () => {
-    await axios.get("http://localhost:8000/api/contact/all/", {
-        headers: {
-            Authorization: "Bearer " + userStore.authToken
-        }
+    await axios.get("/api/contact/all/", {
+        withCredentials: true
     }).then(({ data }) => {
         contactRequests.value = data;
         unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
@@ -31,7 +29,8 @@ onMounted(async () => {
         <div class="col-md-6">
             <div class="content-card bg-success text-light show">
                 <h3>You have {{ unreadRequets.length }} new requests</h3>
-                <RouterLink :to="{ name: 'adminManageContactRequests', query: {filter: 'not-checked'} }" class="btn btn-light">View in detail</RouterLink>
+                <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'not-checked' } }"
+                    class="btn btn-light">View in detail</RouterLink>
             </div>
         </div>
     </div>
