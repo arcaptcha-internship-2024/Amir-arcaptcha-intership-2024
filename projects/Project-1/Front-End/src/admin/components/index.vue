@@ -38,7 +38,7 @@ onMounted(async () => {
                     class="btn btn-light">View in detail</RouterLink>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" v-if="userStore.adminRole === 'superuser'">
             <div class="content-card bg-secondary text-light show">
                 <h3>Users Management</h3>
                 <RouterLink :to="{ name: 'adminManageUsers' }" class="btn btn-light">
