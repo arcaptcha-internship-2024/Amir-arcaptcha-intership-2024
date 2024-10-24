@@ -17,5 +17,19 @@ export const useUserStore = defineStore("user", () => {
     const setUserData = (userData) => {
         user.value = userData;
     }
-    return { user, isUserAuthenticated, isUserAnonymous, $reset, setUserData }
+    const fetch = () => {
+        try {
+            user.value = JSON.parse(localStorage.getItem("user"));
+        } catch {
+            user.value = {};
+        }
+    }
+    const adminRole = computed(() => {
+        if (Object.keys(user.value).includes("role")) {
+            return user.value.role;
+        }
+        return "";
+    })
+
+    return { user, isUserAuthenticated, isUserAnonymous, adminRole, $reset, setUserData, fetch }
 })
