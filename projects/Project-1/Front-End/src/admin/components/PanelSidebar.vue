@@ -1,3 +1,7 @@
+<script setup>
+import { useUserStore } from '@/store/user';
+const userStore = useUserStore();
+</script>
 <template>
     <div class="sidebar">
         <div class="logo">Arcaptcha</div>
@@ -5,7 +9,8 @@
             <RouterLink :to="{ name: 'adminPanel' }" class="sidebar-link">
                 <span>Dashboard</span>
             </RouterLink>
-            <RouterLink :to="{ name: 'adminManageUsers' }" class="sidebar-link">
+            <RouterLink :to="{ name: 'adminManageUsers' }" class="sidebar-link"
+                v-if="userStore.adminRole === 'superuser'">
                 <span>Users</span>
             </RouterLink>
             <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'all' } }" class="sidebar-link">
