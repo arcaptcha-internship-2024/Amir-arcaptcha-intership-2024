@@ -29,6 +29,7 @@ const getContactRequests = async () => {
 onMounted(async () => {
     await getContactRequests();
     alertStore.$fire();
+    userStore.fetch();
 })
 </script>
 <template>
