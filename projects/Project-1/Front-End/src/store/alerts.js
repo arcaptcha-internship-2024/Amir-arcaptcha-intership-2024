@@ -27,7 +27,7 @@ export const useAlertStore = defineStore("alerts", () => {
         level.value = "";
     }
     function $fire() {
-        if (!hasMessage.value) return;
+        if (!message.value) return;
         const toastConfig = {
             theme: "dark",
             position: "top-left",

@@ -8,6 +8,12 @@ const getArcaptchaTokenValue = () => {
     return false;
 }
 
+export const renderArcaptcha = () => {
+    arcaptcha.render("#arcaptcha", {
+        site_key: "rvr5q8ovqn"
+    })
+}
+
 const getCaptchaToken = () => {
     return getArcaptchaTokenValue();
 }

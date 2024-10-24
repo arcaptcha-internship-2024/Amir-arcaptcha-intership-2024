@@ -6,6 +6,7 @@ import AdminLogin from "@/admin/Login.vue";
 import AdminPanel from "@/admin/Panel.vue";
 import ManageContactRequests from "@/admin/ManageContactRequests.vue";
 import Users from "@/admin/Users.vue";
+import CreateAdmin from "@/admin/CreateAdmin.vue";
 import AdminIndex from "@/admin/components/index.vue";
 import Logout from "@/admin/components/Logout.vue";
 
@@ -19,6 +20,7 @@ const routes = [
         children: [
             { path: "", component: AdminIndex, name: "adminPanel" },
             { path: "users/", component: Users, name: "adminManageUsers" },
+            { path: "users/create/", component: CreateAdmin, name: "createAdminUser" },
             { path: "contact-requests/", component: ManageContactRequests, name: "adminManageContactRequests" },
             { path: "logout/", component: Logout, name: "adminLogout" },
         ]
