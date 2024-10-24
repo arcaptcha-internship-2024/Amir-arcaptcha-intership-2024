@@ -4,10 +4,12 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import "@/assets/admin/css/admin-panel.css"
 import { useUserStore } from '@/store/user';
+import { useAlertStore } from '@/store/alerts';
 import { logoutUser } from '@/utils/admin/authentication';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
 const userStore = useUserStore();
+const alertStore = useAlertStore();
 
 const getContactRequests = async () => {
     await axios.get("/api/contact/all/", {
@@ -26,6 +28,7 @@ const getContactRequests = async () => {
 
 onMounted(async () => {
     await getContactRequests();
+    alertStore.$fire();
 })
 </script>
 <template>
