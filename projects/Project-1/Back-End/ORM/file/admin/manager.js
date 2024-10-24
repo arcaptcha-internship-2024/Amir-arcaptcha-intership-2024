@@ -11,7 +11,7 @@ const getAdmin = async (username) => {
     return table.find(admin => admin.username === username);
 }
 
-const createAdmin = async (username, password, role = "sales_expert",) => {
+const createAdmin = async (username, password, role = "sale-manager",) => {
     if (isObjectExists(username)) {
         throw "Username already exists";
     }
