@@ -2,10 +2,12 @@
 import { useAdminStore } from '@/store/admins';
 import { useUserStore } from '@/store/user';
 import { onMounted, ref, computed } from 'vue';
+import { useAlertStore } from '@/store/alerts';
 import FilterAdmins from './components/FilterAdmins.vue';
 import MainContentTitle from './components/MainContentTitle.vue';
 const adminStore = useAdminStore();
 const userStore = useUserStore();
+const alertStore = useAlertStore();
 const filterUsersRole = ref("all");
 const filterUsersName = ref("");
 
@@ -19,6 +21,7 @@ const results = computed(() => {
 
 onMounted(async () => {
     await adminStore.fetch();
+    alertStore.$fire();
 })
 </script>
 
