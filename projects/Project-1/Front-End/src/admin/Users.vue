@@ -17,7 +17,6 @@ const results = computed(() => {
 
 onMounted(async () => {
     await adminStore.fetch();
-    results = adminStore.users;
 })
 </script>
 
