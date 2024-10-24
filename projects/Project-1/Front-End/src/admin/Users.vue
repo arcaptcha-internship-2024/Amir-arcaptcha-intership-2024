@@ -1,9 +1,11 @@
 <script setup>
 import { useAdminStore } from '@/store/admins';
+import { useUserStore } from '@/store/user';
 import { onMounted, ref, computed } from 'vue';
 import FilterAdmins from './components/FilterAdmins.vue';
 import MainContentTitle from './components/MainContentTitle.vue';
 const adminStore = useAdminStore();
+const userStore = useUserStore();
 const filterUsersRole = ref("all");
 const filterUsersName = ref("");
 
@@ -25,7 +27,8 @@ onMounted(async () => {
     <div class="container">
         <FilterAdmins @filterRole="value => filterUsersRole = value"
             @filterUsername="value => filterUsersName = value" />
-        <div class="row bg-dark p-2 rounded text-white align-items-center my-1" v-for="(user, index) in results" :key="index" >
+        <div class="row bg-dark p-2 rounded text-white align-items-center my-1" v-for="(user, index) in results"
+            :key="index">
             <div class="col-1">{{ index + 1 }}</div>
             <div class="col-4">{{ user.username }}</div>
             <div class="col-4">
@@ -35,6 +38,12 @@ onMounted(async () => {
             </div>
             <div class="col-2">
                 <button class="btn btn-light">View</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <RouterLink v-if="userStore.adminRole === 'superuser'" :to="{ name: 'createAdminUser' }"
+                    class="btn btn-success">Create new admin</RouterLink>
             </div>
         </div>
     </div>
