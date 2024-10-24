@@ -12,7 +12,7 @@ const getAdmin = async (username) => {
 }
 
 const createAdmin = async (username, password, role = "sale-manager",) => {
-    if (isObjectExists(username)) {
+    if (await isObjectExists(username)) {
         throw "Username already exists";
     }
     let hashedPassword = await hashUserPassword(password);

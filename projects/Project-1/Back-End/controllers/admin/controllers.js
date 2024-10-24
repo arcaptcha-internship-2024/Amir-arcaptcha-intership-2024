@@ -25,7 +25,7 @@ const createNewAdminController = async (request, response) => {
     const { username, password, role, arcaptcha_token } = request.body;
     let isCaptchaValid = await validateCaptchaToken(arcaptcha_token);
     if (!isCaptchaValid) {
-        return response.code(400).send({ error: "Captcha is not valid" });
+        return response.code(400).send({ message: "Captcha is not valid" });
     };
     if (await db.admin.exists(username)) {
         return response.code(409).send({ message: "Username already taken" });
