@@ -18,17 +18,25 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         })
     }
 
-    const unreadMessages = computed(() => {
-        return all.value.filter(data => !data.checked);
+    const notCheckedMessages = computed(() => {
+        return all.value.filter(data => data.status === "not-checked");
     })
 
-    const unreadMessagesCount = computed(() => {
-        return unreadMessages.value.length
+    const notCheckedMessagesCount = computed(() => {
+        return notCheckedMessages.value.length
+    })
+    
+    const inProgressMessages = computed(() => {
+        return all.value.filter(data => data.status === "in-progress")
+    })
+
+    const completedMessages = computed(() => {
+        return all.value.filter(data => data.status === "completed")
     })
 
     const $reset = () => {
         all.value = [];
     }
 
-    return { all, unreadMessages, unreadMessagesCount, $fetch, $reset }
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset }
 })

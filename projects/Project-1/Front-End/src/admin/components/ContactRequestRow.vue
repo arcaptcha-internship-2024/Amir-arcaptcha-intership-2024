@@ -11,8 +11,9 @@ const displayDateFormat = (date) => {
         <div class="col-4">{{ first_name + " " + last_name }}</div>
         <div class="col-3">{{ displayDateFormat(created_at) }}</div>
         <div class="col-2">
-            <button class="btn btn-success" v-if="status">Checked</button>
-            <button class="btn btn-danger" v-else>Not Checked</button>
+            <button class="btn btn-success" v-if="status === 'completed'">Completed</button>
+            <button class="btn btn-danger" v-else-if="status === 'not-checked'">Not Checked</button>
+            <button class="btn btn-warning" v-else-if="status === 'in-progress'">In progress</button>
         </div>
         <div class="col-2">
             <RouterLink :to="{ name: 'contactRequestDetail', params: { id } }" class="btn btn-light">View</RouterLink>

@@ -2,67 +2,41 @@
 import MainContentTitle from "./components/MainContentTitle.vue";
 import ContactRequestRow from "./components/ContactRequestRow.vue";
 import FilterContactRequests from "./components/FilterContactRequests.vue";
-import axios from "axios";
-import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
+import { useContactRequestStore } from "@/store/contactRequests";
 import { logoutUser } from '@/utils/admin/authentication';
 import "@/assets/admin/css/admin-panel.css";
-const contactRequests = ref([]);
-const displayedResults = ref([]);
-const orderingResult = ref("");
-const filteringResult = ref("");
+const filteringResult = ref("all");
+const searchQuery = ref("");
 const router = useRouter();
-const route = useRoute();
 const userStore = useUserStore();
+const contactRequestStore = useContactRequestStore();
 
-const getContactRequests = async () => {
-    await axios.get("/api/contact/all/", {
-        withCredentials: true
-    }).then(({ data }) => {
-        contactRequests.value = data;
-        displayedResults.value = contactRequests.value;
-    }).catch(error => {
-        if (error.status === 401) {
-            logoutUser();
-            router.push({ name: "adminLogin" });
+const isNameIncludeQuery = (first_name, last_name, query) => {
+    let name = first_name.toLowerCase() + " " + last_name.toLowerCase();
+    return name.includes(query.toLowerCase());
+}
+
+const displayedResults = computed(() => {
+    return contactRequestStore.all.filter(data => {
+        let status = true;
+        if (filteringResult.value !== "all") {
+            status = data.status === filteringResult.value;
         }
+        let searchFilter = isNameIncludeQuery(data.first_name, data.last_name, searchQuery.value);
+        return status && searchFilter;
     })
-}
-
-const updateRouteWithQueryString = (query, queryKey) => {
-    const queryObj = {};
-    queryObj[queryKey] = query;
-    router.push({
-        path: route.path,
-        query: queryObj
-    })
-}
-const changeOrdering = (query) => {
-    orderingResult.value = query;
-    updateRouteWithQueryString(query, "ordering");
-}
-const changeFiltering = (query) => {
-    filteringResult.value = query;
-    updateRouteWithQueryString(query, "filter");
-    if (query === "checked") {
-        displayedResults.value = contactRequests.value.filter(data => data.checked)
-    } else if (query === "not-checked") {
-        displayedResults.value = contactRequests.value.filter(data => !data.checked)
-    } else {
-        displayedResults.value = contactRequests.value;
-    }
-}
-
-const setQueryStringOnMountingPoint = () => {
-    const queryStringKeys = Object.keys(route.query);
-    if (queryStringKeys.includes("filter")) changeFiltering(route.query['filter']);
-    if (queryStringKeys.includes("ordering")) changeOrdering(route.query['ordering']);
-}
+})
 
 onMounted(async () => {
-    await getContactRequests();
-    setQueryStringOnMountingPoint();
+    userStore.fetch();
+    if (userStore.isUserAnonymous) {
+        logoutUser();
+        router.push({ name: "adminLogin" });
+    }
+    await contactRequestStore.$fetch();
 })
 
 </script>
@@ -70,9 +44,9 @@ onMounted(async () => {
 <template>
     <MainContentTitle title="Contact Requests" />
     <div class="container">
-        <FilterContactRequests @order-by="changeOrdering" @filter-by="changeFiltering" />
+        <FilterContactRequests @filter-by="query => filteringResult = query" @searchBy="query => searchQuery = query" />
         <ContactRequestRow v-for="(data, index) in displayedResults" :number="index + 1" :first_name=data.first_name
-            :last_name=data.last_name :created_at=data.created_at :status=data.checked :key="index" :id=data.id
+            :last_name=data.last_name :created_at=data.created_at :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />
         <h2 v-else>No result for display</h2>
     </div>

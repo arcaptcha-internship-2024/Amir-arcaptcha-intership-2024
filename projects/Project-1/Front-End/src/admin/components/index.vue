@@ -31,8 +31,8 @@ onMounted(async () => {
     <div class="row g-3">
         <div class="col-md-6">
             <div class="content-card bg-success text-light show">
-                <h3>You have {{ contactRequestStore.unreadMessagesCount }} new requests</h3>
-                <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'not-checked' } }"
+                <h3>You have {{ contactRequestStore.notCheckedMessagesCount }} new requests</h3>
+                <RouterLink :to="{ name: 'adminManageContactRequests' }"
                     class="btn btn-light">View in detail</RouterLink>
             </div>
         </div>
