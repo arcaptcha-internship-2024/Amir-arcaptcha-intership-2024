@@ -5,11 +5,13 @@ import { onMounted, ref } from 'vue';
 import "@/assets/admin/css/admin-panel.css"
 import { useUserStore } from '@/store/user';
 import { useAlertStore } from '@/store/alerts';
+import { useRouter } from 'vue-router';
 import { logoutUser } from '@/utils/admin/authentication';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
 const userStore = useUserStore();
 const alertStore = useAlertStore();
+const router = useRouter();
 
 const getContactRequests = async () => {
     await axios.get("/api/contact/all/", {
