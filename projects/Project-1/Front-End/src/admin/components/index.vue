@@ -5,33 +5,30 @@ import { onMounted, ref } from 'vue';
 import "@/assets/admin/css/admin-panel.css"
 import { useUserStore } from '@/store/user';
 import { useAlertStore } from '@/store/alerts';
+import { useContactRequestStore } from '@/store/contactRequests';
 import { useRouter } from 'vue-router';
 import { logoutUser } from '@/utils/admin/authentication';
 const contactRequests = ref([]);
 const unreadRequets = ref([]);
 const userStore = useUserStore();
 const alertStore = useAlertStore();
+const contactRequestStore = useContactRequestStore();
 const router = useRouter();
 
 const getContactRequests = async () => {
-    await axios.get("/api/contact/all/", {
-        withCredentials: true
-    }).then(({ data }) => {
-        contactRequests.value = data;
-        unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
-    }).catch(error => {
-        if (error.status === 401) {
-            logoutUser();
-            router.push({ name: "adminLogin" });
-        }
-        console.log("User is not authenticated");
-    })
+    await contactRequestStore.$fetch();
+    contactRequests.value = contactRequestStore.all;
+    unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
 }
 
 onMounted(async () => {
-    await getContactRequests();
-    alertStore.$fire();
     userStore.fetch();
+    if (userStore.isUserAnonymous) {
+        logoutUser();
+        router.push({name: "adminLogin"})
+    }
+    alertStore.$fire();
+    await getContactRequests();
 })
 </script>
 <template>
@@ -39,7 +36,7 @@ onMounted(async () => {
     <div class="row g-3">
         <div class="col-md-6">
             <div class="content-card bg-success text-light show">
-                <h3>You have {{ unreadRequets.length }} new requests</h3>
+                <h3>You have {{ contactRequestStore.unreadMessagesCount }} new requests</h3>
                 <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'not-checked' } }"
                     class="btn btn-light">View in detail</RouterLink>
             </div>
