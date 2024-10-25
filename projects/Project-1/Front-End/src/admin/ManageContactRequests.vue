@@ -14,9 +14,9 @@ const router = useRouter();
 const userStore = useUserStore();
 const contactRequestStore = useContactRequestStore();
 
-const isNameIncludeQuery = (first_name, last_name, query) => {
+const isNameIncludeQuery = (first_name, last_name, phone_number, query) => {
     let name = first_name.toLowerCase() + " " + last_name.toLowerCase();
-    return name.includes(query.toLowerCase());
+    return name.includes(query.toLowerCase()) || phone_number.includes(query);
 }
 
 const displayedResults = computed(() => {
@@ -25,7 +25,7 @@ const displayedResults = computed(() => {
         if (filteringResult.value !== "all") {
             status = data.status === filteringResult.value;
         }
-        let searchFilter = isNameIncludeQuery(data.first_name, data.last_name, searchQuery.value);
+        let searchFilter = isNameIncludeQuery(data.first_name, data.last_name, data.phone_number, searchQuery.value);
         return status && searchFilter;
     })
 })
@@ -46,7 +46,7 @@ onMounted(async () => {
     <div class="container">
         <FilterContactRequests @filter-by="query => filteringResult = query" @searchBy="query => searchQuery = query" />
         <ContactRequestRow v-for="(data, index) in displayedResults" :number="index + 1" :first_name=data.first_name
-            :last_name=data.last_name :created_at=data.created_at :status=data.status :key="index" :id=data.id
+            :last_name=data.last_name :phone_number=data.phone_number :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />
         <h2 v-else>No result for display</h2>
     </div>
