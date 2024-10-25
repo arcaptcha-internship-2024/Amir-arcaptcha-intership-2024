@@ -9,6 +9,7 @@ import Users from "@/admin/Users.vue";
 import CreateAdmin from "@/admin/CreateAdmin.vue";
 import AdminIndex from "@/admin/components/index.vue";
 import Logout from "@/admin/components/Logout.vue";
+import ContactRequestDetail from "@/admin/ContactRequestDetail.vue";
 
 const routes = [
     { path: "/", component: Home },
@@ -22,6 +23,7 @@ const routes = [
             { path: "users/", component: Users, name: "adminManageUsers" },
             { path: "users/create/", component: CreateAdmin, name: "createAdminUser" },
             { path: "contact-requests/", component: ManageContactRequests, name: "adminManageContactRequests" },
+            { path: "contact-requests/:id/", component: ContactRequestDetail, name: "contactRequestDetail" },
             { path: "logout/", component: Logout, name: "adminLogout" },
         ]
     },

@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['number', 'first_name', 'last_name', 'created_at', 'status']);
+defineProps(['id', 'number', 'first_name', 'last_name', 'created_at', 'status']);
 const displayDateFormat = (date) => {
     const newDate = new Date(date);
     return `${newDate.getMonth()}/${newDate.getDate()}/${newDate.getFullYear()}`;
@@ -15,7 +15,7 @@ const displayDateFormat = (date) => {
             <button class="btn btn-danger" v-else>Not Checked</button>
         </div>
         <div class="col-2">
-            <button class="btn btn-light">View</button>
+            <RouterLink :to="{ name: 'contactRequestDetail', params: { id } }" class="btn btn-light">View</RouterLink>
         </div>
     </div>
 </template>

@@ -42,6 +42,7 @@ const fetchContactRequestSchema = {
                 items: {
                     type: "object",
                     properties: {
+                        id: { type: "string" },
                         first_name: { type: "string" },
                         last_name: { type: "string" },
                         phone_number: { type: "string" },
