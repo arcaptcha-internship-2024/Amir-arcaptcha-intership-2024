@@ -1,15 +1,12 @@
 <script setup>
 import MainContentTitle from './MainContentTitle.vue';
-import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import "@/assets/admin/css/admin-panel.css"
 import { useUserStore } from '@/store/user';
 import { useAlertStore } from '@/store/alerts';
 import { useContactRequestStore } from '@/store/contactRequests';
 import { useRouter } from 'vue-router';
 import { logoutUser } from '@/utils/admin/authentication';
-const contactRequests = ref([]);
-const unreadRequets = ref([]);
 const userStore = useUserStore();
 const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
@@ -17,8 +14,6 @@ const router = useRouter();
 
 const getContactRequests = async () => {
     await contactRequestStore.$fetch();
-    contactRequests.value = contactRequestStore.all;
-    unreadRequets.value = contactRequests.value.filter(request => request.checked === false);
 }
 
 onMounted(async () => {
