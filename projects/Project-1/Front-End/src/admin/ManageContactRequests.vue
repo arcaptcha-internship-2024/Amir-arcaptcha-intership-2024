@@ -49,5 +49,12 @@ onMounted(async () => {
             :last_name=data.last_name :phone_number=data.phone_number :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />
         <h2 v-else>No result for display</h2>
+        <div class="row">
+            <div class="col-12">
+                <RouterLink class="btn btn-success" :to="{ name: 'adminCreateContactRequests' }">
+                    Create new one
+                </RouterLink>
+            </div>
+        </div>
     </div>
 </template>
