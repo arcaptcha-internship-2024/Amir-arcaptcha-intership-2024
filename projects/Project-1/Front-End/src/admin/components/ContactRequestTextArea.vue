@@ -8,7 +8,7 @@ const inputData = ref("");
         <label :for="input_id" class="mb-1">
             {{ input_label }}:
         </label>
-        <textarea type="text" class="form-control" :id="input_id" :value="input_value" v-model="inputData"
+        <textarea type="text" class="form-control" :id="input_id" :value="input_value" :v-model="inputData"
         @input="$emit('input', inputData)"></textarea>
     </div>
 </template>

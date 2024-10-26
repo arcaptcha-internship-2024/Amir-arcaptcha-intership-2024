@@ -8,7 +8,7 @@ const inputData = ref("");
         <label :for="input_id" class="mb-1">
             {{ input_label }}:
         </label>
-        <select name="" id="" class="form-select" v-model="inputData" @input="$emit('input', inputData)">
+        <select name="" id="" class="form-select" :v-model="inputData" @input="$emit('input', inputData)">
             <option :selected="input_value === 'not-checked'" value="not-checked">Not checked</option>
             <option :selected="input_value === 'in-progress'" value="in-progress">In progress</option>
             <option :selected="input_value === 'completed'" value="completed">Completed</option>
