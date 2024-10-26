@@ -25,7 +25,7 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
     const notCheckedMessagesCount = computed(() => {
         return notCheckedMessages.value.length
     })
-    
+
     const inProgressMessages = computed(() => {
         return all.value.filter(data => data.status === "in-progress")
     })
@@ -38,5 +38,13 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         all.value = [];
     }
 
-    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset }
+    const exists = (id) => {
+        return all.value.some(data => data.id === id);
+    }
+
+    const get = (id) => {
+        return all.value.find(data => data.id === id);
+    }
+
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get }
 })
