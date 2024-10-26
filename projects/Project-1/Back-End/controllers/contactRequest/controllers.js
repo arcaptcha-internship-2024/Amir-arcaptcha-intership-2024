@@ -23,7 +23,23 @@ const fetchContactRequestsController = async (request, response) => {
     return response.send(conactRequests);
 }
 
+const adminCreateContactRequestController = async (request, response) => {
+    let { status, admin_message, first_name, last_name, phone_number, company_name, job_position, description } = request.body;
+    let { id } = await db.contactRequest.create(
+        first_name = first_name,
+        last_name = last_name,
+        phone_number = phone_number,
+        company_name = company_name,
+        job_position = job_position,
+        description = description,
+        status = status,
+        admin_message = admin_message
+    )
+    response.code(201).send({ id: id });
+}
+
 module.exports = {
     createRequestController,
     fetchContactRequestsController,
+    adminCreateContactRequestController
 }

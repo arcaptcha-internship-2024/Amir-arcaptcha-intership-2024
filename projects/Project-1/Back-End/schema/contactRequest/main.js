@@ -1,5 +1,23 @@
-const { createRequestController, fetchContactRequestsController } = require("../../controllers/contactRequest/controllers");
+const { createRequestController, fetchContactRequestsController, adminCreateContactRequestController } = require("../../controllers/contactRequest/controllers");
 const { jwtAuthenticatePreValidationHook } = require(process.cwd() + "/utils/admin/authentication.js");
+
+const adminContactRequestSchema = {
+    type: "object",
+    required: ["first_name", "last_name", "phone_number", "company_name", "job_position", "description", "status", "admin_message"],
+    properties: {
+        id: { type: "string" },
+        first_name: { type: "string" },
+        last_name: { type: "string" },
+        phone_number: { type: "string" },
+        company_name: { type: "string" },
+        job_position: { type: "string" },
+        description: { type: "string" },
+        status: { type: "string" },
+        created_at: { type: "string" },
+        updated_at: { type: "string" },
+        admin_message: { type: "string" },
+    }
+}
 
 const createRequestSchema = {
     schema: {
@@ -39,22 +57,7 @@ const fetchContactRequestSchema = {
         response: {
             200: {
                 type: "array",
-                items: {
-                    type: "object",
-                    properties: {
-                        id: { type: "string" },
-                        first_name: { type: "string" },
-                        last_name: { type: "string" },
-                        phone_number: { type: "string" },
-                        company_name: { type: "string" },
-                        job_position: { type: "string" },
-                        description: { type: "string" },
-                        status: { type: "string" },
-                        created_at: { type: "string" },
-                        updated_at: { type: "string" },
-                        admin_message: { type: "string" },
-                    }
-                }
+                items: adminContactRequestSchema
             }
         }
     },
@@ -64,7 +67,26 @@ const fetchContactRequestSchema = {
     handler: fetchContactRequestsController,
 }
 
+const adminCreateRequestSchema = {
+    schema: {
+        body: adminContactRequestSchema,
+        response: {
+            200: {
+                type: "object",
+                properties: {
+                    message: { type: "string" }
+                }
+            }
+        }
+    },
+    preValidation: [
+        jwtAuthenticatePreValidationHook
+    ],
+    handler: adminCreateContactRequestController
+}
+
 module.exports = {
     createRequestSchema,
-    fetchContactRequestSchema
+    fetchContactRequestSchema,
+    adminCreateRequestSchema
 }
