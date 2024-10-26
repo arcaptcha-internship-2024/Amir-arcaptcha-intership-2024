@@ -46,5 +46,19 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         return all.value.find(data => data.id === id);
     }
 
-    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get }
+    const create = async (contactRequestData) => {
+        let status = false, id = "", errorMessage = "";
+        await axios.post("/api/contact/admin/create/", contactRequestData, { withCredentials: true })
+            .then(({ data }) => {
+                id = data.id;
+                status = true;
+            })
+            .catch(error => {
+                errorMessage = error.response.data.error;
+                console.log("Fail to create object");
+            })
+        return { status, id, errorMessage }
+    }
+
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create }
 })
