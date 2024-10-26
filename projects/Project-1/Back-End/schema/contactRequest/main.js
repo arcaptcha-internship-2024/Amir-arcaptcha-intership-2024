@@ -51,7 +51,8 @@ const fetchContactRequestSchema = {
                         description: { type: "string" },
                         status: { type: "string" },
                         created_at: { type: "string" },
-                        updated_at: { type: "string" }
+                        updated_at: { type: "string" },
+                        admin_message: { type: "string" },
                     }
                 }
             }
