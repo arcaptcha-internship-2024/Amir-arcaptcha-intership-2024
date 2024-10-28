@@ -6,12 +6,14 @@ import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/user";
 import { useContactRequestStore } from "@/store/contactRequests";
+import { useAlertStore } from '@/store/alerts';
 import { logoutUser } from '@/utils/admin/authentication';
 import "@/assets/admin/css/admin-panel.css";
 const filteringResult = ref("all");
 const searchQuery = ref("");
 const router = useRouter();
 const userStore = useUserStore();
+const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
 
 const isNameIncludeQuery = (first_name, last_name, phone_number, query) => {
@@ -31,6 +33,7 @@ const displayedResults = computed(() => {
 })
 
 onMounted(async () => {
+    alertStore.$fire();
     userStore.fetch();
     if (userStore.isUserAnonymous) {
         logoutUser();

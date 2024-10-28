@@ -6,7 +6,8 @@ import ContactRequestStatus from './components/ContactRequestStatus.vue';
 import { useContactRequestStore } from '@/store/contactRequests';
 import { useAlertStore } from '@/store/alerts';
 import { ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const contactRequests = useContactRequestStore();
 const alertStore = useAlertStore();
 const first_name = ref("");
@@ -31,11 +32,15 @@ const contactRequestObject = () => {
     }
 }
 
+const redirectToCreatedObject = () => {
+    router.push({ name: "adminManageContactRequests" });
+}
+
 const formSubmitHandler = async () => {
-    console.log(contactRequestObject());
-    const { status, errorMessage } = await contactRequests.create(contactRequestObject())
+    const { status, errorMessage, id } = await contactRequests.create(contactRequestObject());
     if (status) {
         alertStore.setMessage("Object Created", "success");
+        redirectToCreatedObject();
     } else {
         alertStore.setMessage(errorMessage, "error");
         alertStore.$fire();

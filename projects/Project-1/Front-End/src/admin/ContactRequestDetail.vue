@@ -25,7 +25,7 @@ const getOwnerName = () => {
 onMounted(async () => {
     await contactRequestStore.$fetch();
     redirectIfObjectDoesntExists();
-    contactRequest.value = contactRequestStore.get(id.value);
+    contactRequest.value = await contactRequestStore.get(id.value);
 })
 </script>
 
