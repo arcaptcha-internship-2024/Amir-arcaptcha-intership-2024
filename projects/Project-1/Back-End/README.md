@@ -64,7 +64,11 @@ Create a user based on given data in JSON format
     "phone_number": "09121234567",
     "company_name": "arcaptcha",
     "job_position": "Back-End Developer",
-    "description": "Back-End Developer in high-tech company"
+    "description": "Back-End Developer in high-tech company",
+    "status": "not-checked",
+    "created_at": "2024-10-28T09:28:00.415Z",
+    "updated_at": "2024-10-28T09:28:00.415Z",
+    "admin_message": ""
 }
 ```
 
