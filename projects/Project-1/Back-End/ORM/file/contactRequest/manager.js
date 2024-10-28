@@ -29,7 +29,7 @@ const createContactRequest = async (first_name, last_name, phone_number, company
 const deleteContactRequest = async (id) => {
     let table = await getContactRequestTable();
     
-    table = table.filter(obj => obj.id === id);
+    table = table.filter(obj => obj.id !== id);
     await updateDB("contactRequest", table);
 }
 
