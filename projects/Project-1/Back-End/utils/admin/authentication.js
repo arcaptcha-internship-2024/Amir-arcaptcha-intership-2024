@@ -7,9 +7,15 @@ const authenticate = async (user, password) => {
 const jwtAuthenticatePreValidationHook = async (request, response) => {
     try {
         const { token } = request.cookies;
-        await request.jwtVerify({onlyCookie: true});
+        await request.jwtVerify({ onlyCookie: true });
     } catch (error) {
         return response.status(401).send({ error: "Access denied, UnAuthorized user" })
+    }
+}
+
+const superUserPermissonRequiredHook = async (request, response) => {
+    if(request.user.role !== "superuser"){
+        return response.status(403).send({ error: "Permission denied" })
     }
 }
 
@@ -23,5 +29,6 @@ const setAuthTokenInCookieForRequest = async (response, token) => {
 module.exports = {
     authenticate,
     jwtAuthenticatePreValidationHook,
-    setAuthTokenInCookieForRequest
+    setAuthTokenInCookieForRequest,
+    superUserPermissonRequiredHook
 }
