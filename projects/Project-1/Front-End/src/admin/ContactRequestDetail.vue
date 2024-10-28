@@ -51,7 +51,7 @@ onMounted(async () => {
                 <hr />
                 <ContactRequestTextArea input_label="Admin message" input_id="admin_message"
                     :input_value="contactRequest.admin_message" />
-                <ContactRequestStatus input_id="status" :input_value="contactRequest.status" input_label="Status" />
+                <ContactRequestStatus input_id="status" input_label="Status" :input_value="contactRequest.status" />
             </div>
 
             <div class="bg-light text-dark mt-2 rounded rounded-2 px-2">
