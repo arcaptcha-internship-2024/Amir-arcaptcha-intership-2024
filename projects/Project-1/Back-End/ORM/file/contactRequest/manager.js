@@ -26,7 +26,14 @@ const createContactRequest = async (first_name, last_name, phone_number, company
     return requestObj;
 }
 
+const deleteContactRequest = async (id) => {
+    let table = await getContactRequestTable();
+    table = table.filter(obj => obj.id === id);
+    await updateDB("contactRequest", table);
+}
+
 module.exports = {
     getContactRequestTable,
     createContactRequest,
+    deleteContactRequest
 }
