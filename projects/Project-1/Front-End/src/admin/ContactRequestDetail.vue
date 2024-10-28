@@ -6,6 +6,8 @@ import MainContentTitle from './components/MainContentTitle.vue';
 import ContactRequestInput from './components/ContactRequestInput.vue';
 import ContactRequestTextArea from './components/ContactRequestTextArea.vue';
 import ContactRequestStatus from './components/ContactRequestStatus.vue';
+import { useAlertStore } from '@/store/alerts';
+const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
 const route = useRoute();
 const router = useRouter();
@@ -20,6 +22,17 @@ const redirectIfObjectDoesntExists = () => {
 
 const getOwnerName = () => {
     return contactRequest.value.first_name + " " + contactRequest.value.last_name;
+}
+
+const deleteObjectHandler = async () => {
+    const { success, message } = await contactRequestStore.deleteObject(id.value);
+    if (success) {
+        alertStore.setMessage(message, "success");
+        router.push({ name: "adminManageContactRequests" });
+    } else {
+        alertStore.setMessage(message, "error")
+        alertStore.$fire();
+    }
 }
 
 onMounted(async () => {
@@ -58,7 +71,7 @@ onMounted(async () => {
 
             <div class="col-6 mt-2">
                 <button class="btn btn-success me-2" type="button">Update</button>
-                <button class="btn btn-danger ms-2" type="button">Delete</button>
+                <button class="btn btn-danger ms-2" @click="deleteObjectHandler" type="button">Delete</button>
             </div>
         </form>
     </div>

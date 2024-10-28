@@ -59,6 +59,17 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
             })
         return { status, id, errorMessage }
     }
-
-    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create }
+    const deleteObject = async (id) => {
+        let success = false, message = "";
+        await axios.delete(`http://localhost:8000/api/contact/admin/delete/${id}/`, { withCredentials: true })
+            .then(({ data }) => {
+                success = true;
+                message = data.message;
+            })
+            .catch(error => {
+                message = error.response.data.message
+            });
+        return { message, success }
+    }
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create, deleteObject }
 })

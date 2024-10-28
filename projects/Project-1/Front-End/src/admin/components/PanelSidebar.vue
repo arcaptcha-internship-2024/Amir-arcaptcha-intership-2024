@@ -26,7 +26,7 @@ const userStore = useUserStore();
 <style lang="css" scoped>
 .sidebar {
     width: 250px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #343a40;
     color: #fff;
     position: relative;
