@@ -19,8 +19,8 @@ const createRequestController = async (request, response) => {
 }
 
 const fetchContactRequestsController = async (request, response) => {
-    const conactRequests = await db.contactRequest.all();
-    return response.send(conactRequests);
+    const contactRequests = await db.contactRequest.all();
+    return response.send(contactRequests);
 }
 
 const adminCreateContactRequestController = async (request, response) => {
@@ -38,8 +38,18 @@ const adminCreateContactRequestController = async (request, response) => {
     response.code(201).send({ id: id });
 }
 
+const adminDeleteContactRequestController = async (request, response) => {
+    let { id } = request.params;
+    if (db.contactRequest.exists(id)) {
+        db.contactRequest.delete(id);
+        return response.code(200).send({ message: "Object deleted" });
+    }
+    return response.code(404).send({ message: "Object not found" })
+}
+
 module.exports = {
     createRequestController,
     fetchContactRequestsController,
-    adminCreateContactRequestController
+    adminCreateContactRequestController,
+    adminDeleteContactRequestController
 }
