@@ -19,7 +19,7 @@ const createAdmin = async (username, password, role = "sale-manager",) => {
     const table = await getAdminTable();
     const adminObj = {
         username,
-        hashedPassword,
+        password: hashedPassword,
         role
     }
     table.push(adminObj);
