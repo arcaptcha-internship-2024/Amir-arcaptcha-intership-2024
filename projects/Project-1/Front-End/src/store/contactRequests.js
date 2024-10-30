@@ -71,5 +71,17 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
             });
         return { message, success }
     }
-    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create, deleteObject }
+    const updateObject = async (data) => {
+        let success = false, message = "";
+        await axios.put(`http://localhost:8000/api/contact/admin/update/`, data,{ withCredentials: true })
+            .then(({ data }) => {
+                success = true;
+                message = data.message;
+            })
+            .catch(error => {
+                message = error.response.data.message
+            });
+        return success, message;
+    }
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create, deleteObject, updateObject }
 })

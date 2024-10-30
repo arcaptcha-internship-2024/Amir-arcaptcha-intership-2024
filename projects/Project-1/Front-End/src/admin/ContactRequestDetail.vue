@@ -35,6 +35,10 @@ const deleteObjectHandler = async () => {
     }
 }
 
+const updateObjectHandler = async () => {
+    const { success, message } = await contactRequestStore.updateObject(contactRequest.value);
+}
+
 onMounted(async () => {
     await contactRequestStore.$fetch();
     redirectIfObjectDoesntExists();
@@ -70,7 +74,7 @@ onMounted(async () => {
             </div>
 
             <div class="col-6 mt-2">
-                <button class="btn btn-success me-2" type="button">Update</button>
+                <button class="btn btn-success me-2" @click="updateObjectHandler" type="button">Update</button>
                 <button class="btn btn-danger ms-2" @click="deleteObjectHandler" type="button">Delete</button>
             </div>
         </form>
