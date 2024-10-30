@@ -26,7 +26,6 @@ const fetchContactRequestsController = async (request, response) => {
 
 const adminCreateContactRequestController = async (request, response) => {
     let { status, admin_message, first_name, last_name, phone_number, company_name, job_position, description } = request.body;
-    console.log(await validateContactRequestData(data = { first_name, last_name, phone_number, company_name, job_position, status }, status_neccessary = true))
     if (!await validateContactRequestData(data = { first_name, last_name, phone_number, company_name, job_position, status }, status_neccessary = true)) {
         return response.code(400).send({ error: "Please Complete all fields" });
     }
