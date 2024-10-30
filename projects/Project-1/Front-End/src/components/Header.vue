@@ -32,7 +32,7 @@ const userStore = useUserStore();
                 <!-- Login and Sign-up buttons -->
                 <div class="auth-buttons">
                     <RouterLink :to="{ name: 'adminLogin' }" class="btn btn-outline-primary"
-                        v-if="!userStore.isUserAuthenticated">
+                        v-if="userStore.isUserAnonymous">
                         Login</RouterLink>
                     <RouterLink :to="{ name: 'adminPanel' }" class="btn btn-outline-success" v-else>Panel</RouterLink>
                 </div>
