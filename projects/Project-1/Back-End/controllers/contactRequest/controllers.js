@@ -52,11 +52,11 @@ const adminDeleteContactRequestController = async (request, response) => {
 }
 
 const adminUpdateContactRequestController = async (request, response) => {
-    let { id, first_name, last_name, phone_number, job_position, description, admin_message, status } = request.body;
+    let { id, first_name, last_name, phone_number, company_name, job_position, description, admin_message, status } = request.body;
     if (!await db.contactRequest.exists(id)) {
         return response.code(404).send({ message: "Object Not found" });
     }
-    const obj = await db.contactRequest.update({ id, first_name, last_name, phone_number, job_position, description, admin_message, status });
+    const obj = await db.contactRequest.update({ id, first_name, last_name, phone_number, company_name, job_position, description, admin_message, status });
     return response.code(200).send({ message: "Object Updated" })
 }
 
