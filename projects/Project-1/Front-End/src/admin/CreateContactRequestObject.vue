@@ -16,7 +16,7 @@ const company_name = ref("");
 const phone_number = ref("");
 const job_position = ref("");
 const description = ref("");
-const requestStatus = ref("");
+const requestStatus = ref("not-checked");
 const admin_message = ref("");
 
 const contactRequestObject = () => {
