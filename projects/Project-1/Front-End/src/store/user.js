@@ -6,7 +6,7 @@ export const useUserStore = defineStore("user", () => {
     const isUserAuthenticated = computed(() => !isUserObjEmpty());
     const isUserAnonymous = computed(() => isUserObjEmpty());
     const isUserObjEmpty = () => {
-        if (Object.keys(user.value).length > 0) {
+        if (Object.keys(user.value).length === 0) {
             return true;
         }
         return false;
