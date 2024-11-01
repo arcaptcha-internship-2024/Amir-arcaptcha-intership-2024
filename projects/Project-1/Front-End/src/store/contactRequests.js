@@ -6,7 +6,7 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
     const all = ref([]);
 
     const $fetch = async () => {
-        await axios.get("/api/contact/all/", {
+        await axios.get("http://localhost:8000/api/contact/all/", {
             withCredentials: true
         }).then(({ data }) => {
             all.value = data;
@@ -48,7 +48,7 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
 
     const create = async (contactRequestData) => {
         let status = false, id = "", errorMessage = "";
-        await axios.post("/api/contact/admin/create/", contactRequestData, { withCredentials: true })
+        await axios.post("http://localhost:8000/api/contact/admin/create/", contactRequestData, { withCredentials: true })
             .then(({ data }) => {
                 id = data.id;
                 status = true;

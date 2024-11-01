@@ -7,7 +7,7 @@ export const useAdminStore = defineStore("admins", () => {
     const users = ref([]);
     const fetch = async () => {
         if (users.value.length > 0) return;
-        await axios.get("/api/admin/all/", {
+        await axios.get("http://localhost:8000/api/admin/all/", {
             withCredentials: true,
         }).then(({ data }) => {
             users.value = data;

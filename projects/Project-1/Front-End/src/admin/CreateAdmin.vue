@@ -28,7 +28,7 @@ const sendDataToServer = () => {
         role: role.value,
         arcaptcha_token: arcaptcha_token
     }
-    axios.post("/api/admin/create/", formData, { withCredentials: true })
+    axios.post("http://localhost:8000/api/admin/create/", formData, { withCredentials: true })
         .then(({ data }) => {
             alertStore.setMessage(data['message'], "success");
             router.push({ name: "adminManageUsers" })
