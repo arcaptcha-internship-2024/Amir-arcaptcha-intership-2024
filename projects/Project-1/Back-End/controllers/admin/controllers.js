@@ -1,9 +1,9 @@
 const { db } = require(process.cwd() + "/ORM/main");
 const { authenticate, setAuthTokenInCookieForRequest } = require(process.cwd() + "/utils/admin/authentication");
-const { validateCaptchaToken } = require(process.cwd() + "/utils/captcha/main")
+const { isCaptchaTokenValid } = require(process.cwd() + "/utils/captcha/main")
 const adminLoginController = async (request, response) => {
     const { username, password, arcaptcha_token } = request.body;
-    let isCaptchaValid = await validateCaptchaToken(arcaptcha_token);
+    let isCaptchaValid = await isCaptchaTokenValid(arcaptcha_token);
     if (!isCaptchaValid) {
         return response.code(400).send({ error: "Captcha is not valid" });
     };
@@ -23,7 +23,7 @@ const usersListController = async (request, response) => {
 
 const createNewAdminController = async (request, response) => {
     const { username, password, role, arcaptcha_token } = request.body;
-    let isCaptchaValid = await validateCaptchaToken(arcaptcha_token);
+    let isCaptchaValid = await isCaptchaTokenValid(arcaptcha_token);
     if (!isCaptchaValid) {
         return response.code(400).send({ message: "Captcha is not valid" });
     };

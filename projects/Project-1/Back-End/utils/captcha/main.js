@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const { ARCAPTCHA_SITEKEY, ARCAPTCHA_SECRETKEY } = process.env;
 
-const validateArcaptchaToken = async (arcaptcha_token) => {
+const isArcaptchaTokenValid = async (arcaptcha_token) => {
     try {
         const result = await axios.post("https://api.arcaptcha.co/arcaptcha/api/verify", {
             challenge_id: arcaptcha_token,
@@ -17,11 +17,11 @@ const validateArcaptchaToken = async (arcaptcha_token) => {
     }
 }
 
-const validateCaptchaToken = async (arcaptcha_token) => {
-    return await validateArcaptchaToken(arcaptcha_token);
+const isCaptchaTokenValid = async (arcaptcha_token) => {
+    return await isArcaptchaTokenValid(arcaptcha_token);
 }
 
 module.exports = {
-    validateArcaptchaToken,
-    validateCaptchaToken
+    isArcaptchaTokenValid,
+    isCaptchaTokenValid
 }
