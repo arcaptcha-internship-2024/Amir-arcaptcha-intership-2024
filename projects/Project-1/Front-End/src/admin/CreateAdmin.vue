@@ -4,9 +4,7 @@ import { useAlertStore } from '@/store/alerts';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MainContentTitle from './components/MainContentTitle.vue';
-import { renderArcaptcha } from "@/utils/captcha/main";
 import axios from 'axios';
-import getCaptchaToken from '@/utils/captcha/main';
 const userStore = useUserStore();
 const alertStore = useAlertStore();
 const router = useRouter();
@@ -21,12 +19,10 @@ const clearFormInputs = () => {
 }
 
 const sendDataToServer = () => {
-    const arcaptcha_token = getCaptchaToken();
     const formData = {
         username: username.value,
         password: password.value,
-        role: role.value,
-        arcaptcha_token: arcaptcha_token
+        role: role.value
     }
     axios.post("http://localhost:8000/api/admin/create/", formData, { withCredentials: true })
         .then(({ data }) => {
@@ -54,7 +50,6 @@ onMounted(() => {
         alertStore.setMessage("You're not allowed to access this page", 'warning')
         router.push({ name: "adminPanel" });
     }
-    renderArcaptcha();
 })
 </script>
 
@@ -80,7 +75,6 @@ onMounted(() => {
                         <option value="sale-manager">Sale Maneger</option>
                     </select>
                 </div>
-                <div id="arcaptcha" class="my-2"></div>
                 <button class="btn btn-outline-light" type="submit">Create</button>
             </form>
         </div>
