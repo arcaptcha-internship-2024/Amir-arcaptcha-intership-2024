@@ -1,5 +1,5 @@
 const { createRequestController, fetchContactRequestsController, adminCreateContactRequestController, adminDeleteContactRequestController, adminUpdateContactRequestController } = require("../../controllers/contactRequest/controllers");
-const { jwtAuthenticatePreValidationHook, superUserPermissonRequiredHook } = require(process.cwd() + "/utils/admin/authentication.js");
+const { jwtAuthenticatePreValidationHook, superUserPermissonRequiredHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const adminContactRequestSchema = {
     type: "object",
@@ -49,6 +49,9 @@ const createRequestSchema = {
             }
         }
     },
+    preValidation: [
+        captchaVerificationHook
+    ],
     handler: createRequestController,
 }
 
@@ -124,7 +127,7 @@ const adminUpdateRequestSchema = {
                 type: 'object',
                 properties: {
                     message: { type: 'string' },
-                    
+
                 }
             },
             404: {

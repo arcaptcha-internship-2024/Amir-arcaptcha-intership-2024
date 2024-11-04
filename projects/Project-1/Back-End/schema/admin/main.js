@@ -1,5 +1,5 @@
 const { adminLoginController, usersListController, createNewAdminController } = require(process.cwd() + "/controllers/admin/controllers.js");
-const { jwtAuthenticatePreValidationHook } = require(process.cwd() + "/utils/admin/authentication.js");
+const { jwtAuthenticatePreValidationHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const errorResponseSchema = {
     type: "object",
@@ -45,6 +45,9 @@ const adminLoginSchema = {
             401: errorResponseSchema
         },
     },
+    preValidation: [
+        captchaVerificationHook
+    ],
     handler: adminLoginController
 }
 

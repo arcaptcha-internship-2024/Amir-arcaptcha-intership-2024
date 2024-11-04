@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { isCaptchaTokenValid } = require("../captcha/main")
 
 const authenticate = async (user, password) => {
     return await bcrypt.compare(password, user.password);
@@ -14,8 +15,16 @@ const jwtAuthenticatePreValidationHook = async (request, response) => {
 }
 
 const superUserPermissonRequiredHook = async (request, response) => {
-    if(request.user.role !== "superuser"){
+    if (request.user.role !== "superuser") {
         return response.status(403).send({ error: "Permission denied" })
+    }
+}
+
+const captchaVerificationHook = async (request, response) => {
+    const { arcaptcha_token } = request.body;
+    const isCaptchaValid = await isCaptchaTokenValid(arcaptcha_token);
+    if (!isCaptchaValid){
+        return response.status(400).send({ error: "Captcha Token Is not valid" })
     }
 }
 
@@ -30,5 +39,6 @@ module.exports = {
     authenticate,
     jwtAuthenticatePreValidationHook,
     setAuthTokenInCookieForRequest,
-    superUserPermissonRequiredHook
+    superUserPermissonRequiredHook,
+    captchaVerificationHook
 }
