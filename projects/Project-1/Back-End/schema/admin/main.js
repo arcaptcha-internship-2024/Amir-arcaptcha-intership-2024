@@ -1,4 +1,4 @@
-const { adminLoginController, usersListController, createNewAdminController } = require(process.cwd() + "/controllers/admin/controllers.js");
+const { adminLoginController, usersListController, createNewAdminController, logoutController } = require(process.cwd() + "/controllers/admin/controllers.js");
 const { jwtAuthenticatePreValidationHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const errorResponseSchema = {
@@ -82,8 +82,7 @@ const createNewAdminSchema = {
             properties: {
                 username: { type: "string" },
                 password: { type: "string" },
-                role: { type: "string" },
-                arcaptcha_token: { type: "string" }
+                role: { type: "string" }
             }
         },
         response: {
@@ -98,8 +97,13 @@ const createNewAdminSchema = {
     handler: createNewAdminController,
 }
 
+const logoutSchema = {
+    handler: logoutController
+}
+
 module.exports = {
     adminLoginSchema,
     allUserSchema,
-    createNewAdminSchema
+    createNewAdminSchema,
+    logoutSchema
 }

@@ -1,5 +1,5 @@
 const { db } = require(process.cwd() + "/ORM/main");
-const { authenticate, setAuthTokenInCookieForRequest } = require(process.cwd() + "/utils/admin/authentication");
+const { authenticate, setAuthTokenInCookieForRequest, destroyAuthCookie } = require(process.cwd() + "/utils/admin/authentication");
 const adminLoginController = async (request, response) => {
     const { username, password } = request.body;
     const user = await db.admin.get(username);
@@ -31,8 +31,14 @@ const createNewAdminController = async (request, response) => {
     return response.code(400).send({ message: "Failed to create user" });
 }
 
+const logoutController = async (request, response) => {
+    await destroyAuthCookie(response);
+    response.code(200).send()
+}
+
 module.exports = {
     adminLoginController,
     usersListController,
-    createNewAdminController
+    createNewAdminController,
+    logoutController
 }

@@ -35,10 +35,18 @@ const setAuthTokenInCookieForRequest = async (response, token) => {
     })
 }
 
+const destroyAuthCookie = async (response) => {
+    response.clearCookie("token", {
+        httpOnly: true,
+        path: "/"
+    })    
+}
+
 module.exports = {
     authenticate,
     jwtAuthenticatePreValidationHook,
     setAuthTokenInCookieForRequest,
     superUserPermissonRequiredHook,
-    captchaVerificationHook
+    captchaVerificationHook,
+    destroyAuthCookie
 }
