@@ -1,5 +1,5 @@
 const { adminLoginController, usersListController, createNewAdminController, logoutController } = require(process.cwd() + "/controllers/admin/controllers.js");
-const { jwtAuthenticatePreValidationHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
+const { jwtAuthenticatePreValidationHook, captchaVerificationHook, superUserPermissonRequiredHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const errorResponseSchema = {
     type: "object",
@@ -70,7 +70,8 @@ const allUserSchema = {
         }
     },
     preValidation: [
-        jwtAuthenticatePreValidationHook
+        jwtAuthenticatePreValidationHook,
+        superUserPermissonRequiredHook
     ],
     handler: usersListController
 }
@@ -92,7 +93,8 @@ const createNewAdminSchema = {
         }
     },
     preValidation: [
-        jwtAuthenticatePreValidationHook
+        jwtAuthenticatePreValidationHook,
+        superUserPermissonRequiredHook
     ],
     handler: createNewAdminController,
 }
