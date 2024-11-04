@@ -5,10 +5,8 @@ import { useUserStore } from '@/store/user';
 
 const userStore = useUserStore();
 const router = useRouter();
-onMounted(() => {
-    userStore.$reset();
-    localStorage.setItem("isAuthenticated", false);
-    localStorage.setItem("user", '{}');
+onMounted(async () => {
+    await userStore.logout();
     router.push("/admin/login/");
 })
 </script>

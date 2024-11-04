@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -11,8 +12,16 @@ export const useUserStore = defineStore("user", () => {
         }
         return false;
     }
-    const $reset = () => {
-        user.value = {};
+    const logout = async () => {
+        await axios.get("http://localhost:8000/api/admin/logout/", { withCredentials: true })
+            .then(response => {
+                user.value = {};
+                localStorage.setItem("isAuthenticated", false);
+                localStorage.setItem("user", '{}');
+            })
+            .catch(error => {
+                console.log("Failed to logout user");
+            })
     }
     const setUserData = (userData) => {
         user.value = userData;
@@ -31,5 +40,5 @@ export const useUserStore = defineStore("user", () => {
         return "";
     })
 
-    return { user, isUserAuthenticated, isUserAnonymous, adminRole, $reset, setUserData, fetch }
+    return { user, isUserAuthenticated, isUserAnonymous, adminRole, logout, setUserData, fetch }
 })
