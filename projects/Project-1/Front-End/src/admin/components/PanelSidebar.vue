@@ -13,7 +13,7 @@ const userStore = useUserStore();
                 v-if="userStore.adminRole === 'superuser'">
                 <span>Users</span>
             </RouterLink>
-            <RouterLink :to="{ name: 'adminManageContactRequests', query: { filter: 'all' } }" class="sidebar-link">
+            <RouterLink :to="{ name: 'adminManageContactRequests' }" class="sidebar-link">
                 <span>Contact Requests</span>
             </RouterLink>
             <RouterLink :to="{ name: 'adminLogout' }" class="sidebar-link">

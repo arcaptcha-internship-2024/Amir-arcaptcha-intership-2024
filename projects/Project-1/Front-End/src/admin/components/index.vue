@@ -18,9 +18,9 @@ const getContactRequests = async () => {
 
 onMounted(async () => {
     userStore.fetch();
-    if (userStore.isUserAnonymous) {
+    if (userStore.isUserAnonymous || userStore.user == {}) {
         logoutUser();
-        router.push({name: "adminLogin"})
+        router.push({ name: "adminLogin" })
     }
     alertStore.$fire();
     await getContactRequests();
@@ -32,8 +32,8 @@ onMounted(async () => {
         <div class="col-md-6">
             <div class="content-card bg-success text-light show">
                 <h3>You have {{ contactRequestStore.notCheckedMessagesCount }} new requests</h3>
-                <RouterLink :to="{ name: 'adminManageContactRequests' }"
-                    class="btn btn-light">View in detail</RouterLink>
+                <RouterLink :to="{ name: 'adminManageContactRequests' }" class="btn btn-light">View in detail
+                </RouterLink>
             </div>
         </div>
         <div class="col-md-6" v-if="userStore.adminRole === 'superuser'">

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import axios from "axios";
+import { logoutUser } from "@/utils/admin/authentication";
 
 export const useContactRequestStore = defineStore("contactRequest", () => {
     const all = ref([]);
@@ -13,6 +14,7 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         }).catch(error => {
             if (error.status === 401) {
                 console.log("User is not authenticated");
+                logoutUser();
             }
             console.log("Fail to fetch data from server");
         })

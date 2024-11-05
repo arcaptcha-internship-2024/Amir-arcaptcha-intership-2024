@@ -1,6 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { logoutUser } from "@/utils/admin/authentication";
 
 export const useUserStore = defineStore("user", () => {
     const user = ref({});
@@ -16,8 +17,7 @@ export const useUserStore = defineStore("user", () => {
         await axios.get("http://localhost:8000/api/admin/logout/", { withCredentials: true })
             .then(response => {
                 user.value = {};
-                localStorage.setItem("isAuthenticated", false);
-                localStorage.setItem("user", '{}');
+                logoutUser();
             })
             .catch(error => {
                 console.log("Failed to logout user");
