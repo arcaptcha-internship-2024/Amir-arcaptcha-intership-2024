@@ -26,6 +26,7 @@
 | Docker Network | [Link](#docker-network) |
 | Docker Compose | [Link](#docker-compose) |
 | Write Docker compose | [Link](#write-docker-compose) |
+| Set environment variable in docker-compose.yml | [Link](#set-environment-varible-in-docker-composeyml) |
 
 #### What is Docker?
 
@@ -316,5 +317,99 @@ volumes:
 
 ```sh
 docker compose -f docker-compose.yml up --build -d
+```
+
+#### Set environment varible in docker-compose.yml
+
+> [!IMPORTANT]
+> Do not use environment variables to pass important and sensitive information to the container, we should use **[secrets](https://docs.docker.com/compose/how-tos/use-secrets/)** instead.
+
+There is 2 ways to set environment variables in docker-compose.yml
+
+1. Use the `environment` attribute
+
+You can set your environment variables in your container's environment with the `environment` attribute in `docker-compose.yml`
+
+**It supports both list and mapping syntax:**
+
+```yml
+services:
+  webapp:
+    environment:
+      DEBUG: "true"
+```
+
+**OR**
+
+```yml
+services:
+  webapp:
+    environment:
+      - DEBUG=true
+```
+
+**Additional information:**
+
+You can choose not to set a value and pass the environment variables from your shell straight through to your containers. It works in the same way as `docker run -e VARIABLE ...`:
+
+```yml
+web:
+  environment:
+    - DEBUG
+```
+
+The value of the `DEBUG` variable in the container is taken from the value for the same variable in the shell in which Compose is run. Note that in this case no warning is issued if the DEBUG variable in the shell environment is not set.
+
+---
+
+You can also take advantage of interpolation. In the following example, the result is similar to the one above but Compose gives you a warning if the DEBUG variable is not set in the shell environment or in an .env file in the project directory.
+
+```yml
+web:
+  environment:
+    - DEBUG=${DEBUG}
+```
+
+2. Use the `env_file` attribute:
+
+A container's environment can also be set using `.env` file along with the `env_file` attribute.
+
+```yml
+services:
+  webapp:
+    env_file: "./.env"
+```
+
+**OR**
+
+```yml
+services:
+  webapp:
+    env_file: 
+      - ./.env
+```
+
+The `env_file` attribute also let you use the same .env file for your project in docker-compose and also make it clear. Note that using `env_file` attribute you can pass multiple environment variable files.
+
+The paths to your .env file, specified in the env_file attribute, are relative to the location of your compose.yml file.
+
+**Additional Information:**
+
+- If multiple files are specified, there are evaluated in order and can be override values set in previous file
+- As docker compose version 2.24.0 you can set your `.env` file, defined by `env_file` attribute, to be optional by using the `required` field.
+When the `required` is set to `false` and the `.env` file is missing, Compose silently ignores the entry.
+
+```yml
+env_file:
+  - path: ./.env
+    required: true # default
+  - path: ./override.env
+    required: false
+```
+
+Values in your `.env` file can be override from the command line using 
+
+```sh
+docker compose run -e
 ```
 
