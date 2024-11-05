@@ -233,3 +233,11 @@ main();
 Bcrypt remains one of the most reliable password hashing solutions available today. Its adaptive nature, built-in salt handling, and proven security make it an excellent choice for password storage in modern applications. While it may not be the fastest option available, its intentional slowness is a feature, not a bug, providing crucial protection against brute-force attacks.
 
 The combination of adjustable work factor and automatic salt handling makes Bcrypt a practical choice for developers who need a secure, well-tested solution for password hashing. When implemented correctly, it provides a robust first line of defense in protecting user credentials.
+
+Resources: 
+
+| Title | Link |
+| --- | --- |
+| Bcrypt & Password Security - An Introduction | https://www.youtube.com/watch?v=O6cmuiTBZVs |
+| Password Hashing, Salts, Peppers | Explained! | https://www.youtube.com/watch?v=--tnZMuoK3E |
+| Bcrypt Tutorial in Nodejs, Understand Hashing, Salt, Rainbow Tables and Bcrypt | https://www.youtube.com/watch?v=ro1WmoP4CZs&t=693s |
