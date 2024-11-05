@@ -35,6 +35,12 @@ const clearFormFields = () => {
     password.value = "";
 }
 
+const renderArcaptcha = () => {
+    arcaptcha.render("#arcaptcha", {
+        site_key: "rvr5q8ovqn"
+    })
+}
+
 const setAuthenticateUserInStore = () => {
     let user = localStorage.getItem("user");
     if (user) {
@@ -66,6 +72,7 @@ const formSubmitHandler = async () => {
         router.push("/admin/");
     } catch {
         errorLoginMessageAlert();
+        renderArcaptcha();
     }
     clearFormFields();
 }
@@ -76,9 +83,7 @@ onMounted(() => {
     if (alertStore.hasMessage) {
         alertStore.$fire();
     }
-    arcaptcha.render("#arcaptcha", {
-        site_key: "rvr5q8ovqn"
-    })
+    renderArcaptcha();
 })
 </script>
 
