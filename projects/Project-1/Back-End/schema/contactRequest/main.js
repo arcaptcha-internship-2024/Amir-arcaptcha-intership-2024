@@ -2,6 +2,7 @@ const { createRequestController, fetchContactRequestsController, adminCreateCont
 const { jwtAuthenticatePreValidationHook, superUserPermissonRequiredHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const adminContactRequestSchema = {
+    description: "Schema for creating contact request object by admin user",
     type: "object",
     required: ["first_name", "last_name", "phone_number", "company_name", "job_position", "description", "status", "admin_message"],
     properties: {
@@ -21,6 +22,8 @@ const adminContactRequestSchema = {
 
 const createRequestSchema = {
     schema: {
+        description: "Create contact request endpoint for anonymous users",
+        tags: ["contact"],
         body: {
             type: "object",
             required: ['first_name', 'last_name', 'company_name', 'job_position', 'phone_number', 'description', 'arcaptcha_token'],
@@ -57,6 +60,8 @@ const createRequestSchema = {
 
 const fetchContactRequestSchema = {
     schema: {
+        description: "Fetch Contact Request objects",
+        tags: ["contact"],
         response: {
             200: {
                 type: "array",
@@ -72,6 +77,8 @@ const fetchContactRequestSchema = {
 
 const adminCreateRequestSchema = {
     schema: {
+        description: "Create Contact Request object by admin users",
+        tags: ["contact"],
         body: adminContactRequestSchema,
         response: {
             200: {
@@ -90,6 +97,8 @@ const adminCreateRequestSchema = {
 
 const adminDeleteRequestSchema = {
     schema: {
+        description: "Delete Contact Request object by admin",
+        tags: ["contact"],
         params: {
             type: "object",
             properties: {
@@ -121,6 +130,8 @@ const adminDeleteRequestSchema = {
 
 const adminUpdateRequestSchema = {
     schema: {
+        description: "Update Contact Request object",
+        tags: ["contact"],
         body: adminContactRequestSchema,
         response: {
             200: {
