@@ -33,7 +33,7 @@ const isUsernameExists = async (username = "admin") => {
 }
 
 const writeSeedInFile = async () => {
-    await fs.writeFile(dbFilePath, JSON.stringify(seed));
+    await fs.writeFile(dbFilePath, JSON.stringify(seed), { encoding: "utf8" });
 }
 const appendSeed = async () => {
     try {
