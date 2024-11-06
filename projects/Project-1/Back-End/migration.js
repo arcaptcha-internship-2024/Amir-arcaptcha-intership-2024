@@ -1,5 +1,6 @@
+require("dotenv").config();
 const DB_TYPE = process.env.DB_TYPE;
-const fs = require("fs");
+const fs = require("fs").promises;
 const dbFilePath = "./db/db.json";
 const seed = {
     "admin": [
@@ -15,27 +16,36 @@ const seed = {
 
 if (DB_TYPE !== "file") { process.exit(0) }
 
-const checkAdminExists = async (username = "admin") => {
+const isUsernameExists = async (username = "admin") => {
     let flag = false;
-    await fs.readFile(dbFilePath, (error, data) => {
-        if (error) throw error;
-        const db = JSON.parse(data);
-        if (Object.keys(db).includes("admin")) {
-            if (db.admin.find(admin => admin.username === "admin")) {
-                flag = true
-            }
+    let db = await fs.readFile(dbFilePath, { encoding: 'utf8' });
+    try {
+        db = JSON.parse(db);
+    } catch (e) {
+        return flag
+    }
+    if (Object.keys(db).includes(username)) {
+        if (db.admin.find(admin => admin.username === username)) {
+            flag = true
         }
-    })
+    }
     return flag;
 }
+
+const writeSeedInFile = async () => {
+    await fs.writeFile(dbFilePath, JSON.stringify(seed));
+}
 const appendSeed = async () => {
-    fs.open(dbFilePath, 'w', function (error, file) {
-        if (error) throw error;
-    })
-    if (! await checkAdminExists()) {
-        fs.writeFile(dbFilePath, JSON.stringify(seed), function (error, file) {
-            if (error) throw error;
-        })
+    try {
+        await fs.open(dbFilePath, 'r');
+        if (! await isUsernameExists()) {
+            await writeSeedInFile();
+        }
     }
+    catch {
+        await writeSeedInFile();
+    }
+
+
 }
 appendSeed();
