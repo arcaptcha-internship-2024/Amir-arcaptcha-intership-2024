@@ -6,7 +6,8 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ./.env
+      - path: ./.env
+        required: true
     volumes:
       - ./Back-End/db/:/app/db
   
