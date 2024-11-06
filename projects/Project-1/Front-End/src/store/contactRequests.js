@@ -6,8 +6,8 @@ import { logoutUser } from "@/utils/admin/authentication";
 export const useContactRequestStore = defineStore("contactRequest", () => {
     const all = ref([]);
 
-    const $fetch = async () => {
-        await axios.get("http://localhost:8000/api/contact/all/", {
+    const $fetch = async (page = 1, limit = 5) => {
+        await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}`, {
             withCredentials: true
         }).then(({ data }) => {
             all.value = data;
