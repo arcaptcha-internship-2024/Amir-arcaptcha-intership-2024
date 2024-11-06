@@ -5,6 +5,14 @@ const getPaginatedResultForFileORM = (startIndex, endIndex, dataArr) => {
 }
 
 const getPaginatedResult = (page = 1, limit = 5, data) => {
+    if (typeof page !== "number"){
+        page = 1;
+    }
+    
+    if (typeof limit !== "number"){
+        limit = 1;
+    }
+
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     if (process.env.DB_TYPE === "file") {
