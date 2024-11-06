@@ -1,5 +1,6 @@
 const { db } = require("../../ORM/main");
 const { validateContactRequestData } = require(process.cwd() + "/utils/contactRequest/main.js");
+const { getPaginatedResult } = require(process.cwd() + "/utils/pagination/main.js");
 
 const createRequestController = async (request, response) => {
     let { first_name, last_name, phone_number, company_name, job_position, description } = request.body;
@@ -15,7 +16,9 @@ const createRequestController = async (request, response) => {
 }
 
 const fetchContactRequestsController = async (request, response) => {
-    const contactRequests = await db.contactRequest.all();
+    const { page, limit } = request.query;
+    let contactRequests = await db.contactRequest.all();
+    contactRequests = getPaginatedResult(page, limit, contactRequests);
     return response.send(contactRequests);
 }
 

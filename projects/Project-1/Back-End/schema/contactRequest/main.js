@@ -62,6 +62,13 @@ const fetchContactRequestSchema = {
     schema: {
         description: "Fetch Contact Request objects",
         tags: ["contact"],
+        query: {
+            type: "object",
+            properties: {
+                page: { type: "number" },
+                limit: { type: "number" }
+            }
+        },
         response: {
             200: {
                 type: "array",
