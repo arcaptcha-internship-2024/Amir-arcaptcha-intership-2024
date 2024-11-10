@@ -65,14 +65,35 @@ const fetchContactRequestSchema = {
         query: {
             type: "object",
             properties: {
+                q: { type: "string" },
                 page: { type: "number" },
                 limit: { type: "number" }
             }
         },
         response: {
             200: {
-                type: "array",
-                items: adminContactRequestSchema
+                type: "object",
+                properties: {
+                    previous: {
+                        type: "object",
+                        properties: {
+                            has_previous: { type: "boolean" },
+                            previous_page: { type: "integer" }
+                        }
+                    },
+                    contact_requests: {
+                        type: "array",
+                        items: adminContactRequestSchema
+                    },
+                    next: {
+                        type: "object",
+                        properties: {
+                            has_next: { type: "boolean" },
+                            next_page: { type: "integer" }
+                        }
+                    }
+                }
+
             }
         }
     },
