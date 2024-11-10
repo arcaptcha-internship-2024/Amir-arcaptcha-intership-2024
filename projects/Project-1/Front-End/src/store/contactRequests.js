@@ -5,12 +5,18 @@ import { logoutUser } from "@/utils/admin/authentication";
 
 export const useContactRequestStore = defineStore("contactRequest", () => {
     const all = ref([]);
+    const pagination = ref({});
 
-    const $fetch = async (page = 1, limit = 5) => {
-        await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}`, {
+    const $fetch = async (page = 1, limit = 5, query="ali") => {
+        await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}&q=${query}`, {
             withCredentials: true
         }).then(({ data }) => {
-            all.value = data;
+            const { contact_requests, next, previous } = data;
+            all.value = contact_requests;
+            pagination.value = {
+                next,
+                previous
+            }
         }).catch(error => {
             if (error.status === 401) {
                 console.log("User is not authenticated");
@@ -85,5 +91,5 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
             });
         return { success, message };
     }
-    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, $fetch, $reset, exists, get, create, deleteObject, updateObject }
+    return { all, notCheckedMessages, notCheckedMessagesCount, inProgressMessages, completedMessages, pagination, $fetch, $reset, exists, get, create, deleteObject, updateObject }
 })
