@@ -6,7 +6,10 @@ const getPaginatedResultForFileORM = (startIndex, endIndex, dataArr) => {
 
 const filterResultsByQuery = (query = "", data = []) => {
     return data.filter(obj => {
-        return obj.first_name.includes(query) || obj.last_name.includes(query)
+        query = query.toLowerCase()
+        let first_name = obj.first_name.toLowerCase();
+        let last_name = obj.last_name.toLowerCase();
+        return first_name.includes(query) || last_name.includes(query)
     });
 }
 
