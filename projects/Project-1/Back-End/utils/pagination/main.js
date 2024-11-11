@@ -20,6 +20,7 @@ const getPaginationData = (data = [], startIndex, endIndex, currentPage) => {
             has_previous: startIndex > 0,
             previous_page: startIndex > 0 ? currentPage - 1 : 0
         },
+        current_page: currentPage
     }
 }
 

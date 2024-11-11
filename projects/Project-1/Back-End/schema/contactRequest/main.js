@@ -91,7 +91,8 @@ const fetchContactRequestSchema = {
                             has_next: { type: "boolean" },
                             next_page: { type: "integer" }
                         }
-                    }
+                    },
+                    current_page: { type: "integer" }
                 }
 
             }
