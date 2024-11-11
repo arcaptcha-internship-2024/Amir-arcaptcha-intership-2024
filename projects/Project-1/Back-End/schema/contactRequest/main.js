@@ -67,7 +67,8 @@ const fetchContactRequestSchema = {
             properties: {
                 q: { type: "string" },
                 page: { type: "number" },
-                limit: { type: "number" }
+                limit: { type: "number" },
+                status: { type: "string" }
             }
         },
         response: {

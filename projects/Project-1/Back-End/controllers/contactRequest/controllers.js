@@ -16,9 +16,9 @@ const createRequestController = async (request, response) => {
 }
 
 const fetchContactRequestsController = async (request, response) => {
-    const { q, page, limit } = request.query;
+    const { q, page, limit, status } = request.query;
     let contactRequests = await db.contactRequest.all();
-    let paginatedResult = getPaginatedResult(page, limit, q, contactRequests);
+    let paginatedResult = getPaginatedResult(page, limit, q, status, contactRequests);
     return response.send(paginatedResult);
 }
 
