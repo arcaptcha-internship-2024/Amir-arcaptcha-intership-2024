@@ -1,6 +1,7 @@
 const { db } = require("../../ORM/main");
 const { validateContactRequestData } = require(process.cwd() + "/utils/contactRequest/main.js");
 const { getPaginatedResult } = require(process.cwd() + "/utils/pagination/main.js");
+const { sendLogToQueue } = require(process.cwd() + "/utils/logger/main.js");
 
 const createRequestController = async (request, response) => {
     let { first_name, last_name, phone_number, company_name, job_position, description } = request.body;
@@ -37,6 +38,7 @@ const adminCreateContactRequestController = async (request, response) => {
         status = status,
         admin_message = admin_message
     )
+    sendLogToQueue(`${request.user.username} Created a contact request object with ID: ${id}`);
     return response.code(201).send({ id: id });
 }
 
@@ -46,6 +48,7 @@ const adminDeleteContactRequestController = async (request, response) => {
         db.contactRequest.delete(id);
         return response.code(200).send({ message: "Object deleted" });
     }
+    sendLogToQueue(`${request.user.username} deleted a contact request object with ID: ${id}`);
     return response.code(404).send({ message: "Object not found" })
 }
 
@@ -55,6 +58,7 @@ const adminUpdateContactRequestController = async (request, response) => {
         return response.code(404).send({ message: "Object Not found" });
     }
     const obj = await db.contactRequest.update({ id, first_name, last_name, phone_number, company_name, job_position, description, admin_message, status });
+    sendLogToQueue(`${request.user.username} Updated a contact request object with ID: ${id}`);
     return response.code(200).send({ message: "Object Updated" })
 }
 

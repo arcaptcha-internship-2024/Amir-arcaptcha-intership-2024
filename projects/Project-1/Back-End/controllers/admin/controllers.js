@@ -1,5 +1,7 @@
 const { db } = require(process.cwd() + "/ORM/main");
 const { authenticate, setAuthTokenInCookieForRequest, destroyAuthCookie } = require(process.cwd() + "/utils/admin/authentication");
+const { sendLogToQueue } = require(process.cwd() + "/utils/logger/main.js");
+
 const adminLoginController = async (request, response) => {
     const { username, password } = request.body;
     const user = await db.admin.get(username);
@@ -28,6 +30,7 @@ const createNewAdminController = async (request, response) => {
     if (result === username) {
         return response.code(201).send({ message: "User created successfully" });
     }
+    sendLogToQueue(`${request.user.username} Created ${role} user request object with username: ${username}`);
     return response.code(400).send({ message: "Failed to create user" });
 }
 
