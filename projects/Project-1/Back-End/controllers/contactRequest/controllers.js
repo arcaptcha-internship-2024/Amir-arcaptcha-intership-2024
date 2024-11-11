@@ -18,19 +18,8 @@ const createRequestController = async (request, response) => {
 const fetchContactRequestsController = async (request, response) => {
     const { q, page, limit } = request.query;
     let contactRequests = await db.contactRequest.all();
-    contactRequests = getPaginatedResult(page, limit, q, contactRequests);
-    let result = {
-        next: {
-            has_next: true,
-            next_page: 2
-        },
-        previous: {
-            has_previous: true,
-            previous_page: 2
-        },
-        contact_requests: contactRequests
-    }
-    return response.send(result);
+    let paginatedResult = getPaginatedResult(page, limit, q, contactRequests);
+    return response.send(paginatedResult);
 }
 
 const adminCreateContactRequestController = async (request, response) => {
