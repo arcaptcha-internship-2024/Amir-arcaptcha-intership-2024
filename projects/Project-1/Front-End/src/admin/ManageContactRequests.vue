@@ -8,6 +8,7 @@ import { useUserStore } from "@/store/user";
 import { useContactRequestStore } from "@/store/contactRequests";
 import { useAlertStore } from '@/store/alerts';
 import { logoutUser } from '@/utils/admin/authentication';
+import Pagination from "./components/Pagination.vue";
 import "@/assets/admin/css/admin-panel.css";
 const filteringResult = ref("all");
 const searchQuery = ref("");
@@ -15,7 +16,6 @@ const router = useRouter();
 const userStore = useUserStore();
 const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
-let currentPage = ref(1);
 const paginationData = computed(() => { return contactRequestStore.pagination });
 
 
@@ -37,6 +37,11 @@ const displayedResults = computed(() => {
 
 const filterResultsBySearchQuery = async (query) => {
     await contactRequestStore.$fetch(1, 5, query);
+    searchQuery.value = query;
+}
+
+const changePageHandler = async (pageIndex) => {
+    await contactRequestStore.$fetch(pageIndex, 5, searchQuery.value);
 }
 
 onMounted(async () => {
@@ -61,35 +66,8 @@ onMounted(async () => {
         <h2 v-else>No result for display</h2>
         <div class="row my-2" v-if="displayedResults.length > 0">
             <div class="col-12 d-flex justify-content-center">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item" v-if="paginationData.previous.has_previous">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item" v-if="paginationData.previous.has_previous">
-                            <a class="page-link" href="#">
-                                {{ paginationData.previous.previous_page }}
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <span class="page-link active">
-                                {{ currentPage }}
-                            </span>
-                        </li>
-                        <li class="page-item" v-if="paginationData.next.has_next">
-                            <a class="page-link" href="#">
-                                {{ paginationData.next.next_page }}
-                            </a>
-                        </li>
-                        <li class="page-item" v-if="paginationData.next.has_next">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <Pagination :pagination_data="paginationData" @next_page="changePageHandler"
+                    @previous_page="changePageHandler" />
             </div>
         </div>
         <div class="row">

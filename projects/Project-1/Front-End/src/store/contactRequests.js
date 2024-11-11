@@ -20,11 +20,12 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}&q=${query}`, {
             withCredentials: true
         }).then(({ data }) => {
-            const { contact_requests, next, previous } = data;
+            const { contact_requests, next, previous, current_page } = data;
             all.value = contact_requests;
             pagination.value = {
                 next,
-                previous
+                previous,
+                current_page
             }
         }).catch(error => {
             if (error.status === 401) {
