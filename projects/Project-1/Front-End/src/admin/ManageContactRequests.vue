@@ -10,7 +10,7 @@ import { useAlertStore } from '@/store/alerts';
 import { logoutUser } from '@/utils/admin/authentication';
 import Pagination from "./components/Pagination.vue";
 import "@/assets/admin/css/admin-panel.css";
-const filteringResult = ref("all");
+const filteringResult = ref("");
 const searchQuery = ref("");
 const router = useRouter();
 const userStore = useUserStore();
@@ -25,23 +25,21 @@ const isNameIncludeQuery = (first_name, last_name, phone_number, query) => {
 }
 
 const displayedResults = computed(() => {
-    return contactRequestStore.all.filter(data => {
-        let status = true;
-        if (filteringResult.value !== "all") {
-            status = data.status === filteringResult.value;
-        }
-        let searchFilter = isNameIncludeQuery(data.first_name, data.last_name, data.phone_number, searchQuery.value);
-        return status && searchFilter;
-    })
+    return contactRequestStore.all
 })
 
 const filterResultsBySearchQuery = async (query) => {
-    await contactRequestStore.$fetch(1, 5, query);
+    await contactRequestStore.$fetch(1, 5, query, filteringResult.value);
     searchQuery.value = query;
 }
 
 const changePageHandler = async (pageIndex) => {
-    await contactRequestStore.$fetch(pageIndex, 5, searchQuery.value);
+    await contactRequestStore.$fetch(pageIndex, 5, searchQuery.value, filteringResult.value);
+}
+
+const filterResultsByStatus = async (status) => {
+    await contactRequestStore.$fetch(1, 5, searchQuery.value, status);
+    filteringResult.value = status;
 }
 
 onMounted(async () => {
@@ -59,7 +57,7 @@ onMounted(async () => {
 <template>
     <MainContentTitle title="Contact Requests" />
     <div class="container">
-        <FilterContactRequests @filter-by="query => filteringResult = query" @searchBy="filterResultsBySearchQuery" />
+        <FilterContactRequests @filter-by="filterResultsByStatus" @searchBy="filterResultsBySearchQuery" />
         <ContactRequestRow v-for="(data, index) in displayedResults" :number="index + 1" :first_name=data.first_name
             :last_name=data.last_name :phone_number=data.phone_number :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />

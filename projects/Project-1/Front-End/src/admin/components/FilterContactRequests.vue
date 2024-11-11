@@ -18,7 +18,7 @@ const searchQuery = ref("");
             <select class="form-select" name="check-status" v-model="checkStatusFilter"
                 @change="$emit('filterBy', checkStatusFilter)">
                 <option disabled value="">Check status</option>
-                <option value="all">All</option>
+                <option value="">All</option>
                 <option value="completed">Completed</option>
                 <option value="in-progress">In progress</option>
                 <option value="not-checked">Not Checked</option>
