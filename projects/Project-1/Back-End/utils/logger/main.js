@@ -48,7 +48,7 @@ const writeLogsInFile = (message) => {
     let path = process.cwd() + "/logs/";
     let fileName = new Date().toLocaleDateString().replaceAll("/", "-") + ".log";
     let filePath = path + fileName;
-    fs.writeFile(filePath, message, { encoding: "utf8" });
+    fs.appendFile(filePath, message + "\n", { encoding: "utf8" });
 }
 
 module.exports = {
