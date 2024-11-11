@@ -16,8 +16,8 @@ export const useContactRequestStore = defineStore("contactRequest", () => {
         }
     });
 
-    const $fetch = async (page = 1, limit = 5, query = "") => {
-        await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}&q=${query}`, {
+    const $fetch = async (page = 1, limit = 5, query = "", status = "") => {
+        await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}&q=${query}&status=${status}`, {
             withCredentials: true
         }).then(({ data }) => {
             const { contact_requests, next, previous, current_page } = data;
