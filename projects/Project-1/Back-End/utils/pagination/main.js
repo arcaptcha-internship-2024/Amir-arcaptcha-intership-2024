@@ -10,6 +10,10 @@ const filterResultsByQuery = (query = "", data = []) => {
     });
 }
 
+const filterResultsByStatus = (status = "", data = []) => {
+    return data.filter(obj => obj.status === status);
+}
+
 const getPaginationData = (data = [], startIndex, endIndex, currentPage) => {
     return {
         next: {
@@ -24,7 +28,7 @@ const getPaginationData = (data = [], startIndex, endIndex, currentPage) => {
     }
 }
 
-const getPaginatedResult = (page = 1, limit = 5, query = "", data) => {
+const getPaginatedResult = (page = 1, limit = 5, query = "", status = "", data) => {
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     let paginationData = {};
@@ -32,6 +36,10 @@ const getPaginatedResult = (page = 1, limit = 5, query = "", data) => {
     if (query !== "") {
         data = filterResultsByQuery(query, data);
     }
+    if (status !== "") {
+        data = filterResultsByStatus(status, data);
+    }
+    
     paginationData = getPaginationData(data, startIndex, endIndex, page);
     switch (process.env.DB_TYPE) {
         case "file":
