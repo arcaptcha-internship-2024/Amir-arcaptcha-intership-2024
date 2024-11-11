@@ -46,9 +46,9 @@ const adminDeleteContactRequestController = async (request, response) => {
     let { id } = request.params;
     if (await db.contactRequest.exists(id)) {
         db.contactRequest.delete(id);
+        sendLogToQueue(`${request.user.username} deleted a contact request object with ID: ${id}`);
         return response.code(200).send({ message: "Object deleted" });
     }
-    sendLogToQueue(`${request.user.username} deleted a contact request object with ID: ${id}`);
     return response.code(404).send({ message: "Object not found" })
 }
 
