@@ -10,6 +10,10 @@ services:
         required: true
     volumes:
       - ./Back-End/db/:/app/db
+      - ./Back-End/logs/:/app/logs
+      
+    depends_on:
+      - rabbitmq
   
   frontend:
     build: Front-End/
@@ -18,3 +22,15 @@ services:
       - 8080:80
     depends_on:
       - backend
+  
+  rabbitmq:
+    image: rabbitmq:4.0-management-alpine
+    container_name: arcaptcha_rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+      
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  
