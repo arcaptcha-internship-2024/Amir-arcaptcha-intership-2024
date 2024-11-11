@@ -15,6 +15,18 @@ const router = useRouter();
 const userStore = useUserStore();
 const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
+let currentPage = ref(1);
+const paginationData = ref({
+    next: {
+        has_next: false,
+        next_page: 0
+    },
+    previous: {
+        has_previous: false,
+        previous_page: 0
+    }
+});
+
 
 const isNameIncludeQuery = (first_name, last_name, phone_number, query) => {
     let name = first_name.toLowerCase() + " " + last_name.toLowerCase();
@@ -40,6 +52,7 @@ onMounted(async () => {
         router.push({ name: "adminLogin" });
     }
     await contactRequestStore.$fetch();
+    paginationData.value = contactRequestStore.pagination
 })
 
 </script>
@@ -52,6 +65,39 @@ onMounted(async () => {
             :last_name=data.last_name :phone_number=data.phone_number :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />
         <h2 v-else>No result for display</h2>
+        <div class="row my-2" v-if="displayedResults.length > 0">
+            <div class="col-12 d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" v-if="paginationData.previous.has_previous">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" v-if="paginationData.previous.has_previous">
+                            <a class="page-link" href="#">
+                                {{ paginationData.previous.previous_page }}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <span class="page-link active">
+                                {{ currentPage }}
+                            </span>
+                        </li>
+                        <li class="page-item" v-if="paginationData.next.has_next">
+                            <a class="page-link" href="#">
+                                {{ paginationData.next.next_page }}
+                            </a>
+                        </li>
+                        <li class="page-item" v-if="paginationData.next.has_next">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <RouterLink class="btn btn-success" :to="{ name: 'adminCreateContactRequests' }">
