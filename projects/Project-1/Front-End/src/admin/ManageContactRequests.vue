@@ -16,16 +16,7 @@ const userStore = useUserStore();
 const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
 let currentPage = ref(1);
-const paginationData = ref({
-    next: {
-        has_next: false,
-        next_page: 0
-    },
-    previous: {
-        has_previous: false,
-        previous_page: 0
-    }
-});
+const paginationData = computed(() => { return contactRequestStore.pagination });
 
 
 const isNameIncludeQuery = (first_name, last_name, phone_number, query) => {
@@ -44,6 +35,10 @@ const displayedResults = computed(() => {
     })
 })
 
+const filterResultsBySearchQuery = async (query) => {
+    await contactRequestStore.$fetch(1, 5, query);
+}
+
 onMounted(async () => {
     alertStore.$fire();
     userStore.fetch();
@@ -52,7 +47,6 @@ onMounted(async () => {
         router.push({ name: "adminLogin" });
     }
     await contactRequestStore.$fetch();
-    paginationData.value = contactRequestStore.pagination
 })
 
 </script>
@@ -60,7 +54,7 @@ onMounted(async () => {
 <template>
     <MainContentTitle title="Contact Requests" />
     <div class="container">
-        <FilterContactRequests @filter-by="query => filteringResult = query" @searchBy="query => searchQuery = query" />
+        <FilterContactRequests @filter-by="query => filteringResult = query" @searchBy="filterResultsBySearchQuery" />
         <ContactRequestRow v-for="(data, index) in displayedResults" :number="index + 1" :first_name=data.first_name
             :last_name=data.last_name :phone_number=data.phone_number :status=data.status :key="index" :id=data.id
             v-if="displayedResults.length" />

@@ -5,9 +5,18 @@ import { logoutUser } from "@/utils/admin/authentication";
 
 export const useContactRequestStore = defineStore("contactRequest", () => {
     const all = ref([]);
-    const pagination = ref({});
+    const pagination = ref({
+        next: {
+            has_next: false,
+            next_page: 0
+        },
+        previous: {
+            has_previous: false,
+            previous_page: 0
+        }
+    });
 
-    const $fetch = async (page = 1, limit = 5, query="") => {
+    const $fetch = async (page = 1, limit = 5, query = "") => {
         await axios.get(`http://localhost:8000/api/contact/all/?page=${page}&limit=${limit}&q=${query}`, {
             withCredentials: true
         }).then(({ data }) => {
