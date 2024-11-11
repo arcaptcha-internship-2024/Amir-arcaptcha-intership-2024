@@ -1,4 +1,5 @@
 require("dotenv").config();
+let fs = require("fs").promises;
 
 let amqp = require('amqplib/callback_api');
 const queue = process.env.LOG_QUEUE_NAME || log_queue;
@@ -6,14 +7,10 @@ const amqpServer = 'amqp://localhost';
 
 const sendLogToQueue = async (logMessage = "") => {
     amqp.connect(amqpServer, function (error0, connection) {
-        if (error0) {
-            throw error0;
-        }
+        if (error0) throw error0;
 
         connection.createChannel(function (error1, channel) {
-            if (error1) {
-                throw error1;
-            }
+            if (error1) throw error1;
 
             channel.assertQueue(queue, {
                 durable: false
@@ -31,20 +28,27 @@ const sendLogToQueue = async (logMessage = "") => {
 }
 
 const consumeDataFromQueue = () => {
-    amqp.connect(amqpServer, function (errror0, connection) {
-        if (error0) throw errror0;
+    amqp.connect(amqpServer, function (error0, connection) {
+        if (error0) throw error0;
         connection.createChannel(function (error1, channel) {
-            if (error1) throw errror1;
+            if (error1) throw error1;
 
             channel.assertQueue(queue, {
                 durable: false
             })
 
             channel.consume(queue, function (msg) {
-                console.log("recieve Message" + msg.content.toString())
+                writeLogsInFile(msg.content.toString());
             }, { noAck: true })
         })
     })
+}
+
+const writeLogsInFile = (message) => {
+    let path = process.cwd() + "/logs/";
+    let fileName = new Date().toLocaleDateString().replaceAll("/", "-") + ".log";
+    let filePath = path + fileName;
+    fs.writeFile(filePath, message, { encoding: "utf8" });
 }
 
 module.exports = {
