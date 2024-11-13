@@ -77,6 +77,10 @@ fastify.listen({ host: SERVER_HOST || '0.0.0.0', port: SERVER_PORT || 8000 }, (e
         fastify.log.error(err);
         process.exit(1);
     }
-    consumeDataFromQueue();
+    try {
+        consumeDataFromQueue();
+    } catch (err) {
+        console.log("Failed to connect RabbitMQ");
+    }
 })
 module.exports = fastify;
