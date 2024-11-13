@@ -46,6 +46,7 @@ const sendFieldsDataToServer = (fieldsData) => {
   sendDataRequest.setRequestHeader("Content-Type", "application/json");
   sendDataRequest.onload = () => {
     if (sendDataRequest.status === 201) {
+      clearFormData();
       alert("Data Saved successfully!");
     } else {
       const { error } = JSON.parse(sendDataRequest.response);
@@ -96,10 +97,29 @@ const formSubmitHandler = (e) => {
   const fieldsData = createObjectFromInputsData();
   sendFieldsDataToServer(fieldsData);
 }
-onMounted(() => {
+
+const renderArcpatcha = () => {
   arcaptcha.render("#arcaptcha", {
-        site_key: "rvr5q8ovqn"
-    })
+    site_key: "rvr5q8ovqn"
+  })
+}
+
+const renderCaptcha = () => {
+  return renderArcpatcha()
+}
+
+const clearFormData = () => {
+  first_name.value = "";
+  last_name.value = "";
+  company_name.value = "";
+  job_position.value = "";
+  phone_number.value = "";
+  description.value = "";
+  renderCaptcha();
+}
+
+onMounted(() => {
+  renderCaptcha();
 })
 </script>
 
