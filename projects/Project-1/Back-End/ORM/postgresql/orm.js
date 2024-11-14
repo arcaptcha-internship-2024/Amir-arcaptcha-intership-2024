@@ -1,8 +1,10 @@
-const { createContactRequest } = require("./contactRequest/manager");
+const { createContactRequest, getAllContactRequests, getContactRequest } = require("./contactRequest/manager");
 
 module.exports = {
     admin: {},
     contactRequest: {
-        create: createContactRequest
+        create: createContactRequest,
+        all: getAllContactRequests,
+        get: getContactRequest
     }
 }

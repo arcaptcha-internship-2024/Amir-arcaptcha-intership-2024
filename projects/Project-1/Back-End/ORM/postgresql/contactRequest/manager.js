@@ -16,6 +16,32 @@ const createContactRequest = async (first_name, last_name, phone_number, company
     return false;
 }
 
+const getAllContactRequests = async () => {
+    try {
+        const res = await pool.query(`SELECT * FROM contactRequest;`);
+        return res.rows;
+    }
+    catch (err) {
+        console.log("Failed to get all contact requests with error: " + err)
+    }
+    return false;
+}
+
+const getContactRequest = async (id = null) => {
+    if (!id) {
+        throw Error("ID parameter is required")
+    }
+    try {
+        const res = await pool.query(`SELECT * FROM contactRequest WHERE id=$1`, [id])
+        return res.rows.length === 1 ? res.rows[0] : null;
+    }
+    catch (err) {
+        console.log("Failed to get contact request with error: " + err)
+    }
+}
+
 module.exports = {
     createContactRequest,
+    getAllContactRequests,
+    getContactRequest
 }
