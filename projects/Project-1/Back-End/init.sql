@@ -1,8 +1,8 @@
-CREATE DATABASE arcaptcha;
+CREATE DATABASE IF NOT EXISTS arcaptcha;
 
 \ c arcaptcha;
 
-CREATE TABLE contactRequest (
+CREATE TABLE IF NOT EXISTS contactRequest (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(150),
     last_name VARCHAR(150),
@@ -14,4 +14,11 @@ CREATE TABLE contactRequest (
     admin_message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS  admin (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(20) DEFAULT 'sale_manager'
 );
