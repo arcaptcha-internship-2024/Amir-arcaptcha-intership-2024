@@ -52,7 +52,8 @@ const updateContactRequest = async (id = null, first_name, last_name, phone_numb
 const deleteContactRequest = async (id = null) => {
     throwExceptionIfIDNotIncluded(id);
     try {
-        const res = await pool.query("")
+        const res = await pool.query("DELETE FROM contactRequest WHERE id=$1", [id]);
+        return res.rowCount === 1 ? true : false
     }
     catch (err) {
         console.log("Failed to delete contact request with error: " + err)
