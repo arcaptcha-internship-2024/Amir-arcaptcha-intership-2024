@@ -1,4 +1,5 @@
 const pool = require("../db");
+const { throwExceptionIfIDNotIncluded } = require("../utils/main");
 
 const createContactRequest = async (first_name, last_name, phone_number, company_name, job_position, description, status = "not-checked", admin_message = "") => {
     try {
@@ -28,9 +29,7 @@ const getAllContactRequests = async () => {
 }
 
 const getContactRequest = async (id = null) => {
-    if (!id) {
-        throw Error("ID parameter is required")
-    }
+    throwExceptionIfIDNotIncluded(id);
     try {
         const res = await pool.query(`SELECT * FROM contactRequest WHERE id=$1`, [id])
         return res.rows.length === 1 ? res.rows[0] : null;
@@ -40,8 +39,30 @@ const getContactRequest = async (id = null) => {
     }
 }
 
+const updateContactRequest = async (id = null, first_name, last_name, phone_number, company_name, job_position, description, status = "not-checked", admin_message = "") => {
+    throwExceptionIfIDNotIncluded(id);
+    try {
+        const res = await pool.query("")
+    }
+    catch (err) {
+        console.log("Failed to update contact request with error: " + err)
+    }
+}
+
+const deleteContactRequest = async (id = null) => {
+    throwExceptionIfIDNotIncluded(id);
+    try {
+        const res = await pool.query("")
+    }
+    catch (err) {
+        console.log("Failed to delete contact request with error: " + err)
+    }
+}
+
 module.exports = {
     createContactRequest,
     getAllContactRequests,
-    getContactRequest
+    getContactRequest,
+    updateContactRequest,
+    deleteContactRequest
 }
