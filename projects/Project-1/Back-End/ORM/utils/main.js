@@ -4,6 +4,11 @@ const hashUserPassword = async (password, salt_number = 10) => {
     return hashedPassword;
 }
 
+const isAdminRoleValid = (role="", expected_results = []) => {
+    return expected_results.some(expectedRole => expectedRole === role);
+}
+
 module.exports = {
     hashUserPassword,
+    isAdminRoleValid
 }
