@@ -10,7 +10,6 @@ const inputData = ref("not-checked");
             {{ input_label }}:
         </label>
         <select class="form-select" name="status" v-model="inputData" @change="$emit('data', inputData)">
-            {{ input_value ? inputData = input_value : inputData = "not-checked"  }}
             <option :selected="input_value === 'not-checked'" value="not-checked">Not checked</option>
             <option :selected="input_value === 'in-progress'" value="in-progress">In progress</option>
             <option :selected="input_value === 'completed'" value="completed">Completed</option>
