@@ -1,4 +1,4 @@
-const { adminLoginController, usersListController, createNewAdminController, logoutController } = require(process.cwd() + "/controllers/admin/controllers.js");
+const { adminLoginController, usersListController, createNewAdminController, logoutController, retrieveAdminLogController } = require(process.cwd() + "/controllers/admin/controllers.js");
 const { jwtAuthenticatePreValidationHook, captchaVerificationHook, superUserPermissonRequiredHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
 const errorResponseSchema = {
@@ -114,9 +114,31 @@ const logoutSchema = {
     handler: logoutController
 }
 
+const retrieveAdminLogSchema = {
+    schema: {
+        description: "Return last 5 admin actions to the request",
+        tags: ['admin'],
+        response: {
+            200: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        message: { type: "string" },
+                        date: { type: "string" }
+                    }
+                }
+            }
+        }
+    },
+    preValidation: [jwtAuthenticatePreValidationHook],
+    handler: retrieveAdminLogController
+}
+
 module.exports = {
     adminLoginSchema,
     allUserSchema,
     createNewAdminSchema,
-    logoutSchema
+    logoutSchema,
+    retrieveAdminLogSchema
 }

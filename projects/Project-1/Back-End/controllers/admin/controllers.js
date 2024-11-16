@@ -1,14 +1,18 @@
 const { db } = require(process.cwd() + "/ORM/main");
 const { authenticate, setAuthTokenInCookieForRequest, destroyAuthCookie } = require(process.cwd() + "/utils/admin/authentication");
-const { sendLogToQueue } = require(process.cwd() + "/utils/logger/main.js");
+const { sendLogToQueue, getLastLogMessages } = require(process.cwd() + "/utils/logger/main.js");
 
 const adminLoginController = async (request, response) => {
     const { username, password } = request.body;
     const user = await db.admin.get(username);
-    if (await authenticate(user, password)) {
-        const token = request.fastify.jwt.sign({ id: user.id, username: username, role: user['role'] });
-        await setAuthTokenInCookieForRequest(response, token);
-        return response.send({ message: "User Logined successfully", user });
+    try {
+        if (await authenticate(user, password)) {
+            const token = request.fastify.jwt.sign({ id: user.id, username: username, role: user['role'] });
+            await setAuthTokenInCookieForRequest(response, token);
+            return response.send({ message: "User Logined successfully", user });
+        }
+    } catch (err) {
+        console.log(err);
     }
     return response.code(401).send({ error: "Invalid Username or Password" });
 }
@@ -23,14 +27,14 @@ const createNewAdminController = async (request, response) => {
     if (await db.admin.exists(username)) {
         return response.code(409).send({ message: "Username already taken" });
     }
-    if (!(role === "admin" || role === "sale-manager")) {
+    if (!(role === "superuser" || role === "sale-manager")) {
         return response.code(400).send({ message: "Role doesn't exist" });
     }
     const result = await db.admin.create(username, password, role);
-    if (result === username) {
+    if (result.username === username) {
+        sendLogToQueue(`${request.user.username} Created ${role} user request object with username: ${username}`);
         return response.code(201).send({ message: "User created successfully" });
     }
-    sendLogToQueue(`${request.user.username} Created ${role} user request object with username: ${username}`);
     return response.code(400).send({ message: "Failed to create user" });
 }
 
@@ -39,9 +43,15 @@ const logoutController = async (request, response) => {
     response.code(200).send()
 }
 
+const retrieveAdminLogController = async (request, response) => {
+    let logMessages = await getLastLogMessages();
+    return response.send(logMessages)
+}
+
 module.exports = {
     adminLoginController,
     usersListController,
     createNewAdminController,
-    logoutController
+    logoutController,
+    retrieveAdminLogController
 }
