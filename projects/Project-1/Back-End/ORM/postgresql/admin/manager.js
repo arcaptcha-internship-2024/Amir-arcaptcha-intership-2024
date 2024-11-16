@@ -16,7 +16,7 @@ const getAdmin = async (username = "") => {
         throw Error("Username should be included")
     }
     try {
-        const res = await pool.query("SELECT id, username, role FROM admin WHERE username=$1", [username]);
+        const res = await pool.query("SELECT id, username, password, role FROM admin WHERE username=$1", [username]);
         return res.rowCount === 1 ? res.rows[0] : {};
     }
     catch (err) {

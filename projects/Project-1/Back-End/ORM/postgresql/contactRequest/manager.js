@@ -39,10 +39,17 @@ const getContactRequest = async (id = null) => {
     }
 }
 
-const updateContactRequest = async (id = null, first_name, last_name, phone_number, company_name, job_position, description, status = "not-checked", admin_message = "") => {
-    throwExceptionIfIDNotIncluded(id);
+const updateContactRequest = async ({ id, first_name, last_name, phone_number, job_position, company_name, description, admin_message, status }) => {
+    await throwExceptionIfIDNotIncluded(id=id);
     try {
-        const res = await pool.query("")
+        const res = await pool.query(`
+            UPDATE contactRequest 
+                SET first_name=$1, last_name=$2, phone_number=$3, job_position=$4, company_name=$5, description=$6, admin_message=$7, status=$8 
+                WHERE id=$9 RETURNING *
+            `,
+            [first_name, last_name, phone_number, job_position, company_name, description, admin_message, status, id]
+        )
+        return res.rows[0]
     }
     catch (err) {
         console.log("Failed to update contact request with error: " + err)
