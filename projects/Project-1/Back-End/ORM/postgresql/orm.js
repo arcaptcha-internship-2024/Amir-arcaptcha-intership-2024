@@ -1,4 +1,4 @@
-const { createContactRequest, getAllContactRequests, getContactRequest, updateContactRequest, deleteContactRequest } = require("./contactRequest/manager");
+const { createContactRequest, getAllContactRequests, getContactRequest, updateContactRequest, deleteContactRequest, isContactRequestExists } = require("./contactRequest/manager");
 const { getAllAdmins, getAdmin, createAdmin, adminExists, updateAdmin } = require("./admin/manager");
 
 module.exports = {
@@ -14,6 +14,7 @@ module.exports = {
         all: getAllContactRequests,
         get: getContactRequest,
         update: updateContactRequest,
-        delete: deleteContactRequest
+        delete: deleteContactRequest,
+        exists: isContactRequestExists
     }
 }

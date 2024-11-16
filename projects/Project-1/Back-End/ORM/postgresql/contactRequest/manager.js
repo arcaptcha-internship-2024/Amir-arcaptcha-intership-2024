@@ -60,10 +60,26 @@ const deleteContactRequest = async (id = null) => {
     }
 }
 
+const isContactRequestExists = async (id = null) => {
+    if (!id) {
+        throw Error("ID is required");
+    }
+    try {
+        const res = await pool.query("SELECT COUNT(1) FROM contactRequest WHERE id=$1", [id]);
+        return parseInt(res.rows[0].count) === 1;
+
+    } catch (err) {
+        console.log("Failed to check existence contact request object with error: " + err)
+    }
+    return false;
+
+}
+
 module.exports = {
     createContactRequest,
     getAllContactRequests,
     getContactRequest,
     updateContactRequest,
-    deleteContactRequest
+    deleteContactRequest,
+    isContactRequestExists
 }
