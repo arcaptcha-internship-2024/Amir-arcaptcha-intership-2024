@@ -13,7 +13,7 @@ services:
       - ./Back-End/logs/:/app/logs
 
     depends_on:
-      - rabbitmq
+      - postgres
 
   frontend:
     build: Front-End/
