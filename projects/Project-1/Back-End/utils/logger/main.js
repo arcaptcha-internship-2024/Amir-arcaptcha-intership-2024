@@ -2,7 +2,7 @@ require("dotenv").config();
 let fs = require("fs").promises;
 
 let amqp = require('amqplib/callback_api');
-const queue = process.env.LOG_QUEUE_NAME || log_queue;
+const queue = process.env.LOG_QUEUE_NAME || "log_queue";
 const amqpServer = process.env.RABBITMQ_SERVER;
 
 const sendLogToQueue = async (logMessage = "") => {
