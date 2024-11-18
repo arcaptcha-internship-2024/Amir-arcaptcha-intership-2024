@@ -3,6 +3,7 @@ const { buildFastify } = require(process.cwd() + "/App.js");
 
 tap.test("POST /api/contact/create/", async (t) => {
     const fastify = buildFastify();
+    t.createMock(process.cwd() + '/ORM/main.js', { "db.contactRequest.create": () => { return { id: '1' } } })
     t.plan(2);
     t.teardown(() => fastify.close());
     const response = await fastify.inject({
