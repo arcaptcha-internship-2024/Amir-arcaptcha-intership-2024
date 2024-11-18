@@ -39,7 +39,5 @@ services:
     container_name: arcaptcha_postgres
     env_file:
       - ./postgres/.env.postgres
-    ports:
-      - 5432:5432
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
