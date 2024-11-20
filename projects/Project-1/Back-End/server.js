@@ -1,5 +1,7 @@
 const { buildFastify } = require("./App");
 const { consumeDataFromQueue } = require("./utils/logger/main");
+const cors = require('@fastify/cors');
+
 
 const fastify = buildFastify();
 const { SERVER_HOST, SERVER_PORT } = process.env;
