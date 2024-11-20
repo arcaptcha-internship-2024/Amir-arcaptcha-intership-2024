@@ -1,8 +1,20 @@
 module.exports = {
     admin: {
         get: async (username) => {
-            let validUsername = "admin"
-            return username === validUsername;
+            if (username === "admin") {
+                return {
+                    id: 1,
+                    username: "admin",
+                    role: "superuser"
+                }
+            } else if (username === "sale_manager") {
+                return {
+                    id: 2,
+                    username: "sale_manager",
+                    role: "sale-manager"
+                }
+            }
+            return null;
         }
     },
     contactRequest: {
