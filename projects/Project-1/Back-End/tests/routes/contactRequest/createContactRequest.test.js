@@ -1,12 +1,16 @@
 const tap = require("tap");
 const { buildFastify } = require(process.cwd() + "/App.js");
 const { adminCreateRequestSchema, createRequestSchema } = require(process.cwd() + "/schema/contactRequest/main.js")
+const mockDb = require(process.cwd() + "/tests/mocks/DB/mockedDB.js")
+
+const mockControllers = tap.mockRequire(process.cwd() + "/controllers/contactRequest/controllers", {
+    [process.cwd() + "/ORM/main"]: { db: mockDb }
+});
+
 
 tap.test("POST /api/contact/create/", async (t) => {
     const fastify = buildFastify();
-    fastify.post("/api/contact/create/", createRequestSchema);
-
-    t.createMock(process.cwd() + '/ORM/main.js', { "db.contactRequest.create": () => { return { id: '1' } } });
+    fastify.post("/api/contact/create/", { ...createRequestSchema, handler: mockControllers.createRequestController });
     t.plan(2);
     t.teardown(() => fastify.close());
     const response = await fastify.inject({
@@ -36,7 +40,8 @@ tap.test("POST /api/contact/admin/create/", async (t) => {
 
     await fastify.post("/api/contact/admin/create/", {
         ...adminCreateRequestSchema,
-        preValidation: []
+        preValidation: [],
+        handler: mockControllers.adminCreateContactRequestController
     })
 
     t.teardown(() => fastify.close());
