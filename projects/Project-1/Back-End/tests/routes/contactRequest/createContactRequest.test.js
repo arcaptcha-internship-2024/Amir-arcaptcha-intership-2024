@@ -4,7 +4,8 @@ const { adminCreateRequestSchema, createRequestSchema } = require(process.cwd() 
 const mockDb = require(process.cwd() + "/tests/mocks/DB/mockedDB.js")
 
 const mockControllers = tap.mockRequire(process.cwd() + "/controllers/contactRequest/controllers", {
-    [process.cwd() + "/ORM/main"]: { db: mockDb }
+    [process.cwd() + "/ORM/main"]: { db: mockDb },
+    [process.cwd() + "/utils/logger/main"]: { sendLogToQueue: async (log_message = "") => true },
 });
 
 
@@ -57,12 +58,10 @@ tap.test("POST /api/contact/admin/create/", async (t) => {
             job_position: "test",
             phone_number: "test",
             description: "test",
-            arcaptcha_token: "000000000000000000000000000000",
             admin_message: "",
             status: "not-checked"
         }
     })
-
     t.equal(response.statusCode, 201);
     t.match(JSON.parse(response.body), { id: String });
 })
