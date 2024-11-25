@@ -42,6 +42,17 @@ const createComment = async ({ message, admin_username, contact_request_id }) =>
     }
 }
 
+const filterComments = async (contact_request_id) => {
+    try {
+        const response = await pool.query("SELECT id, message, created_at FROM contactRequestComments WHERE contact_request_id=$1", [contact_request_id]);
+        return response.rows;
+    } catch (err) {
+        console.log("Failed to filter comments for contact request with error: " + err);
+    }
+    return [];
+}
+
 module.exports = {
-    createComment
+    createComment,
+    filterComments
 }
