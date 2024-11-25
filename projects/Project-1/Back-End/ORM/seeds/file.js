@@ -10,7 +10,8 @@ const seed = {
             "role": "superuser"
         }
     ],
-    "contactRequest": []
+    "contactRequest": [],
+    "contactRequestComments": []
 }
 
 const isUsernameExists = async (username = "admin") => {
