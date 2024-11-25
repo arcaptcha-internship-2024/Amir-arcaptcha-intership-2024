@@ -28,9 +28,6 @@ const getContactRequestCommentsTable = async () => {
 const getAdminID = async (admin_username) => {
     await throwErrorIfAdminNotExist(admin_username)
     let admin = await getAdmin(admin_username);
-    if (!admin) {
-        throw Error("Admin with given username not exists")
-    }
     return admin.id
 }
 
