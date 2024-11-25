@@ -16,7 +16,6 @@ const phone_number = ref("");
 const job_position = ref("");
 const description = ref("");
 const requestStatus = ref("not-checked");
-const admin_message = ref("");
 
 const redirectIfObjectDoesntExists = () => {
     if (!contactRequestStore.exists(id.value)) {
@@ -56,8 +55,7 @@ const getUpdatedData = () => {
         phone_number: phone_number.value,
         job_position: job_position.value,
         description: description.value,
-        status: requestStatus.value,
-        admin_message: admin_message.value,
+        status: requestStatus.value
     }
 }
 
@@ -69,7 +67,6 @@ const assignDataToRefVariables = (data) => {
     job_position.value = data.job_position
     description.value = data.description
     requestStatus.value = data.status
-    admin_message.value = data.admin_message
 }
 
 onMounted(async () => {
@@ -87,13 +84,6 @@ onMounted(async () => {
             <div class="bg-dark text-white rounded rounded-2 p-2">
                 <h4>Request Progress Status</h4>
                 <hr />
-
-                <div class="col-12 my-2">
-                    <label for="admin_message" class="mb-1">
-                        Admin Message:
-                    </label>
-                    <textarea type="text" class="form-control" v-model="admin_message" id="admin_message"></textarea>
-                </div>
                 <div class="col-12 my-2">
                     <label for="status" class="mb-1">
                         Status:

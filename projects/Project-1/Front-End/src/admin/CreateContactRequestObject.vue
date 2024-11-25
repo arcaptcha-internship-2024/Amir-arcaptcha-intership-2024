@@ -17,7 +17,6 @@ const phone_number = ref("");
 const job_position = ref("");
 const description = ref("");
 const requestStatus = ref("not-checked");
-const admin_message = ref("");
 
 const contactRequestObject = () => {
     return {
@@ -28,7 +27,6 @@ const contactRequestObject = () => {
         job_position: job_position.value,
         description: description.value,
         status: requestStatus.value,
-        admin_message: admin_message.value,
     }
 }
 
@@ -55,7 +53,6 @@ const formSubmitHandler = async () => {
             <div class="bg-dark text-white rounded rounded-2 p-2">
                 <h4>Request Progress Status</h4>
                 <hr />
-                <ContactRequestTextArea input_label="Admin message" @data="query => admin_message = query" />
                 <ContactRequestStatus input_label="Status" @data="query => requestStatus = query" />
             </div>
             <div class="bg-light text-dark mt-2 rounded rounded-2 px-2">
