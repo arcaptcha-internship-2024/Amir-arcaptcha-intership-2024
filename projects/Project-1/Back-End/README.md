@@ -51,3 +51,24 @@ After successfully image created, run the container by:
 ```sh
 docker run --name arcaptcha_backend -d -p 8000:8000  arcaptcha_project_backend:1.0
 ```
+
+
+## Testing:
+
+For run unit tests:
+
+1. Create a `db/db.test.json` file including this data:
+
+```json
+{
+    "admin": [],
+    "contactRequest": [],
+    "contactRequestComments": []
+}
+```
+
+2. Run test command:
+
+```sh
+npm run test
+```

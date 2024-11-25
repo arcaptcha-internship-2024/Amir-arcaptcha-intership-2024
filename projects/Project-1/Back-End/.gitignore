@@ -1,4 +1,5 @@
 db/db.json
+db/db.test.json
 .env
 logs/*.log
 .tap/
