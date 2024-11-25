@@ -4,7 +4,7 @@ const { jwtAuthenticatePreValidationHook, superUserPermissonRequiredHook, captch
 const adminContactRequestSchema = {
     description: "Schema for creating contact request object by admin user",
     type: "object",
-    required: ["first_name", "last_name", "phone_number", "company_name", "job_position", "description", "status", "admin_message"],
+    required: ["first_name", "last_name", "phone_number", "company_name", "job_position", "description", "status"],
     properties: {
         id: { type: "string" },
         first_name: { type: "string" },
@@ -15,8 +15,7 @@ const adminContactRequestSchema = {
         description: { type: "string" },
         status: { type: "string" },
         created_at: { type: "string" },
-        updated_at: { type: "string" },
-        admin_message: { type: "string" },
+        updated_at: { type: "string" }
     }
 }
 
