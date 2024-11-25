@@ -74,9 +74,16 @@ const updateComment = async ({ id, message, admin_username, contact_request_id }
     return obj;
 }
 
+const filterComments = async (contact_request_id) => {
+    let table = await getContactRequestCommentsTable();
+    return table.filter(obj => obj.contact_request_id = contact_request_id)
+
+}
+
 
 module.exports = {
     createComment,
     isCommentExists,
     updateComment,
+    filterComments
 }

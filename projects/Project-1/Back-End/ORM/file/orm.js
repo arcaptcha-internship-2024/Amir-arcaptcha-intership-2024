@@ -1,6 +1,6 @@
 const { getContactRequestTable, createContactRequest, deleteContactRequest, isContactRequestExists, updateContactRequest } = require("./contactRequest/manager");
 const { createAdmin, getAdminTable, isObjectExists, getAdmin } = require("./admin/manager");
-const { createComment } = require("./contactRequestComments/manager");
+const { createComment, filterComments } = require("./contactRequestComments/manager");
 
 module.exports = {
     admin: {
@@ -18,5 +18,6 @@ module.exports = {
     },
     contactRequestComments: {
         create: createComment,
+        filter: filterComments
     }
 }
