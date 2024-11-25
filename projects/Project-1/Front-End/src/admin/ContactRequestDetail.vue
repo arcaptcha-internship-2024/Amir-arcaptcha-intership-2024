@@ -20,10 +20,8 @@ const requestStatus = ref("not-checked");
 const admin_message = ref("");
 const comments = ref([]);
 
-const redirectIfObjectDoesntExists = () => {
-    if (!contactRequestStore.exists(id.value)) {
-        router.push({ name: 'adminManageContactRequests' })
-    }
+const redirectIfObjectNotExists = () => {
+    router.push({ name: 'adminManageContactRequests' });
 }
 
 const deleteObjectHandler = async () => {
@@ -85,7 +83,7 @@ const createCommentForContactRequest = async () => {
         })
 }
 
-const retrieveContactRequests = async () => {
+const retrieveContactRequestComments = async () => {
     await axios.get(`http://localhost:8000/api/contact/${id.value}/comment/all/`, { withCredentials: true })
         .then(({ data }) => {
             comments.value = data;
@@ -97,12 +95,19 @@ const retrieveContactRequests = async () => {
         })
 }
 
+const retrieveContactRequest = async () => {
+    axios.get(`http://localhost:8000/api/contact/get/${route.params.id}/`, { withCredentials: true })
+        .then(({ data }) => {
+            assignDataToRefVariables(data);
+        })
+        .catch(error => {
+            redirectIfObjectNotExists();
+        })
+}
+
 onMounted(async () => {
-    await contactRequestStore.$fetch();
-    redirectIfObjectDoesntExists();
-    let contactRequestData = await contactRequestStore.get(id.value);
-    assignDataToRefVariables(contactRequestData);
-    await retrieveContactRequests();
+    await retrieveContactRequest();
+    await retrieveContactRequestComments();
 })
 </script>
 
