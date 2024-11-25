@@ -24,7 +24,7 @@ const fetchContactRequestsController = async (request, response) => {
 }
 
 const adminCreateContactRequestController = async (request, response) => {
-    let { status, admin_message, first_name, last_name, phone_number, company_name, job_position, description } = request.body;
+    let { status, first_name, last_name, phone_number, company_name, job_position, description } = request.body;
     if (!await validateContactRequestData(data = { first_name, last_name, phone_number, company_name, job_position, status }, status_neccessary = true)) {
         return response.code(400).send({ error: "Please Complete all fields" });
     }
@@ -35,8 +35,7 @@ const adminCreateContactRequestController = async (request, response) => {
         company_name = company_name,
         job_position = job_position,
         description = description,
-        status = status,
-        admin_message = admin_message
+        status = status
     )
     sendLogToQueue(`${request.user.username} Created a contact request object with ID: ${id}`);
     return response.code(201).send({ id: id });
@@ -53,11 +52,11 @@ const adminDeleteContactRequestController = async (request, response) => {
 }
 
 const adminUpdateContactRequestController = async (request, response) => {
-    let { id, first_name, last_name, phone_number, company_name, job_position, description, admin_message, status } = request.body;
+    let { id, first_name, last_name, phone_number, company_name, job_position, description, status } = request.body;
     if (!await db.contactRequest.exists(id)) {
         return response.code(404).send({ message: "Object Not found" });
     }
-    const obj = await db.contactRequest.update({ id, first_name, last_name, phone_number, company_name, job_position, description, admin_message, status });
+    const obj = await db.contactRequest.update({ id, first_name, last_name, phone_number, company_name, job_position, description, status });
     sendLogToQueue(`${request.user.username} Updated a contact request object with ID: ${id}`);
     return response.code(200).send({ message: "Object Updated" })
 }
