@@ -13,6 +13,13 @@ const createCommentHandler = async (request, response) => {
     }
 }
 
+const retrieveAllCommentsHandler = async (request, response) => {
+    const { id: contact_request_id } = request.params;
+    const comments = await db.contactRequestComments.filter(contact_request_id);
+    response.code(200).send(comments);
+}
+
 module.exports = {
-    createCommentHandler
+    createCommentHandler,
+    retrieveAllCommentsHandler
 }
