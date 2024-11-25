@@ -19,7 +19,8 @@ fastify.register(require('@fastify/swagger'), {
         produces: ['application/json'],
         tags: [
             { name: 'contact', description: 'Contact related endpoints' },
-            { name: 'admin', description: 'Admin related endpoints' }
+            { name: 'admin', description: 'Admin related endpoints' },
+            { name: "comment", description: "Contact request comment schemas" }
         ],
         securityDefinitions: {
             apiKey: {
