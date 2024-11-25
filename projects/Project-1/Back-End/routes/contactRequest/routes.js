@@ -1,6 +1,7 @@
-const { createRequestSchema, fetchContactRequestSchema, adminCreateRequestSchema, adminDeleteRequestSchema, adminUpdateRequestSchema, createCommentSchema, retrieveAllCommentSchema } = require("../../schema/contactRequest/main");
+const { retrieveContactRequestData, createRequestSchema, fetchContactRequestSchema, adminCreateRequestSchema, adminDeleteRequestSchema, adminUpdateRequestSchema, createCommentSchema, retrieveAllCommentSchema } = require("../../schema/contactRequest/main");
 
 const Routes = (fastify, option, done) => {
+    fastify.get("get/:id/", retrieveContactRequestData);
     fastify.post("create/", createRequestSchema);
     fastify.get("all/", fetchContactRequestSchema);
     fastify.post("admin/create/", adminCreateRequestSchema);

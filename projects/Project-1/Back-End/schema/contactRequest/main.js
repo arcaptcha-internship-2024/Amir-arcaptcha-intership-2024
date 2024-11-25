@@ -1,4 +1,4 @@
-const { createRequestController, fetchContactRequestsController, adminCreateContactRequestController, adminDeleteContactRequestController, adminUpdateContactRequestController } = require("../../controllers/contactRequest/controllers");
+const { retrieveContactRequestHandler, createRequestController, fetchContactRequestsController, adminCreateContactRequestController, adminDeleteContactRequestController, adminUpdateContactRequestController } = require("../../controllers/contactRequest/controllers");
 const { createCommentHandler, retrieveAllCommentsHandler } = require(process.cwd() + "/controllers/contactRequestComments/controllers");
 const { jwtAuthenticatePreValidationHook, superUserPermissonRequiredHook, captchaVerificationHook } = require(process.cwd() + "/utils/admin/authentication.js");
 
@@ -56,6 +56,30 @@ const createRequestSchema = {
         captchaVerificationHook
     ],
     handler: createRequestController,
+}
+
+const retrieveContactRequestData = {
+    schema: {
+        params: {
+            type: "object",
+            properties: {
+                id: { type: "string" }
+            }
+        },
+        response: {
+            200: adminContactRequestSchema,
+            404: {
+                type: "object",
+                properties: {
+                    message: { type: "string" }
+                }
+            }
+        }
+    },
+    preValidation: [
+        jwtAuthenticatePreValidationHook
+    ],
+    handler: retrieveContactRequestHandler
 }
 
 const fetchContactRequestSchema = {
@@ -260,5 +284,6 @@ module.exports = {
     adminDeleteRequestSchema,
     adminUpdateRequestSchema,
     createCommentSchema,
-    retrieveAllCommentSchema
+    retrieveAllCommentSchema,
+    retrieveContactRequestData
 }

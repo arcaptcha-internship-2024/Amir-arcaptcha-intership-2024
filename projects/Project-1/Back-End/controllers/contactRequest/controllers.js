@@ -23,6 +23,15 @@ const fetchContactRequestsController = async (request, response) => {
     return response.send(paginatedResult);
 }
 
+const retrieveContactRequestHandler = async (request, response) => {
+    let { id } = request.params;
+    let obj = await db.contactRequest.get(id);
+    if (obj) {
+        return response.code(200).send(obj);
+    }
+    return response.code(404).send({ message: "Object not found" })
+}
+
 const adminCreateContactRequestController = async (request, response) => {
     let { status, first_name, last_name, phone_number, company_name, job_position, description } = request.body;
     if (!await validateContactRequestData(data = { first_name, last_name, phone_number, company_name, job_position, status }, status_neccessary = true)) {
@@ -64,6 +73,7 @@ const adminUpdateContactRequestController = async (request, response) => {
 module.exports = {
     createRequestController,
     fetchContactRequestsController,
+    retrieveContactRequestHandler,
     adminCreateContactRequestController,
     adminDeleteContactRequestController,
     adminUpdateContactRequestController
