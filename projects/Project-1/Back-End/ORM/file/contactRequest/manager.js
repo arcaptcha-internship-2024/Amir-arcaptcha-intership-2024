@@ -6,7 +6,7 @@ const getContactRequestTable = async () => {
     return contactRequest;
 }
 
-const createContactRequest = async (first_name, last_name, phone_number, company_name, job_position, description, status = "not-checked", admin_message = "") => {
+const createContactRequest = async (first_name, last_name, phone_number, company_name, job_position, description, status = "not-checked") => {
     let table = await getContactRequestTable();
     const requestObj = {
         id: uuidv4(),
@@ -17,7 +17,6 @@ const createContactRequest = async (first_name, last_name, phone_number, company
         company_name,
         description,
         status,
-        admin_message,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
     }
@@ -38,7 +37,7 @@ const isContactRequestExists = async (id) => {
     return table.some(obj => obj.id === id);
 }
 
-const updateContactRequest = async ({ id, first_name, last_name, phone_number, job_position, company_name, description, admin_message, status }) => {
+const updateContactRequest = async ({ id, first_name, last_name, phone_number, job_position, company_name, description, status }) => {
     if (!await isContactRequestExists(id)) {
         throw "Error: Contact request object doesn't exists";
     }
@@ -54,7 +53,6 @@ const updateContactRequest = async ({ id, first_name, last_name, phone_number, j
         phone_number,
         job_position,
         description,
-        admin_message,
         status,
         updated_at: new Date().toISOString()
     }
