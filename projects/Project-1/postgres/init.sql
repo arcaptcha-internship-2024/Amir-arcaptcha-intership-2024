@@ -20,9 +20,11 @@ CREATE TABLE IF NOT EXISTS admin (
 
 CREATE TABLE IF NOT EXISTS contactRequestComments (
     id SERIAL PRIMARY KEY,
-    CONSTRAINT admin_id FOREIGN KEY (id) REFERENCES admin(id),
-    CONSTRAINT contact_request_id FOREIGN KEY (id) REFERENCES contactRequest(id),
+    admin_id INT NOT NULL,
+    contact_request_id INT NOT NULL,
     message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_admin FOREIGN KEY (admin_id) REFERENCES admin(id),
+    CONSTRAINT fk_contact_request FOREIGN KEY (contact_request_id) REFERENCES contactRequest(id)
 );
