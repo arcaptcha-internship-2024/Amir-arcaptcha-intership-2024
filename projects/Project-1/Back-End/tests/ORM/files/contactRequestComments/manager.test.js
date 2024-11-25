@@ -14,7 +14,6 @@ tap.test("Create Contact Request object in file database", async (t) => {
     };
 
     const response = await contactRequestComments.createComment(fakeData);
-    console.log(response);
     t.equal(response.message, fakeData.message);
     t.equal(response.admin_id, 1);
     t.equal(response.contact_request_id, fakeData.contact_request_id);
