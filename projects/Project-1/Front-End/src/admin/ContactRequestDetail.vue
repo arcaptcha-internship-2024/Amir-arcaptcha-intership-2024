@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import MainContentTitle from './components/MainContentTitle.vue';
 import { useAlertStore } from '@/store/alerts';
+import axios from "axios";
 const alertStore = useAlertStore();
 const contactRequestStore = useContactRequestStore();
 const route = useRoute();
@@ -16,6 +17,7 @@ const phone_number = ref("");
 const job_position = ref("");
 const description = ref("");
 const requestStatus = ref("not-checked");
+const admin_message = ref("");
 
 const redirectIfObjectDoesntExists = () => {
     if (!contactRequestStore.exists(id.value)) {
@@ -35,6 +37,7 @@ const deleteObjectHandler = async () => {
 }
 
 const updateObjectHandler = async () => {
+    await createCommentForContactRequest();
     let updatedData = getUpdatedData();
     const { success, message } = await contactRequestStore.updateObject(updatedData);
     if (success) {
@@ -69,6 +72,21 @@ const assignDataToRefVariables = (data) => {
     requestStatus.value = data.status
 }
 
+const createCommentForContactRequest = async () => {
+    if (message.value.length === 0) {
+        return;
+    }
+    axios.post(`http://localhost:8000/api/contact/${id.value}/comment/create/`, { message: admin_message.value }, { withCredentials: true })
+        .then(({ data }) => {
+            console.log("Comment object Created");
+        })
+        .catch(error => {
+            let errorMessage = error.response.data.error;
+            alertStore.setMessage(errorMessage, "error");
+            alertStore.$fire();
+        })
+}
+
 onMounted(async () => {
     await contactRequestStore.$fetch();
     redirectIfObjectDoesntExists();
@@ -84,6 +102,12 @@ onMounted(async () => {
             <div class="bg-dark text-white rounded rounded-2 p-2">
                 <h4>Request Progress Status</h4>
                 <hr />
+                <div class="col-12 my-2">
+                    <label for="admin_message" class="mb-1">
+                        Admin Message:
+                    </label>
+                    <textarea type="text" class="form-control" v-model="admin_message" id="admin_message"></textarea>
+                </div>
                 <div class="col-12 my-2">
                     <label for="status" class="mb-1">
                         Status:

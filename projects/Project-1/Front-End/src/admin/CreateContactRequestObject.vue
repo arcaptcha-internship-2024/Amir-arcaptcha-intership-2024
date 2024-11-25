@@ -26,7 +26,7 @@ const contactRequestObject = () => {
         phone_number: phone_number.value,
         job_position: job_position.value,
         description: description.value,
-        status: requestStatus.value,
+        status: requestStatus.value
     }
 }
 
