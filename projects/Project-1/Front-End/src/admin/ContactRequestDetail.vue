@@ -18,6 +18,7 @@ const job_position = ref("");
 const description = ref("");
 const requestStatus = ref("not-checked");
 const admin_message = ref("");
+const comments = ref([]);
 
 const redirectIfObjectDoesntExists = () => {
     if (!contactRequestStore.exists(id.value)) {
@@ -73,12 +74,21 @@ const assignDataToRefVariables = (data) => {
 }
 
 const createCommentForContactRequest = async () => {
-    if (message.value.length === 0) {
+    if (admin_message.value.length === 0) {
         return;
     }
-    axios.post(`http://localhost:8000/api/contact/${id.value}/comment/create/`, { message: admin_message.value }, { withCredentials: true })
+    await axios.post(`http://localhost:8000/api/contact/${id.value}/comment/create/`, { message: admin_message.value }, { withCredentials: true })
+        .catch(error => {
+            let errorMessage = error.response.data.error;
+            alertStore.setMessage(errorMessage, "error");
+            alertStore.$fire();
+        })
+}
+
+const retrieveContactRequests = async () => {
+    await axios.get(`http://localhost:8000/api/contact/${id.value}/comment/all/`, { withCredentials: true })
         .then(({ data }) => {
-            console.log("Comment object Created");
+            comments.value = data;
         })
         .catch(error => {
             let errorMessage = error.response.data.error;
@@ -92,6 +102,7 @@ onMounted(async () => {
     redirectIfObjectDoesntExists();
     let contactRequestData = await contactRequestStore.get(id.value);
     assignDataToRefVariables(contactRequestData);
+    await retrieveContactRequests();
 })
 </script>
 
@@ -164,5 +175,14 @@ onMounted(async () => {
                 <button class="btn btn-danger ms-2" @click="deleteObjectHandler" type="button">Delete</button>
             </div>
         </form>
+        <div class="row bg-dark text-light my-2 p-2 rounded rounded-2" v-if="comments">
+            <h3>Admin comments: </h3>
+            <div class="col-12 bg-white text-dark my-2 rounded rounded-2 p-1" v-for="comment in comments.reverse()">
+                <h6>Created at: {{ new Date(comment.created_at).toLocaleString() }}</h6>
+                <p>
+                    {{ comment.message }}
+                </p>
+            </div>
+        </div>
     </div>
 </template>
